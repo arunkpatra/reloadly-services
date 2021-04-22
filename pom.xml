@@ -14,6 +14,13 @@
     <groupId>com.reloadly</groupId>
     <artifactId>reloadly-services</artifactId>
     <version>1.0.0</version>
+    <modules>
+        <module>account-service</module>
+        <module>transaction-service</module>
+        <module>notification-service</module>
+        <module>authentication-service</module>
+        <module>core-components</module>
+    </modules>
     <packaging>pom</packaging>
     <name>Reloadly Microservices</name>
     <description>Reloadly Microservices Parent POM</description>
