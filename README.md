@@ -1,8 +1,9 @@
 # Reloadly Services
 ![Build Status](https://github.com/arunkpatra/reloadly-services/workflows/build/badge.svg)
 
-<img src="reloadly-gif.gif" width="450px" alt="Reloadly" />
-
+<p align="center">
+    <img src="reloadly-gif.gif" width="350px" alt="Reloadly" />
+</p>
 This project implements various microservices. Please see the README files of 
 the respective microservices for more details.
 
