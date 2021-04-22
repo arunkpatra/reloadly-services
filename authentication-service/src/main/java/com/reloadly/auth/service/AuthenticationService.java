@@ -1,8 +1,10 @@
 package com.reloadly.auth.service;
 
 import com.reloadly.auth.exception.AuthenticationFailedException;
+import com.reloadly.auth.exception.TokenVerificationFailedException;
 import com.reloadly.auth.exception.UsernameNotFoundException;
 import com.reloadly.auth.model.AuthenticationResponse;
+import com.reloadly.commons.model.ReloadlyAuthToken;
 
 /**
  * Provides authentication related services.
@@ -22,4 +24,13 @@ public interface AuthenticationService {
      */
     AuthenticationResponse authenticateUsingUsernamePassword(String username, String password)
             throws UsernameNotFoundException, AuthenticationFailedException;
+
+    /**
+     * Verifies a presented Reloadly Authentication Service issued JWT token.
+     *
+     * @param token A Reloadly Authentication Service issued JWT token.
+     * @return A decoded and verified {@link ReloadlyAuthToken}.
+     * @throws TokenVerificationFailedException If token verification fails.
+     */
+    ReloadlyAuthToken verifyToken(String token) throws TokenVerificationFailedException;
 }

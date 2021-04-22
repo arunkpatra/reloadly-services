@@ -4,7 +4,6 @@ import com.reloadly.auth.config.AuthenticationServiceProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -21,8 +20,16 @@ public class JwtTokenUtil implements Serializable {
     }
 
     //retrieve username from jwt token
-    public String getUsernameFromToken(String token) {
+    public String getSubjectFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
+    }
+
+    public String getIssuerFromToken(String token) {
+        return getClaimFromToken(token, Claims::getIssuer);
+    }
+
+    public String getAudienceFromToken(String token) {
+        return getClaimFromToken(token, Claims::getAudience);
     }
 
     //retrieve expiration date from jwt token
@@ -36,8 +43,9 @@ public class JwtTokenUtil implements Serializable {
     }
 
     //for retrieving any information from token we will need the secret key
-    private Claims getAllClaimsFromToken(String token) {
-        return Jwts.parserBuilder().setSigningKey(Keys.hmacShaKeyFor(properties.getJwtSecretKey().getBytes())).build().parseClaimsJws(token).getBody();
+    public Claims getAllClaimsFromToken(String token) {
+        return Jwts.parserBuilder().setSigningKey(Keys.hmacShaKeyFor(properties.getJwtSecretKey().getBytes())).build()
+                .parseClaimsJws(token).getBody();
     }
 
     //check if the token has expired
@@ -62,16 +70,22 @@ public class JwtTokenUtil implements Serializable {
     //3. According to JWS Compact Serialization(https://tools.ietf.org/html/draft-ietf-jose-json-web-signature-41#section-3.1)
     //   compaction of the JWT to a URL-safe string
     private String doGenerateToken(Map<String, Object> claims, String subject) {
-
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + properties.getJwtTokenValiditySeconds() * 1000))
                 .signWith(Keys.hmacShaKeyFor(properties.getJwtSecretKey().getBytes())).compact();
     }
 
     //validate token
-    public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = getUsernameFromToken(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    public Boolean validateToken(String token) {
+        // We check the following
+        // 1. Subject
+        // 2. Issuer
+        // 3. Audience
+        // 4. Token Expiry
+        return ((null != getSubjectFromToken(token)) &&
+                properties.getAudience().equals(getAudienceFromToken(token)) &&
+                properties.getIssuer().equals(getIssuerFromToken(token)) &&
+                !isTokenExpired(token));
     }
 }
 

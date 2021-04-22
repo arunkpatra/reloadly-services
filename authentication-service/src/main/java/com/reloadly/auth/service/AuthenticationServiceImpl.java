@@ -2,15 +2,15 @@ package com.reloadly.auth.service;
 
 import com.reloadly.auth.config.AuthenticationServiceProperties;
 import com.reloadly.auth.entity.AuthorityEntity;
-import com.reloadly.auth.entity.UserEntity;
 import com.reloadly.auth.entity.UsernamePasswordCredentialsEntity;
 import com.reloadly.auth.exception.AuthenticationFailedException;
+import com.reloadly.auth.exception.TokenVerificationFailedException;
 import com.reloadly.auth.exception.UsernameNotFoundException;
 import com.reloadly.auth.jwt.JwtTokenUtil;
 import com.reloadly.auth.model.AuthenticationResponse;
 import com.reloadly.auth.repository.AuthorityRepository;
-import com.reloadly.auth.repository.UserRepository;
 import com.reloadly.auth.repository.UsernamePasswordCredentialsRepository;
+import com.reloadly.commons.model.ReloadlyAuthToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -77,6 +77,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         } catch (Exception e) {
             throw new AuthenticationFailedException(e.getMessage(), e);
         }
+    }
+
+    /**
+     * Verifies a presented Reloadly Authentication Service issued JWT token.
+     *
+     * @param token A Reloadly Authentication Service issued JWT token.
+     * @return A decoded and verified {@link ReloadlyAuthToken}.
+     * @throws TokenVerificationFailedException If token verification fails.
+     */
+    @Override
+    public ReloadlyAuthToken verifyToken(String token) throws TokenVerificationFailedException {
+        if (!jwtTokenUtil.validateToken(token)) {
+            throw new TokenVerificationFailedException();
+        }
+        return new ReloadlyAuthToken(jwtTokenUtil.getAllClaimsFromToken(token));
     }
 
     private Map<String, Object> getCustomClaims(String uid) {

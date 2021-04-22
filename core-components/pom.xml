@@ -16,7 +16,7 @@
         <module>commons</module>
     </modules>
     <artifactId>core-components</artifactId>
-    <name>Core Components</name>
+    <name>Core Components Parent</name>
 
 
 </project>
