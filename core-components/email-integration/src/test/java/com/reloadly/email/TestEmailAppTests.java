@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 
-class TestEmailAppTests extends AbstractIntegrationTest{
+class TestEmailAppTests extends AbstractIntegrationTest {
 
     @Autowired
     private MailSender mailSender;

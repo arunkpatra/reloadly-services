@@ -41,29 +41,29 @@ public class ReloadlyAuthAutoConfiguration {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-                LOGGER.info("Enabling Firebase Auth based HTTP Security.");
-                //@formatter:off
-                http
-                        .csrf().disable()
-                        .authorizeRequests()
-                        .antMatchers("/assets/**").permitAll()
-                        .antMatchers("/instances").permitAll()
-                        .antMatchers("/instances/*").permitAll()
-                        .antMatchers("/actuator/**").permitAll()
-                        .antMatchers("/swagger-ui/**").permitAll()
-                        .antMatchers("/swagger**").permitAll()
-                        .antMatchers("/v2/api-docs/**").permitAll()
-                        .antMatchers("/favicon.ico").permitAll()
-                        .antMatchers("/swagger-resources/configuration/**").permitAll()
-                        .antMatchers("/webjars/**").permitAll()
-                        .antMatchers("/**").hasAnyRole("USER").anyRequest().authenticated()
-                        .and()
-                        .exceptionHandling()
-                        .authenticationEntryPoint(new ReloadlyJwtAuthenticationEntryPoint()).and().sessionManagement()
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-                //@formatter:on
-                // Add a filter to validate the tokens with every request
-                http.addFilterBefore(reloadlyJwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+            LOGGER.info("Enabling Firebase Auth based HTTP Security.");
+            //@formatter:off
+            http
+                    .csrf().disable()
+                    .authorizeRequests()
+                    .antMatchers("/assets/**").permitAll()
+                    .antMatchers("/instances").permitAll()
+                    .antMatchers("/instances/*").permitAll()
+                    .antMatchers("/actuator/**").permitAll()
+                    .antMatchers("/swagger-ui/**").permitAll()
+                    .antMatchers("/swagger**").permitAll()
+                    .antMatchers("/v2/api-docs/**").permitAll()
+                    .antMatchers("/favicon.ico").permitAll()
+                    .antMatchers("/swagger-resources/configuration/**").permitAll()
+                    .antMatchers("/webjars/**").permitAll()
+                    .antMatchers("/**").hasAnyRole("USER").anyRequest().authenticated()
+                    .and()
+                    .exceptionHandling()
+                    .authenticationEntryPoint(new ReloadlyJwtAuthenticationEntryPoint()).and().sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            //@formatter:on
+            // Add a filter to validate the tokens with every request
+            http.addFilterBefore(reloadlyJwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         }
 
         @Configuration

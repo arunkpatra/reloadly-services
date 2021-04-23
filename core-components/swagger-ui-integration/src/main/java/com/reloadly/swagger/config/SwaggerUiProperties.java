@@ -117,6 +117,7 @@ public class SwaggerUiProperties {
     public void setBaseUrl(String baseUrl) {
         this.baseUrl = baseUrl;
     }
+
     public String getLicense() {
         return license;
     }

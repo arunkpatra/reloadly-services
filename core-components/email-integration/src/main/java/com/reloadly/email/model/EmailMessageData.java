@@ -2,7 +2,7 @@ package com.reloadly.email.model;
 
 public class EmailMessageData {
 
-    private String[] toList = new String[] {};
+    private String[] toList = new String[]{};
     private String from;
     private String subject;
     private String text;

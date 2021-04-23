@@ -38,34 +38,34 @@ public class MockSecurityAutoConfiguration {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-                LOGGER.info("Enabling Mock Auth based HTTP Security.");
-                //@formatter:off
-                http
-                        .csrf().disable()
-                        .authorizeRequests()
-                        .antMatchers("/assets/**").permitAll()
-                        .antMatchers("/instances").permitAll()
-                        .antMatchers("/instances/*").permitAll()
-                        .antMatchers("/actuator/**").permitAll()
-                        .antMatchers("/auth/login").permitAll()
-                        .antMatchers("/swagger-ui/**").permitAll()
-                        .antMatchers("/swagger**").permitAll()
-                        .antMatchers("/v2/api-docs/**").permitAll()
-                        .antMatchers("/swagger-resources/configuration/**").permitAll()
-                        .antMatchers("/webjars/**").permitAll()
-                        .antMatchers("/api/signup/mobile").permitAll()
-                        .antMatchers("/api/signup/email").permitAll()
-                        .antMatchers("/api/otp").permitAll()
-                        .antMatchers("/api/invitation/joinqueue").permitAll()
-                        .antMatchers("/api/user/sync").authenticated()
-                        .antMatchers("/api/**").hasAnyRole("USER")
-                        .anyRequest().authenticated().and()
-                        .exceptionHandling()
-                        .authenticationEntryPoint(new MockAuthenticationEntryPoint()).and().sessionManagement()
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-                //@formatter:on
-                // Add a filter to validate the tokens with every request
-                http.addFilterBefore(mockAuthenticationRequestFilter, UsernamePasswordAuthenticationFilter.class);
+            LOGGER.info("Enabling Mock Auth based HTTP Security.");
+            //@formatter:off
+            http
+                    .csrf().disable()
+                    .authorizeRequests()
+                    .antMatchers("/assets/**").permitAll()
+                    .antMatchers("/instances").permitAll()
+                    .antMatchers("/instances/*").permitAll()
+                    .antMatchers("/actuator/**").permitAll()
+                    .antMatchers("/auth/login").permitAll()
+                    .antMatchers("/swagger-ui/**").permitAll()
+                    .antMatchers("/swagger**").permitAll()
+                    .antMatchers("/v2/api-docs/**").permitAll()
+                    .antMatchers("/swagger-resources/configuration/**").permitAll()
+                    .antMatchers("/webjars/**").permitAll()
+                    .antMatchers("/api/signup/mobile").permitAll()
+                    .antMatchers("/api/signup/email").permitAll()
+                    .antMatchers("/api/otp").permitAll()
+                    .antMatchers("/api/invitation/joinqueue").permitAll()
+                    .antMatchers("/api/user/sync").authenticated()
+                    .antMatchers("/api/**").hasAnyRole("USER")
+                    .anyRequest().authenticated().and()
+                    .exceptionHandling()
+                    .authenticationEntryPoint(new MockAuthenticationEntryPoint()).and().sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            //@formatter:on
+            // Add a filter to validate the tokens with every request
+            http.addFilterBefore(mockAuthenticationRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         }
 

@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 //import static org.assertj.core.api.Assertions.assertThat;
 
-class ReloadlySecuredAppTests extends AbstractIntegrationTest{
+class ReloadlySecuredAppTests extends AbstractIntegrationTest {
 
     @Autowired
     private ApplicationContext context;

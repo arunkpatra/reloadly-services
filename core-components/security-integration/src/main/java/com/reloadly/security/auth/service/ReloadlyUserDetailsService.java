@@ -45,7 +45,7 @@ public class ReloadlyUserDetailsService implements UserDetailsService {
             user.setUid((String) decodedToken.getClaims().get("uid"));
             user.setIssuer((String) decodedToken.getClaims().get("issuer"));
             user.setAudience((String) decodedToken.getClaims().get("audience"));
-            user.setClaims((Map<String, Object>)decodedToken.getClaims().get("claims"));
+            user.setClaims((Map<String, Object>) decodedToken.getClaims().get("claims"));
         }
         return user;
     }

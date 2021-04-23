@@ -40,6 +40,7 @@ public class ReloadlyAuthServiceImpl implements ReloadlyAuth {
 
     static class AuthRequest {
         final String token;
+
         @JsonCreator
         public AuthRequest(String token) {
             this.token = token;
