@@ -1,0 +1,29 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: notification-service
+
+reloadly:
+  # Authentication
+  auth:
+    enabled: true
+    reloadly-auth-service-endpoint: http://localhost:9090
+
+  integration:
+    # Swagger UI Integration
+    swagger:
+      enabled: true
+      api-title: Reloadly Notification Services API
+      api-description: Reloadly Notification Services API
+      api-version: 1.0.0
+      base-url: /
+      host: localhost:9090
+      base-package: com.reloadly.notification.controller
+      api-terms-of-service-url: https://reloadly.com/termsofservice
+      license: Copyright api.com
+      license-url: https://reloadly.com/license
+      contact:
+        email: info@reloadly.com
+        name: Reloadly Customer Service
+        url: https://reloadly.com

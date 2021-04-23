@@ -1,0 +1,56 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: account-service
+  datasource:
+    continue-on-error: false
+    hikari:
+      connection-test-query: SELECT 1 FROM SYSIBM.SYSDUMMY1
+      maximum-pool-size: 50
+      minimum-idle: 10
+      pool-name: AcctSvcHikariPool
+    initialization-mode: embedded
+    name: rlacctdb
+    platform: derby
+    schema:
+      - classpath:account-services-schema-derby.sql
+    data:
+      - classpath:account-services-data-derby.sql
+    url: jdbc:derby:memory:rlacctdb;create=true
+    generate-unique-name: true
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        id:
+          new_generator_mappings: false
+        format_sql: true
+    show-sql: false
+    open-in-view: false
+
+reloadly:
+  # Authentication
+  auth:
+    enabled: true
+    reloadly-auth-service-endpoint: http://localhost:9090
+
+  integration:
+    # Swagger UI Integration
+    swagger:
+      enabled: true
+      api-title: Reloadly Account Services API
+      api-description: Reloadly Account Services API
+      api-version: 1.0.0
+      base-url: /
+      host: localhost:9090
+      base-package: com.reloadly.account.controller
+      api-terms-of-service-url: https://reloadly.com/termsofservice
+      license: Copyright api.com
+      license-url: https://reloadly.com/license
+      contact:
+        email: info@reloadly.com
+        name: Reloadly Customer Service
+        url: https://reloadly.com

@@ -1,0 +1,56 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: transaction-service
+  datasource:
+    continue-on-error: false
+    hikari:
+      connection-test-query: SELECT 1 FROM SYSIBM.SYSDUMMY1
+      maximum-pool-size: 50
+      minimum-idle: 10
+      pool-name: TxnSvcHikariPool
+    initialization-mode: embedded
+    name: rltxndb
+    platform: derby
+    schema:
+      - classpath:transaction-services-schema-derby.sql
+    data:
+      - classpath:transaction-services-data-derby.sql
+    url: jdbc:derby:memory:rltxndb;create=true
+    generate-unique-name: true
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        id:
+          new_generator_mappings: false
+        format_sql: true
+    show-sql: false
+    open-in-view: false
+
+reloadly:
+  # Authentication
+  auth:
+    enabled: true
+    reloadly-auth-service-endpoint: http://localhost:9090
+
+  integration:
+    # Swagger UI Integration
+    swagger:
+      enabled: true
+      api-title: Reloadly Transaction Services API
+      api-description: Reloadly Transaction Services API
+      api-version: 1.0.0
+      base-url: /
+      host: localhost:9090
+      base-package: com.reloadly.transaction.controller
+      api-terms-of-service-url: https://reloadly.com/termsofservice
+      license: Copyright api.com
+      license-url: https://reloadly.com/license
+      contact:
+        email: info@reloadly.com
+        name: Reloadly Customer Service
+        url: https://reloadly.com
