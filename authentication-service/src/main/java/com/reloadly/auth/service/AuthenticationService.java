@@ -19,7 +19,7 @@ public interface AuthenticationService {
      * @param username The username.
      * @param password The password in cleartext. Its is matched up with the encrypted password.
      * @return AuthenticationResponse If authentication succeeds, returns the token and other details.
-     * @throws UsernameNotFoundException If the username does not exist.
+     * @throws UsernameNotFoundException     If the username does not exist.
      * @throws AuthenticationFailedException If the username does not exist.
      */
     AuthenticationResponse authenticateUsingUsernamePassword(String username, String password)

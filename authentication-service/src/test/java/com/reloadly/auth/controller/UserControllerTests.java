@@ -19,7 +19,7 @@ public class UserControllerTests extends AbstractIntegrationTest {
     @Test
     @Transactional
     @Rollback
-    public void should_signup_valid_new_user() throws Exception{
+    public void should_signup_valid_new_user() throws Exception {
 
         // Setup
         UsernamePasswordSignupRequest request =

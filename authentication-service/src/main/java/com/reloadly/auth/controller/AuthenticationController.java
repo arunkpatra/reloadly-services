@@ -1,24 +1,31 @@
 package com.reloadly.auth.controller;
 
-import com.reloadly.auth.exception.*;
-import com.reloadly.auth.model.*;
+import com.reloadly.auth.exception.AuthenticationFailedException;
+import com.reloadly.auth.exception.TokenVerificationFailedException;
+import com.reloadly.auth.exception.UsernameNotFoundException;
+import com.reloadly.auth.model.AuthenticationResponse;
+import com.reloadly.auth.model.ErrorResponse;
+import com.reloadly.auth.model.TokenVerificationRequest;
+import com.reloadly.auth.model.UsernamePasswordAuthRequest;
 import com.reloadly.auth.service.AuthenticationService;
 import com.reloadly.auth.service.UserService;
 import com.reloadly.commons.exceptions.ReloadlyException;
 import com.reloadly.commons.model.ReloadlyAuthToken;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
-import java.util.HashMap;
 
 @RestController
 @CrossOrigin
 @Api(tags = {"Authentication"}, hidden = true, value = "Authentication Services")
-public class AuthenticationController extends AbstractRestController{
+public class AuthenticationController extends AbstractRestController {
 
     private final AuthenticationService authenticationService;
     private final UserService userService;
@@ -65,13 +72,13 @@ public class AuthenticationController extends AbstractRestController{
                     response = ErrorResponse.class)
     })
     @ResponseBody
-    @PostMapping(value = "/token/verify", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value = "/verify", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<ReloadlyAuthToken> verifyToken(@RequestBody TokenVerificationRequest request) throws ReloadlyException {
         try {
             ReloadlyAuthToken reloadlyAuthToken =
                     authenticationService.verifyToken(request.getToken());
             return new ResponseEntity<>(reloadlyAuthToken, HttpStatus.OK);
-        } catch (TokenVerificationFailedException  e) {
+        } catch (TokenVerificationFailedException e) {
             return new ResponseEntity<>(new ReloadlyAuthToken(Collections.singletonMap("sub", "unauthorized")), HttpStatus.UNAUTHORIZED);
         } catch (Exception e) {
             throw new ReloadlyException("An internal error has occurred", e);

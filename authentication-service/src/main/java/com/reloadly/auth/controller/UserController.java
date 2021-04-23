@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin
 @Api(tags = {"Users"}, hidden = true, value = "User Services")
-public class UserController extends AbstractRestController{
+public class UserController extends AbstractRestController {
 
     private final UserService userService;
 

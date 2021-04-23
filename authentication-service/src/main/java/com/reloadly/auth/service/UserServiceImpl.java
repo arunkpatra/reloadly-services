@@ -14,7 +14,7 @@ import org.springframework.util.Assert;
 import java.util.UUID;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UsernamePasswordCredentialsRepository usernamePasswordCredentialsRepository;
@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService{
             usernamePasswordCredentialsRepository.save(upce);
         } catch (Exception e) {
             throw new UsernameAlreadyTakenException(String.format("Failed to create UID. Original exception is %s",
-                    e.getMessage()),e);
+                    e.getMessage()), e);
         }
         return ue.getUid();
     }

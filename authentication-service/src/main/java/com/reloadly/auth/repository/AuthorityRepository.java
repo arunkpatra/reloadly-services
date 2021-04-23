@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-public interface AuthorityRepository extends CrudRepository<AuthorityEntity , Long> {
+public interface AuthorityRepository extends CrudRepository<AuthorityEntity, Long> {
 
     @Transactional(readOnly = true)
     List<AuthorityEntity> findAllByUid(String uid);

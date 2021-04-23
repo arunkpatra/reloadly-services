@@ -23,9 +23,13 @@ VALUES ('c1fe6f0d-420e-4161-a134-9c2342e36c95', 'ROLE_USER'),
 
 -- Encrypted password value is `password`
 INSERT INTO username_password_table(user_name, password, uid)
-VALUES ('reloadly', '$2a$10$OwuE74o7m2qCj7yTVgleGOhwuqrvbJZT2qwYCGtyUi6ITSjSqHEZy', 'c1fe6f0d-420e-4161-a134-9c2342e36c95'),
-       ('admin', '$2a$10$OwuE74o7m2qCj7yTVgleGOhwuqrvbJZT2qwYCGtyUi6ITSjSqHEZy', 'd273e6f9-bbf5-4126-bd7b-643ffc601291'),
-       ('inactiveuser', '$2a$10$OwuE74o7m2qCj7yTVgleGOhwuqrvbJZT2qwYCGtyUi6ITSjSqHEZy', 'f433e6f9-ccdd-e2d4-1278-643ffc601457'),
-       ('banneduser', '$2a$10$OwuE74o7m2qCj7yTVgleGOhwuqrvbJZT2qwYCGtyUi6ITSjSqHEZy', '2244d807-d77e-4e42-b81c-22f8b0f95632');
+VALUES ('reloadly', '$2a$10$OwuE74o7m2qCj7yTVgleGOhwuqrvbJZT2qwYCGtyUi6ITSjSqHEZy',
+        'c1fe6f0d-420e-4161-a134-9c2342e36c95'),
+       ('admin', '$2a$10$OwuE74o7m2qCj7yTVgleGOhwuqrvbJZT2qwYCGtyUi6ITSjSqHEZy',
+        'd273e6f9-bbf5-4126-bd7b-643ffc601291'),
+       ('inactiveuser', '$2a$10$OwuE74o7m2qCj7yTVgleGOhwuqrvbJZT2qwYCGtyUi6ITSjSqHEZy',
+        'f433e6f9-ccdd-e2d4-1278-643ffc601457'),
+       ('banneduser', '$2a$10$OwuE74o7m2qCj7yTVgleGOhwuqrvbJZT2qwYCGtyUi6ITSjSqHEZy',
+        '2244d807-d77e-4e42-b81c-22f8b0f95632');
 
 

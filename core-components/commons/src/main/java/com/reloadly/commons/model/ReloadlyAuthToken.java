@@ -1,6 +1,8 @@
 package com.reloadly.commons.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.util.Assert;
 
 import java.util.Map;
@@ -12,6 +14,7 @@ import java.util.Map;
  */
 public final class ReloadlyAuthToken {
 
+    @JsonProperty
     private final Map<String, Object> claims;
 
     @JsonCreator
@@ -21,17 +24,33 @@ public final class ReloadlyAuthToken {
         this.claims = claims;
     }
 
-    /** Returns the Uid for the this token. */
+    /**
+     * Returns the Uid for the this token.
+     */
+    @JsonGetter
     public String getUid() {
         return (String) claims.get("sub");
     }
 
-    /** Returns the Issuer for the this token. */
+    /**
+     * Returns the Issuer for the this token.
+     */
+    @JsonGetter
     public String getIssuer() {
         return (String) claims.get("iss");
     }
 
-    /** Returns a map of all of the claims on this token. */
+    /**
+     * Returns the Audience for the this token.
+     */
+    @JsonGetter
+    public String getAudience() {
+        return (String) claims.get("aud");
+    }
+
+    /**
+     * Returns a map of all of the claims on this token.
+     */
     public Map<String, Object> getClaims() {
         return this.claims;
     }

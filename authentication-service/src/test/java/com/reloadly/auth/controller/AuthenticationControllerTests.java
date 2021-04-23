@@ -24,7 +24,7 @@ public class AuthenticationControllerTests extends AbstractIntegrationTest {
     private AuthenticationServiceProperties properties;
 
     @Test
-    public void should_authenticate_valid_user_pass() throws Exception{
+    public void should_authenticate_valid_user_pass() throws Exception {
 
         // Setup
         UsernamePasswordAuthRequest request =
@@ -47,7 +47,7 @@ public class AuthenticationControllerTests extends AbstractIntegrationTest {
     }
 
     @Test
-    public void should_validate_valid_token() throws Exception{
+    public void should_validate_valid_token() throws Exception {
 
         // Setup
         String uid = "c1fe6f0d-420e-4161-a134-9c2342e36c95";
@@ -68,7 +68,7 @@ public class AuthenticationControllerTests extends AbstractIntegrationTest {
 
         // Act
         TokenVerificationRequest tvr = new TokenVerificationRequest(token);
-        mvcResult = mockMvc.perform(post("/token/verify")
+        mvcResult = mockMvc.perform(post("/verify")
                 .content(objectMapper.writeValueAsString(tvr))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -93,7 +93,7 @@ public class AuthenticationControllerTests extends AbstractIntegrationTest {
     }
 
     @Test
-    public void should_not_authenticate_invalid_pass() throws Exception{
+    public void should_not_authenticate_invalid_pass() throws Exception {
         // Setup
         UsernamePasswordAuthRequest request =
                 new UsernamePasswordAuthRequest("reloadly", "badpassword");
@@ -108,7 +108,7 @@ public class AuthenticationControllerTests extends AbstractIntegrationTest {
     }
 
     @Test
-    public void should_not_authenticate_non_existent_user() throws Exception{
+    public void should_not_authenticate_non_existent_user() throws Exception {
         // Setup
         UsernamePasswordAuthRequest request =
                 new UsernamePasswordAuthRequest("unknownuser", "badpassword");
