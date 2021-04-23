@@ -2,8 +2,6 @@ package com.reloadly.commons.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.util.Assert;
 
 import java.util.Map;
 
