@@ -20,6 +20,7 @@
         <module>notification-service</module>
         <module>authentication-service</module>
         <module>core-components</module>
+        <module>admin-service</module>
     </modules>
     <packaging>pom</packaging>
     <name>Reloadly Microservices Parent</name>
@@ -32,6 +33,7 @@
         <aws.sdk.version>2.16.29</aws.sdk.version>
         <springfox.swagger.version>3.0.0</springfox.swagger.version>
         <twilio.sdk.version>8.8.0</twilio.sdk.version>
+        <spring.boot.admin.version>2.4.1</spring.boot.admin.version>
     </properties>
 
     <dependencyManagement>
@@ -43,6 +45,18 @@
                 <version>${aws.sdk.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>${spring.boot.admin.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-client</artifactId>
+                <version>${spring.boot.admin.version}</version>
             </dependency>
 
             <dependency>

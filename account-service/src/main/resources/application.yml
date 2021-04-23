@@ -1,3 +1,16 @@
+management.metrics.tags.application: ${spring.application.name}
+management.metrics.distribution.percentiles-histogram.http.server.requests: true
+management.metrics.distribution.percentiles-histogram.resilience4j.circuitbreaker.calls: true
+management.endpoint.health.show-details: always
+management.health.diskspace.enabled: false
+management.endpoint.logfile.enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
 server:
   port: 8080
 spring:
@@ -30,15 +43,27 @@ spring:
         format_sql: true
     show-sql: false
     open-in-view: false
+  boot:
+    admin:
+      client:
+        auto-deregistration: true
+        auto-registration: true
+        enabled: true
+        instance:
+          metadata:
+            tags:
+              environment: localhost
+          name: ${spring.application.name}
+          prefer-ip: true
+          service-base-url: http://localhost:8080
+        url: http://localhost:9595
+
 
 reloadly:
-  # Authentication
   auth:
     enabled: true
     reloadly-auth-service-endpoint: http://localhost:9090
-
   integration:
-    # Swagger UI Integration
     swagger:
       enabled: true
       api-title: Reloadly Account Services API

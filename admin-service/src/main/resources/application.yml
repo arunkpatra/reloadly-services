@@ -1,0 +1,6 @@
+server.port: 9595
+spring.application.name: reloadly-admin
+spring.boot.admin.ui.title: Reloadly Admin
+#spring.boot.admin.ui.brand: <img src="icon-thingverse-light.svg"><span>Thingverse Admin</span>
+#spring.boot.admin.ui.favicon: favicon-128x128.png
+spring.boot.admin.ui.available-languages: de,en,fr,ru
