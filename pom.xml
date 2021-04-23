@@ -41,6 +41,30 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.reloadly</groupId>
+                <artifactId>security-integration</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.reloadly</groupId>
+                <artifactId>sms-integration</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.reloadly</groupId>
+                <artifactId>email-integration</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.twilio.sdk</groupId>
+                <artifactId>twilio</artifactId>
+                <version>8.8.0</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
