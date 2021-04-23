@@ -11,13 +11,13 @@ spring:
       minimum-idle: 10
       pool-name: AuthSvcHikariPool
     initialization-mode: embedded
-    name: rasdb
+    name: rlauthdb
     platform: derby
     schema:
       - classpath:auth-services-schema-derby.sql
     data:
       - classpath:auth-services-data-derby.sql
-    url: jdbc:derby:memory:authdb;create=true
+    url: jdbc:derby:memory:rlauthdb;create=true
     generate-unique-name: true
   jpa:
     generate-ddl: false
