@@ -14,6 +14,7 @@
         <module>email-integration</module>
         <module>security-integration</module>
         <module>commons</module>
+        <module>swagger-ui-integration</module>
     </modules>
     <artifactId>core-components</artifactId>
     <name>Core Components Parent</name>

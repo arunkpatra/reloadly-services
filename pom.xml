@@ -27,10 +27,11 @@
 
 
     <properties>
-        <java.version>1.8</java.version>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <aws.sdk.version>2.16.29</aws.sdk.version>
+        <springfox.swagger.version>3.0.0</springfox.swagger.version>
+        <twilio.sdk.version>8.8.0</twilio.sdk.version>
     </properties>
 
     <dependencyManagement>
@@ -47,6 +48,12 @@
             <dependency>
                 <groupId>com.reloadly</groupId>
                 <artifactId>commons</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.reloadly</groupId>
+                <artifactId>swagger-ui-integration</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -71,7 +78,7 @@
             <dependency>
                 <groupId>com.twilio.sdk</groupId>
                 <artifactId>twilio</artifactId>
-                <version>8.8.0</version>
+                <version>${twilio.sdk.version}</version>
             </dependency>
 
         </dependencies>
