@@ -1,0 +1,8 @@
+reloadly:
+  integration:
+    email:
+      ses:
+        enabled: true
+        region: ap-south-1
+        dry-run: true
+

@@ -13,8 +13,10 @@ spring:
     initialization-mode: embedded
     name: rasdb
     platform: derby
-    schema: classpath:schema-derby.sql
-    data: classpath:data-derby.sql
+    schema:
+      - classpath:auth-services-schema-derby.sql
+    data:
+      - classpath:auth-services-data-derby.sql
     url: jdbc:derby:memory:authdb;create=true
     generate-unique-name: true
   jpa:
