@@ -14,13 +14,10 @@ import java.util.Map;
  */
 public final class ReloadlyAuthToken {
 
-    @JsonProperty
     private final Map<String, Object> claims;
 
     @JsonCreator
     public ReloadlyAuthToken(Map<String, Object> claims) {
-        Assert.isTrue(claims.containsKey("sub"),
-                "Claims should contain the subject for the token to be valid");
         this.claims = claims;
     }
 
@@ -51,6 +48,7 @@ public final class ReloadlyAuthToken {
     /**
      * Returns a map of all of the claims on this token.
      */
+    @JsonGetter
     public Map<String, Object> getClaims() {
         return this.claims;
     }
