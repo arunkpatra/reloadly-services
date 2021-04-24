@@ -27,8 +27,10 @@ spring:
     name: rlacctdb
     platform: derby
     schema:
+      - classpath:auth-services-schema-derby.sql
       - classpath:account-services-schema-derby.sql
     data:
+      - classpath:auth-services-data-derby.sql
       - classpath:account-services-data-derby.sql
     url: jdbc:derby:memory:rlacctdb;create=true
     generate-unique-name: true
