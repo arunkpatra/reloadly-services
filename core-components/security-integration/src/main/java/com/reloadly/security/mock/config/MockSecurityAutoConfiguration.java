@@ -20,7 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(MockSecurityProperties.class)
-@ConditionalOnProperty(name = "meelu.security.mock.enabled")
+@ConditionalOnProperty(name = "reloadly.auth.mock.enabled")
 public class MockSecurityAutoConfiguration {
 
     @EnableWebSecurity

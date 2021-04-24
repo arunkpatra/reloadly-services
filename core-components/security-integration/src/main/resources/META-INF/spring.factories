@@ -1,3 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.reloadly.security.config.ReloadlyAuthAutoConfiguration
+com.reloadly.security.config.ReloadlyAuthAutoConfiguration,\
+com.reloadly.security.mock.config.MockSecurityAutoConfiguration
+
 
