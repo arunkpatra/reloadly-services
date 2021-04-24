@@ -33,7 +33,7 @@ public class AccountEntity extends AbstractPersistable<Long> implements Serializ
     private List<AddressEntity> addressEntities;
 
     @OneToOne
-    @JoinColumn(name = "account_balance_id")
+    @JoinColumn(name = "account_balance_id", referencedColumnName = "account_balance_id")
     private AccountBalanceEntity accountBalanceEntity;
 
     public Boolean getActive() {

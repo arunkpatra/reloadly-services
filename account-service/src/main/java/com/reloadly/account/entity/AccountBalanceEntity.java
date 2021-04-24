@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Table(name = "account_balance_table")
 public class AccountBalanceEntity extends AbstractPersistable<Long> implements Serializable {
 
-    @Column(name = "account_bal_uid")
+    @Column(name = "account_balance_id")
     private String acctBalanceUid;
 
     @Column(name = "account_balance")
