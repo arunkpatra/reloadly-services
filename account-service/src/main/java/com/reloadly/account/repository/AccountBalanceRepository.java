@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface AccountBalanceRepository extends CrudRepository<AccountBalanceEntity, Long> {
-    Optional<AccountBalanceEntity> findByAcctBalanceUid(String acctBalanceUid);
+    Optional<AccountBalanceEntity> findByAccountId(String accountId);
 }

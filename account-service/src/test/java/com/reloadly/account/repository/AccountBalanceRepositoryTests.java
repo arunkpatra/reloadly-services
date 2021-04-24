@@ -16,8 +16,8 @@ public class AccountBalanceRepositoryTests extends AbstractIntegrationTest {
 
     @Test
     public void should_find_account_bal_by_acct_bal_id() {
-        String acctBalanceUid = "d1fe6f0d-420e-4161-a134-9c2342e36c88";
-        Optional<AccountBalanceEntity> optAbe = accountBalanceRepository.findByAcctBalanceUid(acctBalanceUid);
+        String accountId = "f1fe6f0d-420e-4161-a134-9c2342e36c99";
+        Optional<AccountBalanceEntity> optAbe = accountBalanceRepository.findByAccountId(accountId);
         assertThat(optAbe.isPresent()).isTrue();
         assertThat(optAbe.get().getAccountBalance()).isEqualTo(200.5f);
     }

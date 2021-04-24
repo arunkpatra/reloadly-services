@@ -11,18 +11,18 @@ import java.io.Serializable;
 @Table(name = "account_balance_table")
 public class AccountBalanceEntity extends AbstractPersistable<Long> implements Serializable {
 
-    @Column(name = "account_balance_id")
-    private String acctBalanceUid;
+    @Column(name = "account_id")
+    private String accountId;
 
     @Column(name = "account_balance")
     private Float accountBalance;
 
-    public String getAcctBalanceUid() {
-        return acctBalanceUid;
+    public String getAccountId() {
+        return accountId;
     }
 
-    public void setAcctBalanceUid(String acctBalanceUid) {
-        this.acctBalanceUid = acctBalanceUid;
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
     }
 
     public Float getAccountBalance() {
