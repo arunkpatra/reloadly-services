@@ -25,6 +25,9 @@ public class AccountEntity extends AbstractPersistable<Long> implements Serializ
     @Column(name = "email")
     private String email;
 
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
     @Column(name = "currency_cd")
     private String currencyCode;
 
@@ -94,6 +97,14 @@ public class AccountEntity extends AbstractPersistable<Long> implements Serializ
 
     public AccountBalanceEntity getAccountBalanceEntity() {
         return accountBalanceEntity;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public void setAccountBalanceEntity(AccountBalanceEntity accountBalanceEntity) {

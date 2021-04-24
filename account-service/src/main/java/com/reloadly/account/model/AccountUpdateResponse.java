@@ -8,12 +8,15 @@ import io.swagger.annotations.ApiModelProperty;
 public class AccountUpdateResponse {
     @ApiModelProperty(value = "Successful", required = true, position = 1)
     private final Boolean successful;
-    @ApiModelProperty(value = "Message", position = 2)
+    @ApiModelProperty(value = "Account ID", position = 2)
+    private final String accountId;
+    @ApiModelProperty(value = "Message", position = 3)
     private final String message;
 
     @JsonCreator
-    public AccountUpdateResponse(Boolean successful, String message) {
+    public AccountUpdateResponse(Boolean successful, String accountId, String message) {
         this.successful = successful;
+        this.accountId = accountId;
         this.message = message;
     }
 
@@ -23,5 +26,9 @@ public class AccountUpdateResponse {
 
     public String getMessage() {
         return message;
+    }
+
+    public String getAccountId() {
+        return accountId;
     }
 }
