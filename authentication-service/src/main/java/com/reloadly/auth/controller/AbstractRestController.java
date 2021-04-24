@@ -14,7 +14,7 @@ public abstract class AbstractRestController {
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(ReloadlyException.class)
-    public ErrorResponse handleMeeluException(ReloadlyException e) {
+    public ErrorResponse handleReloadlyException(ReloadlyException e) {
         //e.printStackTrace();
         String message = "An error occurred";
         String errorDetail = extractMessage(e);
