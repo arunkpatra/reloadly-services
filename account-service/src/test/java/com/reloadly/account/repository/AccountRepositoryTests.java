@@ -2,6 +2,7 @@ package com.reloadly.account.repository;
 
 import com.reloadly.account.AbstractIntegrationTest;
 import com.reloadly.account.entity.AccountEntity;
+import com.reloadly.account.model.AddressType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,7 +23,8 @@ public class AccountRepositoryTests extends AbstractIntegrationTest {
         assertThat(account.isPresent()).isTrue();
         assertThat(account.get().getAccountBalanceEntity().getAccountBalance()).isEqualTo(200.5f);
         assertThat(account.get().getAddressEntities().size()).isEqualTo(1);
-
+        assertThat(account.get().getAddressEntities().get(0)).isNotNull();
+        assertThat(account.get().getAddressEntities().get(0).getAddressType()).isEqualTo(AddressType.BILLING);
     }
 
     @Test
@@ -30,5 +32,4 @@ public class AccountRepositoryTests extends AbstractIntegrationTest {
         String nonExistentAccountId = "e1fe6f0d-420e-4161-a134-9c2342e36c99";
         assertThat(accountRepository.findByAccountId(nonExistentAccountId).isPresent()).isFalse();
     }
-
 }

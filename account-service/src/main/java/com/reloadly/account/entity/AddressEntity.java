@@ -1,10 +1,9 @@
 package com.reloadly.account.entity;
 
+import com.reloadly.account.model.AddressType;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -31,6 +30,10 @@ public class AddressEntity extends AbstractPersistable<Long> implements Serializ
 
     @Column(name = "country")
     private String country;
+
+    @Column(name = "address_type")
+    @Enumerated(EnumType.STRING)
+    private AddressType addressType;
 
     public String getAddressLine1() {
         return addressLine1;
@@ -86,5 +89,13 @@ public class AddressEntity extends AbstractPersistable<Long> implements Serializ
 
     public void setAccountId(String accountId) {
         this.accountId = accountId;
+    }
+
+    public AddressType getAddressType() {
+        return addressType;
+    }
+
+    public void setAddressType(AddressType addressType) {
+        this.addressType = addressType;
     }
 }
