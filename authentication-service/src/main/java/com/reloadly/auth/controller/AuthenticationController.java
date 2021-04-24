@@ -4,7 +4,7 @@ import com.reloadly.auth.exception.AuthenticationFailedException;
 import com.reloadly.auth.exception.TokenVerificationFailedException;
 import com.reloadly.auth.exception.UsernameNotFoundException;
 import com.reloadly.auth.model.AuthenticationResponse;
-import com.reloadly.auth.model.ErrorResponse;
+import com.reloadly.commons.model.ErrorResponse;
 import com.reloadly.auth.model.TokenVerificationRequest;
 import com.reloadly.auth.model.UsernamePasswordAuthRequest;
 import com.reloadly.auth.service.AuthenticationService;

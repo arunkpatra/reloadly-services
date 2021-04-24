@@ -2,7 +2,7 @@ package com.reloadly.auth.controller;
 
 import com.reloadly.auth.exception.InvalidPasswordFormatException;
 import com.reloadly.auth.exception.UsernameAlreadyTakenException;
-import com.reloadly.auth.model.ErrorResponse;
+import com.reloadly.commons.model.ErrorResponse;
 import com.reloadly.auth.model.SignupResponse;
 import com.reloadly.auth.model.UsernamePasswordSignupRequest;
 import com.reloadly.auth.service.UserService;
