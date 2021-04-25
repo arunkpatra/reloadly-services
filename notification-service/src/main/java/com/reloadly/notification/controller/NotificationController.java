@@ -2,8 +2,9 @@ package com.reloadly.notification.controller;
 
 import com.reloadly.commons.exceptions.ReloadlyException;
 import com.reloadly.commons.model.ErrorResponse;
-import com.reloadly.notification.exception.NotificationException;
+import com.reloadly.commons.exceptions.NotificationException;
 import com.reloadly.commons.model.EmailRequest;
+import com.reloadly.commons.model.NotificationResponse;
 import com.reloadly.commons.model.SmsRequest;
 import com.reloadly.notification.service.NotificationService;
 import io.swagger.annotations.*;
@@ -31,14 +32,15 @@ public class NotificationController extends AbstractRestController {
             @ApiResponse(code = 500, message = "An internal error occurred.",
                     response = ErrorResponse.class)
     })
+    @ResponseBody
     @PostMapping(value = "/notification/email", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public <T> ResponseEntity<?> sendEMail(
+    public ResponseEntity<NotificationResponse> sendEMail(
             @ApiParam(name = "Account Creation Request", required = true) @RequestBody EmailRequest request) throws ReloadlyException {
         try {
             notificationService.sendEmail(request);
-            return new ResponseEntity<T>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(new NotificationResponse("Accepted"), HttpStatus.ACCEPTED);
         } catch (NotificationException e) {
-            return new ResponseEntity<T>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new NotificationResponse("Rejected"), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             throw new ReloadlyException("An internal error occurred. Root cause: ".concat(e.getMessage()), e);
         }
@@ -52,14 +54,15 @@ public class NotificationController extends AbstractRestController {
             @ApiResponse(code = 500, message = "An internal error occurred.",
                     response = ErrorResponse.class)
     })
+    @ResponseBody
     @PostMapping(value = "/notification/sms", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public <T> ResponseEntity<?> sendSMS(
+    public ResponseEntity<NotificationResponse> sendSMS(
             @ApiParam(name = "Account Creation Request", required = true) @RequestBody SmsRequest request) throws ReloadlyException {
         try {
             notificationService.sendSms(request);
-            return new ResponseEntity<T>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(new NotificationResponse("Accepted"), HttpStatus.ACCEPTED);
         } catch (NotificationException e) {
-            return new ResponseEntity<T>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new NotificationResponse("Rejected"), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             throw new ReloadlyException("An internal error occurred. Root cause: ".concat(e.getMessage()), e);
         }

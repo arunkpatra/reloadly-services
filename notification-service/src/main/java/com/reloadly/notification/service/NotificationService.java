@@ -1,6 +1,6 @@
 package com.reloadly.notification.service;
 
-import com.reloadly.notification.exception.NotificationException;
+import com.reloadly.commons.exceptions.NotificationException;
 import com.reloadly.commons.model.EmailRequest;
 import com.reloadly.commons.model.SmsRequest;
 

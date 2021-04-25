@@ -1,7 +1,7 @@
 package com.reloadly.notification.service;
 
 import com.reloadly.email.config.SesProperties;
-import com.reloadly.notification.exception.NotificationException;
+import com.reloadly.commons.exceptions.NotificationException;
 import com.reloadly.commons.model.EmailRequest;
 import com.reloadly.commons.model.SmsRequest;
 import com.reloadly.sms.exception.SMSProcessingException;

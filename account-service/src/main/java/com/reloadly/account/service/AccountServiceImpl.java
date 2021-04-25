@@ -9,6 +9,7 @@ import com.reloadly.account.model.*;
 import com.reloadly.account.repository.AccountBalanceRepository;
 import com.reloadly.account.repository.AccountRepository;
 import com.reloadly.account.repository.AddressRepository;
+import com.reloadly.autoconfig.notification.service.ReloadlyNotification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -17,14 +18,15 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class AccountServiceImpl implements AccountService {
+public class AccountServiceImpl extends AccountUpdateNotificationSupport implements AccountService {
 
     private final AccountRepository accountRepository;
     private final AccountBalanceRepository accountBalanceRepository;
     private final AddressRepository addressRepository;
 
     public AccountServiceImpl(AccountRepository accountRepository, AccountBalanceRepository accountBalanceRepository,
-                              AddressRepository addressRepository) {
+                              AddressRepository addressRepository, ReloadlyNotification notification) {
+        super(notification);
         this.accountRepository = accountRepository;
         this.accountBalanceRepository = accountBalanceRepository;
         this.addressRepository = addressRepository;
@@ -44,6 +46,8 @@ public class AccountServiceImpl implements AccountService {
     public AccountUpdateResponse updateAccount(String uid, AccountUpdateRequest request) throws AccountUpdatedException {
 
         try {
+            boolean newAccount = isNewAccount(uid);
+
             // Update base account details
             AccountEntity ae = updateBaseAccountDetails(uid, request);
 
@@ -52,6 +56,9 @@ public class AccountServiceImpl implements AccountService {
 
             // Update billing address
             saveBillingAddress(ae, request.getBillingAddress());
+
+            // Notify
+            sendAccountUpdateNotifications(ae, newAccount);
 
             return new AccountUpdateResponse(true, ae.getAccountId(), "Account update successful");
         } catch (Exception e) {
@@ -140,5 +147,9 @@ public class AccountServiceImpl implements AccountService {
             // save
             addressRepository.save(adr);
         }
+    }
+
+    private boolean isNewAccount(String uid) {
+        return accountRepository.findByUid(uid).isPresent();
     }
 }

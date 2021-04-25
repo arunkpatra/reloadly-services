@@ -60,6 +60,9 @@ spring:
 
 
 reloadly:
+  notification:
+    enabled: true
+    suppress: false
   auth:
     enabled: true
     reloadly-auth-service-endpoint: http://localhost:9090

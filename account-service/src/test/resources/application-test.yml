@@ -1,4 +1,7 @@
 reloadly:
+  notification:
+    enabled: true
+    suppress: true
   auth:
     mock:
       enabled: true

@@ -1,5 +1,6 @@
 package com.reloadly.notification.controller;
 
+import com.reloadly.commons.model.NotificationResponse;
 import com.reloadly.notification.AbstractIntegrationTest;
 import com.reloadly.commons.model.EmailRequest;
 import com.reloadly.commons.model.SmsRequest;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -20,8 +22,13 @@ public class NotificationControllerTests extends AbstractIntegrationTest {
         MvcResult mvcResult = mockMvc.perform(post("/notification/email")
                 .header("X-Mock-UID", testUid).content(objectMapper.writeValueAsString(request))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNoContent())
+                .andExpect(status().isAccepted())
                 .andReturn();
+
+        // Assert
+        NotificationResponse response =
+                objectMapper.readValue(mvcResult.getResponse().getContentAsString(), NotificationResponse.class);
+        assertThat(response.getMessage()).isEqualTo("Accepted");
     }
 
     @Test
@@ -32,7 +39,12 @@ public class NotificationControllerTests extends AbstractIntegrationTest {
         MvcResult mvcResult = mockMvc.perform(post("/notification/sms")
                 .header("X-Mock-UID", testUid).content(objectMapper.writeValueAsString(request))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNoContent())
+                .andExpect(status().isAccepted())
                 .andReturn();
+
+        // Assert
+        NotificationResponse response =
+                objectMapper.readValue(mvcResult.getResponse().getContentAsString(), NotificationResponse.class);
+        assertThat(response.getMessage()).isEqualTo("Accepted");
     }
 }

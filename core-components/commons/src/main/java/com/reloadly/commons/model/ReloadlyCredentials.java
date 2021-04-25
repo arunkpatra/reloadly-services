@@ -1,4 +1,4 @@
-package com.reloadly.security.model;
+package com.reloadly.commons.model;
 
 /**
  * A credentials object that wraps a reloadly issued JWT token. This is useful when a microservice wants to communicate

@@ -1,4 +1,4 @@
-package com.reloadly.notification.exception;
+package com.reloadly.commons.exceptions;
 
 import com.reloadly.commons.exceptions.ReloadlyException;
 
@@ -12,6 +12,10 @@ public class NotificationException extends ReloadlyException {
 
     public NotificationException(Exception e) {
         super(DEFAULT_MESSAGE, e);
+    }
+
+    public NotificationException(String msg) {
+        super(msg);
     }
 
     public NotificationException(String message, Exception e) {
