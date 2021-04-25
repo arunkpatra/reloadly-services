@@ -1,8 +1,8 @@
 package com.reloadly.notification.service;
 
 import com.reloadly.notification.exception.NotificationException;
-import com.reloadly.notification.model.EmailRequest;
-import com.reloadly.notification.model.SmsRequest;
+import com.reloadly.commons.model.EmailRequest;
+import com.reloadly.commons.model.SmsRequest;
 
 /**
  * Notification service to send emails and SMS.

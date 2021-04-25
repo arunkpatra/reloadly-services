@@ -1,4 +1,4 @@
-package com.reloadly.notification.model;
+package com.reloadly.commons.model;
 
 public class SmsRequest {
 

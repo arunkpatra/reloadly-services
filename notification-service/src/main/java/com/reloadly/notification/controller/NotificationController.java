@@ -2,10 +2,9 @@ package com.reloadly.notification.controller;
 
 import com.reloadly.commons.exceptions.ReloadlyException;
 import com.reloadly.commons.model.ErrorResponse;
-import com.reloadly.notification.controller.AbstractRestController;
 import com.reloadly.notification.exception.NotificationException;
-import com.reloadly.notification.model.EmailRequest;
-import com.reloadly.notification.model.SmsRequest;
+import com.reloadly.commons.model.EmailRequest;
+import com.reloadly.commons.model.SmsRequest;
 import com.reloadly.notification.service.NotificationService;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
