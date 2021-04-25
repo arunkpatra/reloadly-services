@@ -10,7 +10,7 @@ package com.reloadly.commons.model;
 public class ReloadlyCredentials {
 
 	public enum CredentialType {
-		RELOADLY_JWT_TOKEN, MOCK_UID
+		RELOADLY_JWT_TOKEN, MOCK_UID, API_KEY
 	}
 	private CredentialType type;
 	/**

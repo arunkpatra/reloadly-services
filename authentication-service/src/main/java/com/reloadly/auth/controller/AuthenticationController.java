@@ -1,8 +1,10 @@
 package com.reloadly.auth.controller;
 
+import com.reloadly.auth.exception.ApiKeyVerificationFailedException;
 import com.reloadly.auth.exception.AuthenticationFailedException;
 import com.reloadly.auth.exception.TokenVerificationFailedException;
 import com.reloadly.auth.exception.UsernameNotFoundException;
+import com.reloadly.auth.model.ApiKeyVerificationRequest;
 import com.reloadly.auth.model.AuthenticationResponse;
 import com.reloadly.commons.model.ErrorResponse;
 import com.reloadly.auth.model.TokenVerificationRequest;
@@ -10,6 +12,7 @@ import com.reloadly.auth.model.UsernamePasswordAuthRequest;
 import com.reloadly.auth.service.AuthenticationService;
 import com.reloadly.auth.service.UserService;
 import com.reloadly.commons.exceptions.ReloadlyException;
+import com.reloadly.commons.model.ReloadlyApiKeyIdentity;
 import com.reloadly.commons.model.ReloadlyAuthToken;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -72,7 +75,7 @@ public class AuthenticationController extends AbstractRestController {
                     response = ErrorResponse.class)
     })
     @ResponseBody
-    @PostMapping(value = "/verify", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value = "/verify/token", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<ReloadlyAuthToken> verifyToken(@RequestBody TokenVerificationRequest request) throws ReloadlyException {
         try {
             ReloadlyAuthToken reloadlyAuthToken =
@@ -80,6 +83,34 @@ public class AuthenticationController extends AbstractRestController {
             return new ResponseEntity<>(reloadlyAuthToken, HttpStatus.OK);
         } catch (TokenVerificationFailedException e) {
             return new ResponseEntity<>(new ReloadlyAuthToken(Collections.singletonMap("sub", "unauthorized")), HttpStatus.UNAUTHORIZED);
+        } catch (Exception e) {
+            throw new ReloadlyException("An internal error has occurred", e);
+        }
+    }
+
+    @ApiOperation(value = "Verify an API Key",
+            notes = "Verify an API Key", response = ReloadlyApiKeyIdentity.class,
+            produces = "application/json")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "API key verification successful",
+                    response = ReloadlyApiKeyIdentity.class),
+            @ApiResponse(code = 401, message = "API Key verification failed",
+                    response = ReloadlyAuthToken.class),
+            @ApiResponse(code = 500, message = "An internal error occurred.",
+                    response = ErrorResponse.class)
+    })
+    @ResponseBody
+    @PostMapping(value = "/verify/apikey", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<ReloadlyApiKeyIdentity> verifyApiKey(@RequestBody ApiKeyVerificationRequest request) throws ReloadlyException {
+        try {
+            ReloadlyApiKeyIdentity reloadlyApiKeyIdentity =
+                    authenticationService.verifyApiKey(request.getApiKey());
+            return new ResponseEntity<>(reloadlyApiKeyIdentity, HttpStatus.OK);
+        } catch (ApiKeyVerificationFailedException e) {
+            ReloadlyApiKeyIdentity id = new ReloadlyApiKeyIdentity();
+            id.setUid("");
+            id.setRoles(Collections.emptyList());
+            return new ResponseEntity<>(id, HttpStatus.UNAUTHORIZED);
         } catch (Exception e) {
             throw new ReloadlyException("An internal error has occurred", e);
         }

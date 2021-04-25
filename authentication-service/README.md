@@ -8,7 +8,7 @@ This microservice provides authentication related services.
   Implementing phone number/One Time Password(OTP) or Social Login are other possibilities. All such methods would be
   mere extensions to the current infrastructure.
 - `/signup` - Signup new users based on username/password. This is a self signup process.
-- `/verify` - Verify a Reloadly Authentication Service issued JWT token
+- `/verify/token` - Verify a Reloadly Authentication Service issued JWT token
 
 ## API
 
@@ -107,7 +107,7 @@ verified and decoded token back.
 
 #### Endpoint
 
-`/verify`
+`/verify/token`
 
 #### HTTP Method
 

@@ -1,9 +1,11 @@
 package com.reloadly.auth.service;
 
+import com.reloadly.auth.exception.ApiKeyVerificationFailedException;
 import com.reloadly.auth.exception.AuthenticationFailedException;
 import com.reloadly.auth.exception.TokenVerificationFailedException;
 import com.reloadly.auth.exception.UsernameNotFoundException;
 import com.reloadly.auth.model.AuthenticationResponse;
+import com.reloadly.commons.model.ReloadlyApiKeyIdentity;
 import com.reloadly.commons.model.ReloadlyAuthToken;
 
 /**
@@ -33,4 +35,15 @@ public interface AuthenticationService {
      * @throws TokenVerificationFailedException If token verification fails.
      */
     ReloadlyAuthToken verifyToken(String token) throws TokenVerificationFailedException;
+
+    /**
+     * Verifies an API key. API keys are meant to be granted to users and applications. It may be granted to service
+     * accounts as well. Service accounts are needed for threads which are not user initiated.
+     *
+     * @param apiKey The API key
+     * @return A translated API key. The {@link ReloadlyApiKeyIdentity} wraps a user or a service account and the roles attached
+     * to it.
+     * @throws ApiKeyVerificationFailedException If verification fails
+     */
+    ReloadlyApiKeyIdentity verifyApiKey(String apiKey) throws ApiKeyVerificationFailedException;
 }

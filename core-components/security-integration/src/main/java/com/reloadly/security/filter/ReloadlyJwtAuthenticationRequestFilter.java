@@ -18,13 +18,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class ReloadlyAuthenticationRequestFilter extends OncePerRequestFilter {
+public class ReloadlyJwtAuthenticationRequestFilter extends OncePerRequestFilter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReloadlyAuthenticationRequestFilter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReloadlyJwtAuthenticationRequestFilter.class);
 
     private final UserDetailsService userDetailsService;
 
-    public ReloadlyAuthenticationRequestFilter(UserDetailsService userDetailsService) {
+    public ReloadlyJwtAuthenticationRequestFilter(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
@@ -38,7 +38,7 @@ public class ReloadlyAuthenticationRequestFilter extends OncePerRequestFilter {
     private void verifyToken(HttpServletRequest request) {
         String token = getBearerToken(request);
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Firebase Auth IdToken: {}", token);
+            LOGGER.debug("Reloadly Auth IdToken: {}", token);
         }
         try {
             if (token != null) {

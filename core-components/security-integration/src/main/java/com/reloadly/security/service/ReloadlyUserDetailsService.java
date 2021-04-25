@@ -29,7 +29,7 @@ public class ReloadlyUserDetailsService implements UserDetailsService {
         try {
             if (token != null) {
                 ReloadlyAuthToken decodedToken = reloadlyAuth.verifyToken(token);
-                user = getFirebaseUserFromDecodedToken(decodedToken);
+                user = getReloadlyUserFromDecodedToken(decodedToken);
             }
         } catch (ReloadlyAuthException e) {
             LOGGER.error("Reloadly Auth Exception: {}", e.getMessage());
@@ -38,7 +38,7 @@ public class ReloadlyUserDetailsService implements UserDetailsService {
         return user;
     }
 
-    private ReloadlyUserDetails getFirebaseUserFromDecodedToken(ReloadlyAuthToken decodedToken) {
+    private ReloadlyUserDetails getReloadlyUserFromDecodedToken(ReloadlyAuthToken decodedToken) {
         ReloadlyUserDetails user = null;
         if (decodedToken != null) {
             user = new ReloadlyUserDetails();
@@ -48,14 +48,5 @@ public class ReloadlyUserDetailsService implements UserDetailsService {
             user.setClaims((Map<String, Object>) decodedToken.getClaims().get("claims"));
         }
         return user;
-    }
-
-    private String getBearerToken(HttpServletRequest request) {
-        String bearerToken = null;
-        String authorization = request.getHeader("Authorization");
-        if (StringUtils.hasText(authorization) && authorization.startsWith("Bearer ")) {
-            bearerToken = authorization.substring(7);
-        }
-        return bearerToken;
     }
 }

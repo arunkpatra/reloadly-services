@@ -89,6 +89,8 @@ public class ReloadlyNotificationImpl implements ReloadlyNotification {
             case RELOADLY_JWT_TOKEN:
                 headers.set("Authorization", "Bearer " + credentials.getCredentials());
                 break;
+            case API_KEY:
+                headers.set("RELOADLY-API-KEY", credentials.getCredentials());
             case MOCK_UID:
                 headers.set("X-Mock-UID", credentials.getCredentials());
                 break;

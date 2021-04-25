@@ -39,8 +39,8 @@ public class AccountController extends AbstractRestController{
     @ResponseBody
     @PostMapping(value = "/account/{uid}", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<AccountUpdateResponse> createAccount(
-            @ApiParam(name = "Account Creation Request", required = true) @RequestBody AccountUpdateRequest  request,
-            @ApiParam(name = "UID of the user", required = true) @PathVariable(name = "uid")String uid) throws ReloadlyException {
+             @RequestBody AccountUpdateRequest  request,
+             @PathVariable(name = "uid")String uid) throws ReloadlyException {
         try {
             return new ResponseEntity<>(accountService.updateAccount(uid, request), HttpStatus.CREATED);
         } catch (AccountUpdatedException e) {
@@ -65,8 +65,8 @@ public class AccountController extends AbstractRestController{
     @ResponseBody
     @PutMapping(value = "/account/{uid}", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<AccountUpdateResponse> updateAccount(
-            @ApiParam(name = "Account Creation Request", required = true) @RequestBody AccountUpdateRequest  request,
-            @ApiParam(name = "UID of the user", required = true) @PathVariable(name = "uid")String uid) throws ReloadlyException {
+             @RequestBody AccountUpdateRequest  request,
+             @PathVariable(name = "uid")String uid) throws ReloadlyException {
         try {
             return new ResponseEntity<>(accountService.updateAccount(uid, request), HttpStatus.OK);
         } catch (AccountUpdatedException e) {
@@ -91,7 +91,7 @@ public class AccountController extends AbstractRestController{
     @ResponseBody
     @GetMapping(value = "/account/{uid}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<AccountDetails> getAccountDetails(
-            @ApiParam(name = "UID of the user", required = true) @PathVariable(name = "uid")String uid) throws ReloadlyException {
+            @PathVariable(name = "uid")String uid) throws ReloadlyException {
         try {
             return new ResponseEntity<>(accountService.getAccountDetails(uid), HttpStatus.OK);
         } catch (AccountNotFoundException e) {

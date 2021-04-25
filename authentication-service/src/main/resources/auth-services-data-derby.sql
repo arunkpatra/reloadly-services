@@ -33,3 +33,6 @@ VALUES ('reloadly', '$2a$10$OwuE74o7m2qCj7yTVgleGOhwuqrvbJZT2qwYCGtyUi6ITSjSqHEZ
         '2244d807-d77e-4e42-b81c-22f8b0f95632');
 
 
+INSERT INTO api_key_table(uid, api_key, active)
+VALUES ('c1fe6f0d-420e-4161-a134-9c2342e36c95', 'd3fe6f0d-120e-4161-a134-8c2342e36ca6', true),
+       ('c1fe6f0d-420e-4161-a134-9c2342e36c95', 'b2fe6f0a-120e-1234-a134-8c2342e36c72', true);
