@@ -19,8 +19,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka-streams</artifactId>
+            <groupId>com.reloadly</groupId>
+            <artifactId>transaction-common</artifactId>
         </dependency>
 
         <dependency>

@@ -22,6 +22,7 @@
         <module>core-components</module>
         <module>transaction-processor</module>
         <module>admin-service</module>
+        <module>transaction-common</module>
     </modules>
     <packaging>pom</packaging>
     <name>Reloadly Microservices Parent</name>
@@ -94,6 +95,18 @@
                 <groupId>com.twilio.sdk</groupId>
                 <artifactId>twilio</artifactId>
                 <version>${twilio.sdk.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.reloadly</groupId>
+                <artifactId>transaction-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.reloadly</groupId>
+                <artifactId>transaction-processor</artifactId>
+                <version>${project.version}</version>
             </dependency>
 
         </dependencies>
