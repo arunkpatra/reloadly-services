@@ -27,7 +27,7 @@ public class AccountController extends AbstractRestController{
 
     @ApiOperation(value = "Create a new account",
             notes = "Create a new account", response = AccountUpdateResponse.class,
-            produces = "application/json")
+            produces = "application/json", authorizations = {@Authorization(value = "Access Token")})
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Account created",
                     response = AccountUpdateResponse.class),
@@ -53,7 +53,7 @@ public class AccountController extends AbstractRestController{
 
     @ApiOperation(value = "Update Account",
             notes = "Update Account", response = AccountUpdateResponse.class,
-            produces = "application/json")
+            produces = "application/json", authorizations = {@Authorization(value = "Access Token")})
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Account updated",
                     response = AccountUpdateResponse.class),
@@ -79,7 +79,7 @@ public class AccountController extends AbstractRestController{
 
     @ApiOperation(value = "Get Account details",
             notes = "Get Account details", response = AccountDetails.class,
-            produces = "application/json")
+            produces = "application/json", authorizations = {@Authorization(value = "Access Token")})
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Account details found",
                     response = AccountDetails.class),
