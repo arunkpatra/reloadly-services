@@ -14,7 +14,7 @@ public class ReloadlyAuthProperties {
     private boolean enabled;
 
     /**
-     * Base64 encoded contents of Google Application Credentials file.
+     * Reloadly auth service endpoint..
      */
     private String reloadlyAuthServiceEndpoint;
 
