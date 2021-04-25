@@ -1,9 +1,9 @@
 package com.reloadly.security.config;
 
-import com.reloadly.security.auth.ReloadlyAuthenticationRequestFilter;
-import com.reloadly.security.auth.service.ReloadlyAuth;
-import com.reloadly.security.auth.service.ReloadlyAuthServiceImpl;
-import com.reloadly.security.auth.service.ReloadlyUserDetailsService;
+import com.reloadly.security.filter.ReloadlyAuthenticationRequestFilter;
+import com.reloadly.security.service.ReloadlyAuth;
+import com.reloadly.security.service.ReloadlyAuthServiceImpl;
+import com.reloadly.security.service.ReloadlyUserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

@@ -1,9 +1,10 @@
-package com.reloadly.security.auth.service;
+package com.reloadly.security.service;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.reloadly.commons.model.ReloadlyAuthToken;
 import com.reloadly.security.config.ReloadlyAuthProperties;
 import com.reloadly.security.exception.ReloadlyAuthException;
+import com.reloadly.security.service.ReloadlyAuth;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestClientException;

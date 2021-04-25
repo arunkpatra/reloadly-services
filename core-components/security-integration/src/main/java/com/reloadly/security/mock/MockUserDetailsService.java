@@ -1,6 +1,6 @@
 package com.reloadly.security.mock;
 
-import com.reloadly.security.auth.model.ReloadlyUserDetails;
+import com.reloadly.security.model.ReloadlyUserDetails;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

@@ -1,7 +1,7 @@
-package com.reloadly.security.auth.service;
+package com.reloadly.security.service;
 
 import com.reloadly.commons.model.ReloadlyAuthToken;
-import com.reloadly.security.auth.model.ReloadlyUserDetails;
+import com.reloadly.security.model.ReloadlyUserDetails;
 import com.reloadly.security.exception.ReloadlyAuthException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,6 +1,6 @@
 package com.reloadly.transaction.service;
 
-import com.reloadly.security.auth.model.ReloadlyUserDetails;
+import com.reloadly.security.model.ReloadlyUserDetails;
 import com.reloadly.transaction.config.TransactionServiceProperties;
 import com.reloadly.transaction.entity.TransactionEntity;
 import com.reloadly.transaction.exception.ReloadlyTxnException;

@@ -1,6 +1,6 @@
-package com.reloadly.security.auth;
+package com.reloadly.security.filter;
 
-import com.reloadly.security.auth.model.ReloadlyCredentials;
+import com.reloadly.security.model.ReloadlyCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
