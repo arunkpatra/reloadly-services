@@ -1,7 +1,8 @@
-package com.reloadly.notification.controlller;
+package com.reloadly.notification.controller;
 
 import com.reloadly.commons.exceptions.ReloadlyException;
 import com.reloadly.commons.model.ErrorResponse;
+import com.reloadly.notification.controller.AbstractRestController;
 import com.reloadly.notification.exception.NotificationException;
 import com.reloadly.notification.model.EmailRequest;
 import com.reloadly.notification.model.SmsRequest;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin
 @Api(tags = {"Notification"}, hidden = true, value = "Notification Services")
-public class NotificationController extends AbstractRestController{
+public class NotificationController extends AbstractRestController {
 
     private final NotificationService notificationService;
 
@@ -24,7 +25,7 @@ public class NotificationController extends AbstractRestController{
     }
 
     @ApiOperation(value = "Send an email",
-            notes = "Send an email")
+            notes = "Send an email", authorizations = {@Authorization(value = "Access Token")})
     @ApiResponses(value = {
             @ApiResponse(code = 204, message = "Request accepted"),
             @ApiResponse(code = 400, message = "Bad request"),
@@ -45,7 +46,7 @@ public class NotificationController extends AbstractRestController{
     }
 
     @ApiOperation(value = "Send a SMS",
-            notes = "Send an email")
+            notes = "Send an email", authorizations = {@Authorization(value = "Access Token")})
     @ApiResponses(value = {
             @ApiResponse(code = 204, message = "Request accepted"),
             @ApiResponse(code = 400, message = "Bad request"),

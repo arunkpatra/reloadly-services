@@ -1,4 +1,4 @@
-package com.reloadly.notification.controlller;
+package com.reloadly.notification.controller;
 
 import com.reloadly.commons.exceptions.ReloadlyException;
 import com.reloadly.commons.model.ErrorResponse;

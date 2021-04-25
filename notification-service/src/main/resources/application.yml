@@ -50,6 +50,7 @@ reloadly:
         dry-run: true
     swagger:
       enabled: true
+      secured: true
       api-title: Reloadly Notification Services API
       api-description: Reloadly Notification Services API
       api-version: 1.0.0
