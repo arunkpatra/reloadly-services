@@ -30,13 +30,13 @@ public class ReloadlyAuthAutoConfiguration {
     @EnableWebSecurity
     @EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
     @ConditionalOnProperty(name = {"reloadly.auth.enabled"}, matchIfMissing = true)
-    public static class FirebaseWebSecurityConfig extends WebSecurityConfigurerAdapter {
+    public static class ReloadlyAuthWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-        private static final Logger LOGGER = LoggerFactory.getLogger(FirebaseWebSecurityConfig.class);
+        private static final Logger LOGGER = LoggerFactory.getLogger(ReloadlyAuthWebSecurityConfig.class);
 
         private final ReloadlyAuthenticationRequestFilter reloadlyJwtRequestFilter;
 
-        public FirebaseWebSecurityConfig(ReloadlyAuthenticationRequestFilter reloadlyJwtRequestFilter) {
+        public ReloadlyAuthWebSecurityConfig(ReloadlyAuthenticationRequestFilter reloadlyJwtRequestFilter) {
             this.reloadlyJwtRequestFilter = reloadlyJwtRequestFilter;
         }
 
