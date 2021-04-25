@@ -13,6 +13,10 @@ public class SwaggerUiProperties {
      */
     private boolean enabled = true;
     /**
+     * Do we need to use security headers?
+     */
+    private boolean secured = false;
+    /**
      * The API base URL
      */
     private String baseUrl = "/";
@@ -140,5 +144,13 @@ public class SwaggerUiProperties {
 
     public void setHost(String host) {
         this.host = host;
+    }
+
+    public boolean isSecured() {
+        return secured;
+    }
+
+    public void setSecured(boolean secured) {
+        this.secured = secured;
     }
 }
