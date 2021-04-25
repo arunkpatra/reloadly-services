@@ -44,11 +44,6 @@
 
         <dependency>
             <groupId>com.reloadly</groupId>
-            <artifactId>notification-integration</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.reloadly</groupId>
             <artifactId>swagger-ui-integration</artifactId>
         </dependency>
 
