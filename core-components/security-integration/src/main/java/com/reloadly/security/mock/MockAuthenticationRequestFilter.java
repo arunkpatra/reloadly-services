@@ -1,5 +1,6 @@
 package com.reloadly.security.mock;
 
+import com.reloadly.security.auth.model.ReloadlyCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -44,7 +45,9 @@ public class MockAuthenticationRequestFilter extends OncePerRequestFilter {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(uid);
                 if (userDetails != null) {
                     UsernamePasswordAuthenticationToken authentication =
-                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                            new UsernamePasswordAuthenticationToken(userDetails,
+                                    getCredentials(ReloadlyCredentials.CredentialType.MOCK_UID, uid),
+                                    userDetails.getAuthorities());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
@@ -61,5 +64,12 @@ public class MockAuthenticationRequestFilter extends OncePerRequestFilter {
             mockUid = value;
         }
         return mockUid;
+    }
+
+    private ReloadlyCredentials getCredentials(ReloadlyCredentials.CredentialType credentialType, String credential) {
+        ReloadlyCredentials credentials = new ReloadlyCredentials();
+        credentials.setType(credentialType);
+        credentials.setCredentials(credential);
+        return credentials;
     }
 }

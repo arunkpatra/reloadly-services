@@ -1,5 +1,6 @@
 package com.reloadly.security.auth;
 
+import com.reloadly.security.auth.model.ReloadlyCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -44,7 +45,8 @@ public class ReloadlyAuthenticationRequestFilter extends OncePerRequestFilter {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(token);
                 if (userDetails != null) {
                     UsernamePasswordAuthenticationToken authentication =
-                            new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(),
+                            new UsernamePasswordAuthenticationToken(userDetails,
+                                    getCredentials(ReloadlyCredentials.CredentialType.RELOADLY_JWT_TOKEN, token),
                                     userDetails.getAuthorities());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -64,4 +66,10 @@ public class ReloadlyAuthenticationRequestFilter extends OncePerRequestFilter {
         return bearerToken;
     }
 
+    private ReloadlyCredentials getCredentials(ReloadlyCredentials.CredentialType credentialType, String credential) {
+        ReloadlyCredentials credentials = new ReloadlyCredentials();
+        credentials.setType(credentialType);
+        credentials.setCredentials(credential);
+        return credentials;
+    }
 }
