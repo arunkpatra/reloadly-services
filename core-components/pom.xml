@@ -15,6 +15,7 @@
         <module>security-integration</module>
         <module>commons</module>
         <module>swagger-ui-integration</module>
+        <module>notification-integration</module>
     </modules>
     <artifactId>core-components</artifactId>
     <name>Core Components Parent</name>
