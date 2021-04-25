@@ -1,4 +1,10 @@
+spring.kafka.bootstrap-servers: localhost:8092
+
 reloadly:
+  api:
+    transaction:
+      kafka:
+        inbound-transactions-topic: com.reloadly.inbound.txn.topic
   auth:
     enabled: false
     mock:

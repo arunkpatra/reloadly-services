@@ -13,6 +13,12 @@
     <name>Transaction Microservice</name>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.reloadly</groupId>
             <artifactId>commons</artifactId>
@@ -80,6 +86,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka-test</artifactId>
+<!--            <scope>test</scope>-->
+        </dependency>
+
     </dependencies>
 
     <build>
