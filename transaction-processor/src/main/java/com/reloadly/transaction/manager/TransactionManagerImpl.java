@@ -35,7 +35,11 @@ public class TransactionManagerImpl implements TransactionManager, InitializingB
      */
     @Override
     public void afterPropertiesSet() throws Exception {
+
+        System.out.println("hello!");
         // Find out all beans available.
+        Map<String, Object> myMap = context.getBeansWithAnnotation(TransactionHandler.class);
+
         context.getBeansWithAnnotation(TransactionHandler.class).entrySet().stream()
                 .filter(e -> (e.getValue() instanceof TransactionProcessor))
                 .forEach(e -> {
@@ -51,13 +55,17 @@ public class TransactionManagerImpl implements TransactionManager, InitializingB
     @Transactional
     public void handleTransaction(TransactionEntity txnEntity) throws ReloadlyTxnProcessingException {
         if (txnProcessorMap.containsKey(txnEntity.getTransactionType().name())) {
-            txnProcessorMap.get(txnEntity.getTransactionType().name()).handleTransaction(txnEntity);
+            try {
+                txnProcessorMap.get(txnEntity.getTransactionType().name()).handleTransaction(txnEntity);
+            } catch (Exception e) {
+                LOGGER.info("Transaction processor has failed. Root cause: " + e.getMessage());
+                throw e;
+            }
         } else {
             LOGGER.error("No Transaction processor found to handle transactions of type {}.",
                     txnEntity.getTransactionType().name());
-            throw new ReloadlyTxnProcessingException(
-                    String.format("No Transaction processor found to handle transactions of type %s.",
-                            txnEntity.getTransactionType().name()));
+            throw new ReloadlyTxnProcessingException("No Transaction processor found to handle transactions of type {}." +
+                    txnEntity.getTransactionType().name());
         }
     }
 

@@ -12,6 +12,11 @@ public class TransactionProcessorProperties {
      * The service account API key.
      */
     private String svcAccountApiKey = "";
+
+    /**
+     * Account service endpoint.
+     */
+    private String reloadlyAccountServiceEndpoint = "http://localhost:8080";
     /**
      * Kafka properties.
      */
@@ -32,5 +37,13 @@ public class TransactionProcessorProperties {
 
     public void setSvcAccountApiKey(String svcAccountApiKey) {
         this.svcAccountApiKey = svcAccountApiKey;
+    }
+
+    public String getReloadlyAccountServiceEndpoint() {
+        return reloadlyAccountServiceEndpoint;
+    }
+
+    public void setReloadlyAccountServiceEndpoint(String reloadlyAccountServiceEndpoint) {
+        this.reloadlyAccountServiceEndpoint = reloadlyAccountServiceEndpoint;
     }
 }

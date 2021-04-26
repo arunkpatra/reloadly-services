@@ -63,6 +63,7 @@ reloadly:
   notification:
     enabled: true
     suppress: false
+    reloadly-notification-service-endpoint: http://localhost:8082
   auth:
     enabled: true
     reloadly-auth-service-endpoint: http://localhost:9090

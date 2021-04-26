@@ -34,4 +34,6 @@ public interface AccountService {
 
 
     AccountDebitResponse debitAccountBalance(String uid, AccountDebitRequest request) throws AccountBalanceException;
+
+    AccountInfo getAccountInfo(String uid) throws AccountNotFoundException;;
 }

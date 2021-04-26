@@ -138,4 +138,18 @@ public class AccountController extends AbstractRestController{
             throw new ReloadlyException("An error occurred. Root Cause: ".concat(e.getMessage()), e);
         }
     }
+
+    @ResponseBody
+    @GetMapping(value = "/account/info/{uid}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<AccountInfo> getAccountInfo(
+            @PathVariable(name = "uid")String uid) throws ReloadlyException {
+        try {
+            return new ResponseEntity<>(accountService.getAccountInfo(uid), HttpStatus.OK);
+        } catch (AccountNotFoundException e) {
+            return new ResponseEntity<>(new AccountInfo(null, null, null),
+                    HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            throw new ReloadlyException("An error occurred. Root cause: " + e.getMessage(), e);
+        }
+    }
 }

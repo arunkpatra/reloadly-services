@@ -80,13 +80,8 @@ public class AccountServiceImpl extends AccountUpdateNotificationSupport impleme
     @Override
     public AccountDetails getAccountDetails(String uid) throws AccountNotFoundException {
         Assert.notNull(uid, "UID can not be null");
-        Optional<AccountEntity> aeOptional = accountRepository.findByUid(uid);
+        AccountEntity ae = accountRepository.findByUid(uid).orElseThrow(() -> new AccountNotFoundException("Account not found for user"));
 
-        if (!aeOptional.isPresent()) {
-            throw new AccountNotFoundException();
-        }
-
-        AccountEntity ae = aeOptional.get();
         AccountInfo accountInfo = new AccountInfo(ae.getName(), ae.getEmail(), ae.getPhoneNumber());
         AccountBalance accountBalance = new AccountBalance(ae.getAccountBalanceEntity().getAccountBalance(), ae.getCurrencyCode());
         Address billingAddress = null;
@@ -99,12 +94,11 @@ public class AccountServiceImpl extends AccountUpdateNotificationSupport impleme
         return new AccountDetails(ae.getAccountId(), accountInfo, accountBalance, billingAddress);
     }
 
-    private AccountEntity getAccountEntity(String uid) throws AccountBalanceException {
-        return accountRepository.findByUid(uid).orElseThrow(() -> new AccountBalanceException("Account not found for user"));
-    }
-
-    private AccountBalanceEntity getAccountBalanceEntity(String accountId) throws AccountBalanceException {
-        return accountBalanceRepository.findByAccountId(accountId).orElseThrow(() -> new AccountBalanceException("Account balance record not found"));
+    @Override
+    public AccountInfo getAccountInfo(String uid) throws AccountNotFoundException {
+        Assert.notNull(uid, "UID can not be null");
+        AccountEntity ae = accountRepository.findByUid(uid).orElseThrow(() -> new AccountNotFoundException("Account not found for user"));
+        return new AccountInfo(ae.getName(), ae.getEmail(), ae.getPhoneNumber());
     }
 
     @Override
@@ -152,6 +146,14 @@ public class AccountServiceImpl extends AccountUpdateNotificationSupport impleme
             throw new AccountBalanceException("failed to credit transaction. Root cause: ".concat(e.getMessage()), e);
         }
         return new AccountDebitResponse(true, "Account successfully credited");
+    }
+
+    private AccountEntity getAccountEntity(String uid) throws AccountBalanceException {
+        return accountRepository.findByUid(uid).orElseThrow(() -> new AccountBalanceException("Account not found for user"));
+    }
+
+    private AccountBalanceEntity getAccountBalanceEntity(String accountId) throws AccountBalanceException {
+        return accountBalanceRepository.findByAccountId(accountId).orElseThrow(() -> new AccountBalanceException("Account balance record not found"));
     }
 
     private AccountEntity updateBaseAccountDetails(String uid, AccountUpdateRequest request) {

@@ -27,7 +27,7 @@ public class TransactionProcessorServiceImpl  implements TransactionProcessorSer
     }
 
     @KafkaListener(topics = "com.reloadly.inbound.txn.topic", groupId = "inboundTxnProcessingConsumerGrp")
-    public void processInboundTransaction(String txnId) throws ReloadlyTxnProcessingException {
+    public void processInboundTransaction(String txnId) {
         Assert.notNull(txnId, "Transaction ID can not be null");
         LOGGER.info("Inbound Transaction received. Txn ID: {}", txnId);
 
@@ -47,7 +47,10 @@ public class TransactionProcessorServiceImpl  implements TransactionProcessorSer
         }
 
         // Delegate to the transaction manager
-        transactionManager.handleTransaction(txnEntity);
-
+        try {
+            transactionManager.handleTransaction(txnEntity);
+        } catch (ReloadlyTxnProcessingException e) {
+            LOGGER.error("Error while processing transaction with txnID: {}. Root Cause: {}", txnId, e.getMessage());
+        }
     }
 }

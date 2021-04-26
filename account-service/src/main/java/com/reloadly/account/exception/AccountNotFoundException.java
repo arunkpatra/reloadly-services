@@ -14,6 +14,10 @@ public class AccountNotFoundException extends ReloadlyException {
         super(DEFAULT_MESSAGE, e);
     }
 
+    public AccountNotFoundException(String message) {
+        super(message);
+    }
+
     public AccountNotFoundException(String message, Exception e) {
         super(message, e);
     }

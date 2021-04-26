@@ -61,8 +61,13 @@ spring:
         url: http://localhost:9595
 
 reloadly:
+  notification:
+    enabled: true
+    suppress: false
+    reloadly-notification-service-endpoint: http://localhost:8082
   api:
     transaction:
       processor:
+        svc-account-api-key: d3fe6f0d-120e-4161-a134-8c2342e36ca6
         kafka:
           inbound-transactions-topic: com.reloadly.inbound.txn.topic
