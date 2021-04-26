@@ -1,10 +1,9 @@
 package com.reloadly.account.controller;
 
+import com.reloadly.account.exception.AccountBalanceException;
 import com.reloadly.account.exception.AccountNotFoundException;
 import com.reloadly.account.exception.AccountUpdatedException;
-import com.reloadly.account.model.AccountDetails;
-import com.reloadly.account.model.AccountUpdateResponse;
-import com.reloadly.account.model.AccountUpdateRequest;
+import com.reloadly.account.model.*;
 import com.reloadly.account.service.AccountService;
 import com.reloadly.commons.exceptions.ReloadlyException;
 import com.reloadly.commons.model.ErrorResponse;
@@ -99,6 +98,44 @@ public class AccountController extends AbstractRestController{
                     HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             throw new ReloadlyException("An error occurred. Root cause: " + e.getMessage(), e);
+        }
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/account/balance/{uid}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<AccountBalance> getAccountBalance(@PathVariable(name = "uid") String uid) throws ReloadlyException {
+        try {
+            return new ResponseEntity<>(accountService.getAccountBalance(uid), HttpStatus.OK);
+        } catch (AccountBalanceException e) {
+            return new ResponseEntity<>(new AccountBalance(0.0F, ""), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            throw new ReloadlyException("An error occurred. Root Cause: ".concat(e.getMessage()), e);
+        }
+    }
+
+    @ResponseBody
+    @PostMapping(value = "/account/credit/{uid}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<AccountCreditResponse> creditAccountBalance(@PathVariable(name = "uid") String uid,
+                                                                      @RequestBody AccountCreditRequest request) throws ReloadlyException {
+        try {
+            return new ResponseEntity<>(accountService.creditAccountBalance(uid, request), HttpStatus.OK);
+        } catch (AccountBalanceException e) {
+            return new ResponseEntity<>(new AccountCreditResponse("Failed"), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            throw new ReloadlyException("An error occurred. Root Cause: ".concat(e.getMessage()), e);
+        }
+    }
+
+    @ResponseBody
+    @PostMapping(value = "/account/debit/{uid}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<AccountDebitResponse> debitAccountBalance(@PathVariable(name = "uid") String uid,
+                                                                    @RequestBody AccountDebitRequest request) throws ReloadlyException {
+        try {
+            return new ResponseEntity<>(accountService.debitAccountBalance(uid, request), HttpStatus.OK);
+        } catch (AccountBalanceException e) {
+            return new ResponseEntity<>(new AccountDebitResponse(false, e.getMessage()), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            throw new ReloadlyException("An error occurred. Root Cause: ".concat(e.getMessage()), e);
         }
     }
 }
