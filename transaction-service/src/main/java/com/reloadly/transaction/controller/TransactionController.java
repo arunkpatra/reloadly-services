@@ -41,7 +41,7 @@ public class TransactionController extends AbstractRestController{
     public ResponseEntity<TransactionResponse> postTransaction(
             @ApiParam(name = "Transaction Request", required = true) @RequestBody TransactionRequest request) throws ReloadlyException {
         try {
-            return new ResponseEntity<>(transactionService.createNewTxn(request), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(transactionService.acceptTransaction(request), HttpStatus.ACCEPTED);
         } catch (ReloadlyTxnException e) {
             return new ResponseEntity<>(new TransactionResponse("", TransactionStatus.REJECTED), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {

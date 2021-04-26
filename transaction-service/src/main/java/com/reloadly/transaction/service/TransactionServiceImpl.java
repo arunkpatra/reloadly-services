@@ -40,7 +40,7 @@ public class TransactionServiceImpl extends TransactionProcessingSupport impleme
      */
     @Override
     @Transactional
-    public TransactionResponse createNewTxn(TransactionRequest request) throws ReloadlyTxnException {
+    public TransactionResponse acceptTransaction(TransactionRequest request) throws ReloadlyTxnException {
 
         Assert.notNull(request, "request can not be null");
         Assert.notNull(request.getTransactionType(), "Transaction type can not be null");

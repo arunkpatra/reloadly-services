@@ -19,5 +19,5 @@ public interface TransactionService {
      *
      * @author Arun Patra
      */
-    TransactionResponse createNewTxn(TransactionRequest request) throws ReloadlyTxnException;
+    TransactionResponse acceptTransaction(TransactionRequest request) throws ReloadlyTxnException;
 }

@@ -9,6 +9,10 @@ public class TransactionServiceProperties {
     public static final String PREFIX = "reloadly.api.transaction";
 
     /**
+     * The service account API key.
+     */
+    private String svcAccountApiKey = "";
+    /**
      * Kafka properties.
      */
     @NestedConfigurationProperty
@@ -20,5 +24,13 @@ public class TransactionServiceProperties {
 
     public void setKafka(KafkaProperties kafka) {
         this.kafka = kafka;
+    }
+
+    public String getSvcAccountApiKey() {
+        return svcAccountApiKey;
+    }
+
+    public void setSvcAccountApiKey(String svcAccountApiKey) {
+        this.svcAccountApiKey = svcAccountApiKey;
     }
 }
