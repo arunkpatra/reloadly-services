@@ -57,7 +57,7 @@ spring:
               environment: localhost
           name: ${spring.application.name}
           prefer-ip: true
-          service-base-url: http://localhost:8081
+          service-base-url: http://localhost:8083
         url: http://localhost:9595
 
 reloadly:
