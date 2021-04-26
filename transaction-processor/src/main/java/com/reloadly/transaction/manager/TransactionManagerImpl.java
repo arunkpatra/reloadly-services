@@ -10,6 +10,7 @@ import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Hashtable;
 import java.util.Map;
@@ -47,6 +48,7 @@ public class TransactionManagerImpl implements TransactionManager, InitializingB
     }
 
     @Override
+    @Transactional
     public void handleTransaction(TransactionEntity txnEntity) throws ReloadlyTxnProcessingException {
         if (txnProcessorMap.containsKey(txnEntity.getTransactionType().name())) {
             txnProcessorMap.get(txnEntity.getTransactionType().name()).handleTransaction(txnEntity);

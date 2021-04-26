@@ -1,6 +1,6 @@
 package com.reloadly.transaction.repository;
 
-import com.reloadly.transaction.AbstractIntegrationTest;
+import com.reloadly.transaction.AbstractJpaIntegrationTest;
 import com.reloadly.transaction.entity.TransactionEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TransactionRepositoryTests extends AbstractIntegrationTest {
+public class TransactionRepositoryTests extends AbstractJpaIntegrationTest {
 
     @Autowired
     private TransactionRepository transactionRepository;
@@ -25,8 +25,6 @@ public class TransactionRepositoryTests extends AbstractIntegrationTest {
         assertThat(txnOpt.isPresent()).isTrue();
         TransactionEntity te = txnOpt.get();
         assertThat(te.getUid()).isEqualTo("c1fe6f0d-420e-4161-a134-9c2342e36c95");
-        assertThat(txnOpt.get().getAirtimeSendTxnEntities().size()).isEqualTo(0);
-        assertThat(txnOpt.get().getMoneyReloadTxnEntities().size()).isEqualTo(1);
 
 
         // This is a airtime send  txn
@@ -35,8 +33,6 @@ public class TransactionRepositoryTests extends AbstractIntegrationTest {
         assertThat(txnOpt.isPresent()).isTrue();
         te = txnOpt.get();
         assertThat(te.getUid()).isEqualTo("c1fe6f0d-420e-4161-a134-9c2342e36c95");
-        assertThat(txnOpt.get().getMoneyReloadTxnEntities().size()).isEqualTo(0);
-        assertThat(txnOpt.get().getAirtimeSendTxnEntities().size()).isEqualTo(1);
 
     }
 

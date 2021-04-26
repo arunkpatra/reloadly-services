@@ -26,14 +26,6 @@ public class TransactionEntity extends AbstractPersistable<Long> implements Seri
     @Enumerated(EnumType.STRING)
     private TransactionStatus transactionStatus;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "txn_id", referencedColumnName = "txn_id")
-    private List<MoneyReloadTxnEntity> moneyReloadTxnEntities;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "txn_id", referencedColumnName = "txn_id")
-    private List<AirtimeSendTxnEntity> airtimeSendTxnEntities;
-
     public String getUid() {
         return uid;
     }
@@ -64,21 +56,5 @@ public class TransactionEntity extends AbstractPersistable<Long> implements Seri
 
     public void setTransactionStatus(TransactionStatus transactionStatus) {
         this.transactionStatus = transactionStatus;
-    }
-
-    public List<MoneyReloadTxnEntity> getMoneyReloadTxnEntities() {
-        return moneyReloadTxnEntities;
-    }
-
-    public void setMoneyReloadTxnEntities(List<MoneyReloadTxnEntity> moneyReloadTxnEntities) {
-        this.moneyReloadTxnEntities = moneyReloadTxnEntities;
-    }
-
-    public List<AirtimeSendTxnEntity> getAirtimeSendTxnEntities() {
-        return airtimeSendTxnEntities;
-    }
-
-    public void setAirtimeSendTxnEntities(List<AirtimeSendTxnEntity> airtimeSendTxnEntities) {
-        this.airtimeSendTxnEntities = airtimeSendTxnEntities;
     }
 }

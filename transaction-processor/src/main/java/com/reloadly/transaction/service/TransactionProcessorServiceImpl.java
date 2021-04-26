@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.Optional;
@@ -27,7 +26,6 @@ public class TransactionProcessorServiceImpl  implements TransactionProcessorSer
         this.transactionManager = transactionManager;
     }
 
-    @Transactional
     @KafkaListener(topics = "com.reloadly.inbound.txn.topic", groupId = "inboundTxnProcessingConsumerGrp")
     public void processInboundTransaction(String txnId) throws ReloadlyTxnProcessingException {
         Assert.notNull(txnId, "Transaction ID can not be null");
