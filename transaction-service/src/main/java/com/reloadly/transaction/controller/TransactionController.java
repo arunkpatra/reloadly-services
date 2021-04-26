@@ -2,7 +2,7 @@ package com.reloadly.transaction.controller;
 
 import com.reloadly.commons.exceptions.ReloadlyException;
 import com.reloadly.commons.model.ErrorResponse;
-import com.reloadly.transaction.exception.ReloadlyTxnException;
+import com.reloadly.transaction.exception.ReloadlyTxnSvcException;
 import com.reloadly.transaction.model.TransactionRequest;
 import com.reloadly.transaction.model.TransactionResponse;
 import com.reloadly.transaction.model.TransactionStatus;
@@ -42,7 +42,7 @@ public class TransactionController extends AbstractRestController{
             @ApiParam(name = "Transaction Request", required = true) @RequestBody TransactionRequest request) throws ReloadlyException {
         try {
             return new ResponseEntity<>(transactionService.acceptTransaction(request), HttpStatus.ACCEPTED);
-        } catch (ReloadlyTxnException e) {
+        } catch (ReloadlyTxnSvcException e) {
             return new ResponseEntity<>(new TransactionResponse("", TransactionStatus.REJECTED), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             throw new ReloadlyException("An error occurred. Root cause: ".concat(e.getMessage()), e);

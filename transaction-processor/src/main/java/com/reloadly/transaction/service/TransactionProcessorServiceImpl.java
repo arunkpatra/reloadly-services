@@ -1,10 +1,10 @@
-package com.reloadly.transaction.processor.service;
+package com.reloadly.transaction.service;
 
 import com.reloadly.transaction.entity.TransactionEntity;
 import com.reloadly.transaction.exception.ReloadlyTxnProcessingException;
+import com.reloadly.transaction.manager.TransactionManager;
 import com.reloadly.transaction.model.TransactionStatus;
 import com.reloadly.transaction.repository.TransactionRepository;
-import com.reloadly.transaction.service.TransactionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;

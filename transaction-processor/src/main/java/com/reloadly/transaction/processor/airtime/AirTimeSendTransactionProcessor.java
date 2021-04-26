@@ -1,26 +1,27 @@
-package com.reloadly.transaction.service;
+package com.reloadly.transaction.processor.airtime;
 
 import com.reloadly.transaction.annotation.TransactionHandler;
-import com.reloadly.transaction.config.TransactionServiceProperties;
+import com.reloadly.transaction.config.TransactionProcessorProperties;
 import com.reloadly.transaction.entity.TransactionEntity;
 import com.reloadly.transaction.exception.ReloadlyTxnProcessingException;
 import com.reloadly.transaction.model.TransactionStatus;
+import com.reloadly.transaction.processor.AbstractTransactionProcessor;
 import com.reloadly.transaction.repository.AirtimeSendTxnRepository;
 import com.reloadly.transaction.repository.TransactionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @TransactionHandler(value = "SEND_AIRTIME", description = "Transaction processor to hand sending airtime")
-public class AirTimeSendTransactionProcessor extends AbstractTransactionProcessor{
+public class AirTimeSendTransactionProcessor extends AbstractTransactionProcessor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AirTimeSendTransactionProcessor.class);
     private final TransactionRepository transactionRepository;
     private final AirtimeSendTxnRepository airtimeSendTxnRepository;
 
-    public AirTimeSendTransactionProcessor(TransactionServiceProperties transactionServiceProperties,
+    public AirTimeSendTransactionProcessor(TransactionProcessorProperties transactionProcessorProperties,
                                            TransactionRepository transactionRepository,
                                            AirtimeSendTxnRepository airtimeSendTxnRepository) {
-        super(transactionServiceProperties);
+        super(transactionProcessorProperties);
         this.transactionRepository = transactionRepository;
         this.airtimeSendTxnRepository = airtimeSendTxnRepository;
     }

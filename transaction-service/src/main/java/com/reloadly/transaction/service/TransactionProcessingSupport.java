@@ -5,7 +5,7 @@ import com.reloadly.transaction.config.TransactionServiceProperties;
 import com.reloadly.transaction.entity.AirtimeSendTxnEntity;
 import com.reloadly.transaction.entity.MoneyReloadTxnEntity;
 import com.reloadly.transaction.entity.TransactionEntity;
-import com.reloadly.transaction.exception.ReloadlyTxnException;
+import com.reloadly.transaction.exception.ReloadlyTxnSvcException;
 import com.reloadly.transaction.model.AddMoneyRequest;
 import com.reloadly.transaction.model.SendAirtimeRequest;
 import com.reloadly.transaction.model.TransactionRequest;
@@ -36,16 +36,16 @@ public abstract class TransactionProcessingSupport extends KafkaSupport {
         this.airtimeSendTxnRepository = airtimeSendTxnRepository;
     }
 
-    protected String getUid() throws ReloadlyTxnException {
+    protected String getUid() throws ReloadlyTxnSvcException {
         Object o = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (!(o instanceof ReloadlyUserDetails)) {
-            throw new ReloadlyTxnException("Can not determine user ID");
+            throw new ReloadlyTxnSvcException("Can not determine user ID");
         } else {
             return ((ReloadlyUserDetails) o).getUsername();
         }
     }
 
-    protected TransactionEntity addTransactionRecord(String uid, TransactionRequest request) throws ReloadlyTxnException {
+    protected TransactionEntity addTransactionRecord(String uid, TransactionRequest request) throws ReloadlyTxnSvcException {
         try {
             TransactionEntity te = new TransactionEntity();
             te.setUid(uid);
@@ -54,14 +54,14 @@ public abstract class TransactionProcessingSupport extends KafkaSupport {
             te.setTransactionStatus(TransactionStatus.ACCEPTED);
             return transactionRepository.save(te);
         } catch (Exception e) {
-            throw new ReloadlyTxnException("Could not register transaction record");
+            throw new ReloadlyTxnSvcException("Could not register transaction record");
         }
     }
 
-    protected void addMoneyReloadTxnRecord(TransactionEntity te, TransactionRequest request) throws ReloadlyTxnException {
+    protected void addMoneyReloadTxnRecord(TransactionEntity te, TransactionRequest request) throws ReloadlyTxnSvcException {
         AddMoneyRequest req = request.getAddMoneyRequest();
         if (null == req) {
-            throw new ReloadlyTxnException("Request did not contain money reload information");
+            throw new ReloadlyTxnSvcException("Request did not contain money reload information");
         }
         Assert.notNull(req.getAmount(), "Amount can not be null");
 
@@ -71,10 +71,10 @@ public abstract class TransactionProcessingSupport extends KafkaSupport {
         moneyReloadTxnRepository.save(mrte);
     }
 
-    protected void addSendAirtimeTxnRecord(TransactionEntity te, TransactionRequest request) throws ReloadlyTxnException {
+    protected void addSendAirtimeTxnRecord(TransactionEntity te, TransactionRequest request) throws ReloadlyTxnSvcException {
         SendAirtimeRequest req = request.getSendAirtimeRequest();
         if (null == req) {
-            throw new ReloadlyTxnException("Request did not contain airtime send information");
+            throw new ReloadlyTxnSvcException("Request did not contain airtime send information");
         }
         Assert.notNull(req.getAmount(), "Amount can not be null");
         Assert.notNull(req.getPhoneNumber(), "Phone number can not be null");

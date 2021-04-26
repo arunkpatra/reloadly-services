@@ -2,23 +2,23 @@ package com.reloadly.transaction.exception;
 
 import com.reloadly.commons.exceptions.ReloadlyException;
 
-public class ReloadlyTxnException extends ReloadlyException {
+public class ReloadlyTxnSvcException extends ReloadlyException {
 
     private static final String DEFAULT_MESSAGE = "Could not process transaction";
 
-    public ReloadlyTxnException() {
+    public ReloadlyTxnSvcException() {
         super(DEFAULT_MESSAGE);
     }
 
-    public ReloadlyTxnException(String message) {
+    public ReloadlyTxnSvcException(String message) {
         super(message);
     }
 
-    public ReloadlyTxnException(Exception e) {
+    public ReloadlyTxnSvcException(Exception e) {
         super(DEFAULT_MESSAGE, e);
     }
 
-    public ReloadlyTxnException(String message, Exception e) {
+    public ReloadlyTxnSvcException(String message, Exception e) {
         super(message, e);
     }
 

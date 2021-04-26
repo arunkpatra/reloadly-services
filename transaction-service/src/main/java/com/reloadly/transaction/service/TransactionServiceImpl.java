@@ -3,7 +3,7 @@ package com.reloadly.transaction.service;
 import com.reloadly.transaction.config.TransactionServiceProperties;
 import com.reloadly.transaction.entity.TransactionEntity;
 import com.reloadly.transaction.exception.KafkaProcessingException;
-import com.reloadly.transaction.exception.ReloadlyTxnException;
+import com.reloadly.transaction.exception.ReloadlyTxnSvcException;
 import com.reloadly.transaction.model.TransactionRequest;
 import com.reloadly.transaction.model.TransactionResponse;
 import com.reloadly.transaction.repository.AirtimeSendTxnRepository;
@@ -35,12 +35,12 @@ public class TransactionServiceImpl extends TransactionProcessingSupport impleme
      *
      * @param request The transaction request object.
      * @return A transaction response object.
-     * @throws ReloadlyTxnException If the transaction could not be handled.
+     * @throws ReloadlyTxnSvcException If the transaction could not be handled.
      * @author Arun Patra
      */
     @Override
     @Transactional
-    public TransactionResponse acceptTransaction(TransactionRequest request) throws ReloadlyTxnException {
+    public TransactionResponse acceptTransaction(TransactionRequest request) throws ReloadlyTxnSvcException {
 
         Assert.notNull(request, "request can not be null");
         Assert.notNull(request.getTransactionType(), "Transaction type can not be null");
@@ -56,13 +56,13 @@ public class TransactionServiceImpl extends TransactionProcessingSupport impleme
                 addSendAirtimeTxnRecord(te, request);
             break;
             default:
-                throw new ReloadlyTxnException("Unknown transaction type");
+                throw new ReloadlyTxnSvcException("Unknown transaction type");
         }
 
         try {
             postTransactionToKafka(te, request);
         } catch (KafkaProcessingException e) {
-            throw new ReloadlyTxnException("Failed to post transaction to Kafka. Root Cause: ".concat(e.getMessage()), e);
+            throw new ReloadlyTxnSvcException("Failed to post transaction to Kafka. Root Cause: ".concat(e.getMessage()), e);
         }
 
         return new TransactionResponse(te.getTxnId(), te.getTransactionStatus());

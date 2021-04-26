@@ -1,11 +1,12 @@
-package com.reloadly.transaction.service;
+package com.reloadly.transaction.processor.moneyreload;
 
 import com.reloadly.transaction.annotation.TransactionHandler;
-import com.reloadly.transaction.config.TransactionServiceProperties;
+import com.reloadly.transaction.config.TransactionProcessorProperties;
 import com.reloadly.transaction.entity.MoneyReloadTxnEntity;
 import com.reloadly.transaction.entity.TransactionEntity;
 import com.reloadly.transaction.exception.ReloadlyTxnProcessingException;
 import com.reloadly.transaction.model.TransactionStatus;
+import com.reloadly.transaction.processor.AbstractTransactionProcessor;
 import com.reloadly.transaction.repository.MoneyReloadTxnRepository;
 import com.reloadly.transaction.repository.TransactionRepository;
 import org.slf4j.Logger;
@@ -20,10 +21,10 @@ public class MoneyReloadTransactionProcessor extends AbstractTransactionProcesso
     private final TransactionRepository transactionRepository;
     private final MoneyReloadTxnRepository moneyReloadTxnRepository;
 
-    public MoneyReloadTransactionProcessor(TransactionServiceProperties transactionServiceProperties,
+    public MoneyReloadTransactionProcessor(TransactionProcessorProperties transactionProcessorProperties,
                                            TransactionRepository transactionRepository,
                                            MoneyReloadTxnRepository moneyReloadTxnRepository) {
-        super(transactionServiceProperties);
+        super(transactionProcessorProperties);
         this.transactionRepository = transactionRepository;
         this.moneyReloadTxnRepository = moneyReloadTxnRepository;
     }

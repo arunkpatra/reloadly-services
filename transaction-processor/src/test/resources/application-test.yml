@@ -1,12 +1,8 @@
-spring.kafka.bootstrap-servers: localhost:8092
+spring.kafka.bootstrap-servers: localhost:7092
 
 reloadly:
   api:
     transaction:
-      service:
+      processor:
         kafka:
           inbound-transactions-topic: com.reloadly.inbound.txn.topic
-  auth:
-    enabled: false
-    mock:
-      enabled: true

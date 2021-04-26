@@ -14,10 +14,10 @@ management:
         include: '*'
 
 server:
-  port: 8081
+  port: 8083
 spring:
   application:
-    name: transaction-service
+    name: transaction-processor
   datasource:
     continue-on-error: false
     hikari:
@@ -61,28 +61,8 @@ spring:
         url: http://localhost:9595
 
 reloadly:
-  auth:
-    enabled: true
-    reloadly-auth-service-endpoint: http://localhost:9090
-  integration:
-    swagger:
-      enabled: true
-      secured: true
-      api-title: Reloadly Transaction Services API
-      api-description: Reloadly Transaction Services API
-      api-version: 1.0.0
-      base-url: /
-      host: localhost:8081
-      base-package: com.reloadly.transaction.controller
-      api-terms-of-service-url: https://reloadly.com/termsofservice
-      license: Copyright api.com
-      license-url: https://reloadly.com/license
-      contact:
-        email: info@reloadly.com
-        name: Reloadly Customer Service
-        url: https://reloadly.com
   api:
     transaction:
-      service:
+      processor:
         kafka:
           inbound-transactions-topic: com.reloadly.inbound.txn.topic

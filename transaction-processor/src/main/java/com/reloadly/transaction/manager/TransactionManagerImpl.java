@@ -1,8 +1,9 @@
-package com.reloadly.transaction.service;
+package com.reloadly.transaction.manager;
 
 import com.reloadly.transaction.annotation.TransactionHandler;
 import com.reloadly.transaction.entity.TransactionEntity;
 import com.reloadly.transaction.exception.ReloadlyTxnProcessingException;
+import com.reloadly.transaction.processor.TransactionProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -17,7 +18,7 @@ import java.util.Map;
 public class TransactionManagerImpl implements TransactionManager, InitializingBean {
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionManagerImpl.class);
     private final ApplicationContext context;
-    private Map<String, TransactionProcessor> txnProcessorMap = new Hashtable<>();
+    private final Map<String, TransactionProcessor> txnProcessorMap = new Hashtable<>();
     public TransactionManagerImpl(ApplicationContext context) {
         this.context = context;
     }

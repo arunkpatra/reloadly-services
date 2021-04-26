@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 @ConfigurationProperties(TransactionServiceProperties.PREFIX)
 public class TransactionServiceProperties {
 
-    public static final String PREFIX = "reloadly.api.transaction";
+    public static final String PREFIX = "reloadly.api.transaction.service";
 
     /**
      * The service account API key.
