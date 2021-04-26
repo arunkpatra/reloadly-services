@@ -7,11 +7,7 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 public class TransactionServiceProperties {
 
     public static final String PREFIX = "reloadly.api.transaction.service";
-
-    /**
-     * The service account API key.
-     */
-    private String svcAccountApiKey = "";
+    
     /**
      * Kafka properties.
      */
@@ -26,11 +22,4 @@ public class TransactionServiceProperties {
         this.kafka = kafka;
     }
 
-    public String getSvcAccountApiKey() {
-        return svcAccountApiKey;
-    }
-
-    public void setSvcAccountApiKey(String svcAccountApiKey) {
-        this.svcAccountApiKey = svcAccountApiKey;
-    }
 }

@@ -2,7 +2,6 @@ package com.reloadly.transaction.processor;
 
 import com.reloadly.commons.model.ReloadlyCredentials;
 import com.reloadly.transaction.config.TransactionProcessorProperties;
-import com.reloadly.transaction.processor.TransactionProcessor;
 import org.springframework.http.HttpHeaders;
 
 public abstract class AbstractTransactionProcessor implements TransactionProcessor {
