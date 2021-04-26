@@ -36,7 +36,6 @@ public class TransactionManagerImpl implements TransactionManager, InitializingB
     @Override
     public void afterPropertiesSet() throws Exception {
 
-        System.out.println("hello!");
         // Find out all beans available.
         Map<String, Object> myMap = context.getBeansWithAnnotation(TransactionHandler.class);
 

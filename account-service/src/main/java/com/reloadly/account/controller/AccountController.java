@@ -52,6 +52,7 @@ public class AccountController extends AbstractRestController{
 
     @ApiOperation(value = "Update Account",
             notes = "Update Account", response = AccountUpdateResponse.class,
+            consumes = "application/json",
             produces = "application/json", authorizations = {@Authorization(value = "Access Token")})
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Account updated",
@@ -101,6 +102,17 @@ public class AccountController extends AbstractRestController{
         }
     }
 
+    @ApiOperation(value = "Get Account Balance",
+            notes = "Get Account Balance", response = AccountBalance.class,
+            produces = "application/json", authorizations = {@Authorization(value = "Access Token")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Account details found",
+                    response = AccountBalance.class),
+            @ApiResponse(code = 400, message = "Bad Request",
+                    response = AccountBalance.class),
+            @ApiResponse(code = 500, message = "An internal error occurred.",
+                    response = ErrorResponse.class)
+    })
     @ResponseBody
     @GetMapping(value = "/account/balance/{uid}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<AccountBalance> getAccountBalance(@PathVariable(name = "uid") String uid) throws ReloadlyException {
@@ -113,6 +125,18 @@ public class AccountController extends AbstractRestController{
         }
     }
 
+    @ApiOperation(value = "Credit Account",
+            notes = "Credit Account", response = AccountCreditResponse.class,
+            consumes = "application/json",
+            produces = "application/json", authorizations = {@Authorization(value = "Access Token")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Account updated",
+                    response = AccountCreditResponse.class),
+            @ApiResponse(code = 400, message = "Bad request",
+                    response = AccountCreditResponse.class),
+            @ApiResponse(code = 500, message = "An internal error occurred.",
+                    response = ErrorResponse.class)
+    })
     @ResponseBody
     @PostMapping(value = "/account/credit/{uid}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<AccountCreditResponse> creditAccountBalance(@PathVariable(name = "uid") String uid,
@@ -126,6 +150,18 @@ public class AccountController extends AbstractRestController{
         }
     }
 
+    @ApiOperation(value = "Debit Account",
+            notes = "Debit Account", response = AccountDebitResponse.class,
+            consumes = "application/json",
+            produces = "application/json", authorizations = {@Authorization(value = "Access Token")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Account debited",
+                    response = AccountDebitResponse.class),
+            @ApiResponse(code = 400, message = "Bad request",
+                    response = AccountDebitResponse.class),
+            @ApiResponse(code = 500, message = "An internal error occurred.",
+                    response = ErrorResponse.class)
+    })
     @ResponseBody
     @PostMapping(value = "/account/debit/{uid}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<AccountDebitResponse> debitAccountBalance(@PathVariable(name = "uid") String uid,
@@ -139,6 +175,17 @@ public class AccountController extends AbstractRestController{
         }
     }
 
+    @ApiOperation(value = "Get Account Info",
+            notes = "Get Account Info", response = AccountInfo.class,
+            produces = "application/json", authorizations = {@Authorization(value = "Access Token")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Account debited",
+                    response = AccountInfo.class),
+            @ApiResponse(code = 404, message = "Not Found",
+                    response = AccountInfo.class),
+            @ApiResponse(code = 500, message = "An internal error occurred.",
+                    response = ErrorResponse.class)
+    })
     @ResponseBody
     @GetMapping(value = "/account/info/{uid}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<AccountInfo> getAccountInfo(

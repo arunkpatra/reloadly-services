@@ -20,6 +20,12 @@ brew services stop zookeeper
 
 ```
 
+Or use the following to start Kafka in the foreground.
+
+```
+zookeeper-server-start -daemon /usr/local/etc/kafka/zookeeper.properties & kafka-server-start /usr/local/etc/kafka/server.properties
+```
+
 After installing Kafka via Homebrew, following helpful info is output:
 
 ``` 

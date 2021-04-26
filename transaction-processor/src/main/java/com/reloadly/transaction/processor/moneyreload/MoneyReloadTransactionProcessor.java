@@ -112,24 +112,39 @@ public class MoneyReloadTransactionProcessor extends AbstractTransactionProcesso
     }
 
     private static class AccountCreditRequest {
-        private final Float amount;
+        private Float amount;
         @JsonCreator
         public AccountCreditRequest(Float amount) {
             this.amount = amount;
         }
+
+        public AccountCreditRequest() {
+        }
+
         public Float getAmount() {
             return amount;
+        }
+
+        public void setAmount(Float amount) {
+            this.amount = amount;
         }
     }
 
     private static class AccountCreditResponse {
-        private final String message;
+        private String message;
         @JsonCreator
         public AccountCreditResponse(String message) {
             this.message = message;
         }
         public String getMessage() {
             return message;
+        }
+
+        public AccountCreditResponse() {
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
         }
     }
 }

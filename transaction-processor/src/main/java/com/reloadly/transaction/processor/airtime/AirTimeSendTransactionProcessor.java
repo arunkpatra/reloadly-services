@@ -113,7 +113,7 @@ public class AirTimeSendTransactionProcessor extends AbstractTransactionProcesso
     }
 
     private static class AccountDebitRequest {
-        private final Float amount;
+        private Float amount;
         @JsonCreator
         public AccountDebitRequest(Float amount) {
             this.amount = amount;
@@ -121,16 +121,35 @@ public class AirTimeSendTransactionProcessor extends AbstractTransactionProcesso
         public Float getAmount() {
             return amount;
         }
+
+        public AccountDebitRequest() {
+        }
+
+        public void setAmount(Float amount) {
+            this.amount = amount;
+        }
     }
 
     private static class AccountDebitResponse {
-        private final Boolean successful;
-        private final String message;
+        private Boolean successful;
+        private String message;
         @JsonCreator
         public AccountDebitResponse(Boolean successful, String message) {
             this.successful = successful;
             this.message = message;
         }
+
+        public AccountDebitResponse() {
+        }
+
+        public void setSuccessful(Boolean successful) {
+            this.successful = successful;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
         public String getMessage() {
             return message;
         }

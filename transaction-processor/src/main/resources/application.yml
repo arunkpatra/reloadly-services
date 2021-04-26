@@ -24,7 +24,7 @@ spring:
       connection-test-query: SELECT 1 FROM SYSIBM.SYSDUMMY1
       maximum-pool-size: 50
       minimum-idle: 10
-      pool-name: TxnSvcHikariPool
+      pool-name: TxnPrcHikariPool
     initialization-mode: embedded
     name: rltxndb
     platform: derby
