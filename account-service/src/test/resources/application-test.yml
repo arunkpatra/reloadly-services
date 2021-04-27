@@ -6,11 +6,11 @@ spring:
       password: password
     initialization-mode: embedded
     platform: derby
+    url: jdbc:derby:memory:rlacctdb;create=true
     schema:
       - classpath:account-services-schema-derby.sql
     data:
       - classpath:account-services-data-derby.sql
-    url: jdbc:derby:memory:rlacctdb;create=true
 
 reloadly:
   notification:
