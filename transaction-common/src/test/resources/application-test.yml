@@ -5,8 +5,8 @@ spring:
     continue-on-error: false
     hikari:
       connection-test-query: SELECT 1 FROM SYSIBM.SYSDUMMY1
-      maximum-pool-size: 50
-      minimum-idle: 10
+      maximum-pool-size: 5
+      minimum-idle: 2
       pool-name: TxnSvcHikariPool
     initialization-mode: embedded
     name: rltxndb

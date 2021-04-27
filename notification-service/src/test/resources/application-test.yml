@@ -3,3 +3,19 @@ reloadly:
     enabled: false
     mock:
       enabled: true
+  integration:
+    sms:
+      twilio:
+        dry-run: true
+        enabled: true
+        messaging-service-id: X
+        twilio-account-sid: Y
+        twilio-auth-token: Z
+    email:
+      ses:
+        enabled: true
+        region: ap-south-1
+        dry-run: true
+        from-email-id: email@email.com
+    swagger:
+      enabled: false
