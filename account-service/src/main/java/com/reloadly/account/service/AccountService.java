@@ -1,10 +1,11 @@
 package com.reloadly.account.service;
 
+import com.reloadly.account.exception.AccountBalanceException;
 import com.reloadly.account.exception.AccountNotFoundException;
 import com.reloadly.account.exception.AccountUpdatedException;
-import com.reloadly.account.model.AccountDetails;
-import com.reloadly.account.model.AccountUpdateRequest;
-import com.reloadly.account.model.AccountUpdateResponse;
+import com.reloadly.account.model.*;
+import com.reloadly.commons.exceptions.ReloadlyException;
+import org.springframework.http.ResponseEntity;
 
 public interface AccountService {
 
@@ -24,4 +25,15 @@ public interface AccountService {
      * @throws AccountNotFoundException If no account was founnd for the user.
      */
     AccountDetails getAccountDetails(String uid) throws AccountNotFoundException;
+
+
+    AccountBalance getAccountBalance(String uid) throws AccountBalanceException;
+
+
+    AccountCreditResponse creditAccountBalance(String uid, AccountCreditRequest request) throws AccountBalanceException;
+
+
+    AccountDebitResponse debitAccountBalance(String uid, AccountDebitRequest request) throws AccountBalanceException;
+
+    AccountInfo getAccountInfo(String uid) throws AccountNotFoundException;;
 }

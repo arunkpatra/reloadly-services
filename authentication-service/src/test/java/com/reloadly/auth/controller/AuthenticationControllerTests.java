@@ -2,9 +2,11 @@ package com.reloadly.auth.controller;
 
 import com.reloadly.auth.AbstractIntegrationTest;
 import com.reloadly.auth.config.AuthenticationServiceProperties;
+import com.reloadly.auth.model.ApiKeyVerificationRequest;
 import com.reloadly.auth.model.AuthenticationResponse;
 import com.reloadly.auth.model.TokenVerificationRequest;
 import com.reloadly.auth.model.UsernamePasswordAuthRequest;
+import com.reloadly.commons.model.ReloadlyApiKeyIdentity;
 import com.reloadly.commons.model.ReloadlyAuthToken;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +70,7 @@ public class AuthenticationControllerTests extends AbstractIntegrationTest {
 
         // Act
         TokenVerificationRequest tvr = new TokenVerificationRequest(token);
-        mvcResult = mockMvc.perform(post("/verify")
+        mvcResult = mockMvc.perform(post("/verify/token")
                 .content(objectMapper.writeValueAsString(tvr))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -120,6 +122,28 @@ public class AuthenticationControllerTests extends AbstractIntegrationTest {
                 .andExpect(status().isUnauthorized())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
+    }
+
+    @Test
+    public void should_verify_valid_key() throws Exception {
+
+        // Setup
+        ApiKeyVerificationRequest request =
+                new ApiKeyVerificationRequest("d3fe6f0d-120e-4161-a134-8c2342e36ca6");
+
+        // Setup and Act
+        MvcResult mvcResult = mockMvc.perform(post("/verify/apikey")
+                .content(objectMapper.writeValueAsString(request))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        // Assert
+        ReloadlyApiKeyIdentity response =
+                objectMapper.readValue(mvcResult.getResponse().getContentAsString(), ReloadlyApiKeyIdentity.class);
+        assertThat(response.getUid()).isNotNull();
+        assertThat(response.getRoles().size()).isEqualTo(2);
     }
 
 }

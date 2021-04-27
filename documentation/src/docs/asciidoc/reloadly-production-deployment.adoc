@@ -1,0 +1,14 @@
+[[production-deployment]]
+== Production Deployment
+
+=== Kubernetes Deployment (EKS)
+
+==== Docker Images
+
+==== Helm Charts
+
+=== AWS Beanstalk
+
+
+
+

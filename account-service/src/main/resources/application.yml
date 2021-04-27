@@ -4,12 +4,7 @@ management.metrics.distribution.percentiles-histogram.resilience4j.circuitbreake
 management.endpoint.health.show-details: always
 management.health.diskspace.enabled: false
 management.endpoint.logfile.enabled: true
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
+management.endpoints.web.exposure.include: '*'
 
 server:
   port: 8080
@@ -19,18 +14,16 @@ spring:
   datasource:
     continue-on-error: false
     hikari:
-      connection-test-query: SELECT 1 FROM SYSIBM.SYSDUMMY1
-      maximum-pool-size: 50
-      minimum-idle: 10
+      connection-test-query: SELECT 1
+      maximum-pool-size: 10
+      minimum-idle: 4
       pool-name: AcctSvcHikariPool
-    initialization-mode: embedded
+      username: ${DB_USER}
+      password: ${DB_PASSWORD}
+    initialization-mode: never
     name: rlacctdb
-    platform: derby
-    schema:
-      - classpath:account-services-schema-derby.sql
-    data:
-      - classpath:account-services-data-derby.sql
-    url: jdbc:derby:memory:rlacctdb;create=true
+    platform: mysql
+    url: jdbc:mysql://localhost:3306/rlacctdb
     generate-unique-name: true
   jpa:
     generate-ddl: false
@@ -58,11 +51,11 @@ spring:
           service-base-url: http://localhost:8080
         url: http://localhost:9595
 
-
 reloadly:
   notification:
     enabled: true
     suppress: false
+    reloadly-notification-service-endpoint: http://localhost:8082
   auth:
     enabled: true
     reloadly-auth-service-endpoint: http://localhost:9090

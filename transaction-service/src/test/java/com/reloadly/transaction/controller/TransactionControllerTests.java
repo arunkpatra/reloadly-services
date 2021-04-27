@@ -16,8 +16,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class TransactionControllerTests extends AbstractIntegrationTest {
 
     @Test
-    @Transactional
-    @Rollback
+//    @Transactional
+//    @Rollback
     public void should_post_transaction() throws Exception {
         String testUid = "fefe6f0d-420e-4161-a134-9c2342e36c95";
 
@@ -36,5 +36,13 @@ public class TransactionControllerTests extends AbstractIntegrationTest {
                 objectMapper.readValue(mvcResult.getResponse().getContentAsString(), TransactionResponse.class);
         assertThat(response.getTransactionId()).isNotEmpty();
         assertThat(response.getTransactionStatus()).isEqualTo(TransactionStatus.ACCEPTED);
+
+        // Wait for Kafka to pickup transaction
+
+        try {
+            Thread.sleep(5000L);
+        } catch (InterruptedException e) {
+            System.out.println("Thread was interrupted");
+        }
     }
 }

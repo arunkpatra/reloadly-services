@@ -3,6 +3,7 @@ package com.reloadly.account.service;
 import com.reloadly.account.entity.AccountBalanceEntity;
 import com.reloadly.account.entity.AccountEntity;
 import com.reloadly.account.entity.AddressEntity;
+import com.reloadly.account.exception.AccountBalanceException;
 import com.reloadly.account.exception.AccountNotFoundException;
 import com.reloadly.account.exception.AccountUpdatedException;
 import com.reloadly.account.model.*;
@@ -10,12 +11,15 @@ import com.reloadly.account.repository.AccountBalanceRepository;
 import com.reloadly.account.repository.AccountRepository;
 import com.reloadly.account.repository.AddressRepository;
 import com.reloadly.autoconfig.notification.service.ReloadlyNotification;
+import com.reloadly.commons.exceptions.ReloadlyException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Supplier;
 
 @Service
 public class AccountServiceImpl extends AccountUpdateNotificationSupport implements AccountService {
@@ -76,13 +80,8 @@ public class AccountServiceImpl extends AccountUpdateNotificationSupport impleme
     @Override
     public AccountDetails getAccountDetails(String uid) throws AccountNotFoundException {
         Assert.notNull(uid, "UID can not be null");
-        Optional<AccountEntity> aeOptional = accountRepository.findByUid(uid);
+        AccountEntity ae = accountRepository.findByUid(uid).orElseThrow(() -> new AccountNotFoundException("Account not found for user"));
 
-        if (!aeOptional.isPresent()) {
-            throw new AccountNotFoundException();
-        }
-
-        AccountEntity ae = aeOptional.get();
         AccountInfo accountInfo = new AccountInfo(ae.getName(), ae.getEmail(), ae.getPhoneNumber());
         AccountBalance accountBalance = new AccountBalance(ae.getAccountBalanceEntity().getAccountBalance(), ae.getCurrencyCode());
         Address billingAddress = null;
@@ -93,6 +92,68 @@ public class AccountServiceImpl extends AccountUpdateNotificationSupport impleme
         }
 
         return new AccountDetails(ae.getAccountId(), accountInfo, accountBalance, billingAddress);
+    }
+
+    @Override
+    public AccountInfo getAccountInfo(String uid) throws AccountNotFoundException {
+        Assert.notNull(uid, "UID can not be null");
+        AccountEntity ae = accountRepository.findByUid(uid).orElseThrow(() -> new AccountNotFoundException("Account not found for user"));
+        return new AccountInfo(ae.getName(), ae.getEmail(), ae.getPhoneNumber());
+    }
+
+    @Override
+    public AccountBalance getAccountBalance(String uid) throws AccountBalanceException {
+
+        AccountEntity ae = getAccountEntity(uid);
+        AccountBalanceEntity abe = getAccountBalanceEntity(ae.getAccountId());
+
+        return new AccountBalance(abe.getAccountBalance(), ae.getCurrencyCode());
+    }
+
+    @Override
+    @Transactional
+    public synchronized AccountCreditResponse creditAccountBalance(String uid, AccountCreditRequest request) throws AccountBalanceException {
+        Assert.notNull(request.getAmount(), "Credit amount can not be null");
+
+        AccountEntity ae = getAccountEntity(uid);
+        AccountBalanceEntity abe = getAccountBalanceEntity(ae.getAccountId());
+        abe.setAccountBalance(abe.getAccountBalance() + request.getAmount());
+
+        try {
+            accountBalanceRepository.save(abe);
+        } catch (Exception e) {
+            throw new AccountBalanceException("failed to credit transaction. Root cause: ".concat(e.getMessage()), e);
+        }
+        return new AccountCreditResponse("Account successfully credited");
+    }
+
+    @Override
+    @Transactional
+    public synchronized AccountDebitResponse debitAccountBalance(String uid, AccountDebitRequest request) throws AccountBalanceException {
+        Assert.notNull(request.getAmount(), "debit amount can not be null");
+
+        AccountEntity ae = getAccountEntity(uid);
+        AccountBalanceEntity abe = getAccountBalanceEntity(ae.getAccountId());
+
+        if (request.getAmount() > abe.getAccountBalance()) {
+            throw new AccountBalanceException("Insufficient funds");
+        }
+        abe.setAccountBalance(abe.getAccountBalance() - request.getAmount());
+
+        try {
+            accountBalanceRepository.save(abe);
+        } catch (Exception e) {
+            throw new AccountBalanceException("failed to credit transaction. Root cause: ".concat(e.getMessage()), e);
+        }
+        return new AccountDebitResponse(true, "Account successfully credited");
+    }
+
+    private AccountEntity getAccountEntity(String uid) throws AccountBalanceException {
+        return accountRepository.findByUid(uid).orElseThrow(() -> new AccountBalanceException("Account not found for user"));
+    }
+
+    private AccountBalanceEntity getAccountBalanceEntity(String accountId) throws AccountBalanceException {
+        return accountBalanceRepository.findByAccountId(accountId).orElseThrow(() -> new AccountBalanceException("Account balance record not found"));
     }
 
     private AccountEntity updateBaseAccountDetails(String uid, AccountUpdateRequest request) {

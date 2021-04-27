@@ -5,11 +5,14 @@
 <p align="center">
     <img src="reloadly-gif.gif" width="350px" alt="Reloadly" />
 </p>
-This project implements various microservices. Please see the README files of 
-the respective microservices for more details.
+This project implements a hypothetical Fintech Platform. For details on the architecture, design, code and other asks as part of the Reloadly code challenge, see the reference documentation below.
 
-## Build
+## Reference Documentation
 
-- Checkout this repository to your local machine, you would need to install `git` first.
-- Build the project using `./mvnw clean install` while remaining in the root directory of this project. You would need
-  JDK 8 installed on your machine first.
+|Documentation Format| Link |
+|--------------------|------|
+|Online HTML Format documentation | [HTML Reference](https://master.d219ur0ee5uhks.amplifyapp.com)|
+|PDF Format documentation  | [PDF Reference](https://master.d219ur0ee5uhks.amplifyapp.com/pdf/reloadly-services.pdf)|
+
+Head over to the [Reference Docs](https://master.d219ur0ee5uhks.amplifyapp.com/ "Reloadly Code Challenge Microservices Reference Docs") site.
+

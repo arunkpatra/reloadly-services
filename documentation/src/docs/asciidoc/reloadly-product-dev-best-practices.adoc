@@ -1,0 +1,19 @@
+[[product-dev-approach]]
+== Product Development Approach
+
+=== Processes and Methodology
+
+
+=== Team Culture
+
+=== Tools
+
+==== Team Communication
+
+==== Defect Management
+
+==== Release Management
+
+==== Source Code Management
+
+==== CI/CD and Automation

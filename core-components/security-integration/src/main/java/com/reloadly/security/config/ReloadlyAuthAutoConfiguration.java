@@ -1,6 +1,7 @@
 package com.reloadly.security.config;
 
-import com.reloadly.security.filter.ReloadlyAuthenticationRequestFilter;
+import com.reloadly.security.filter.ReloadlyApiKeyAuthenticationRequestFilter;
+import com.reloadly.security.filter.ReloadlyJwtAuthenticationRequestFilter;
 import com.reloadly.security.service.ReloadlyAuth;
 import com.reloadly.security.service.ReloadlyAuthServiceImpl;
 import com.reloadly.security.service.ReloadlyUserDetailsService;
@@ -34,10 +35,14 @@ public class ReloadlyAuthAutoConfiguration {
 
         private static final Logger LOGGER = LoggerFactory.getLogger(ReloadlyAuthWebSecurityConfig.class);
 
-        private final ReloadlyAuthenticationRequestFilter reloadlyJwtRequestFilter;
+        private final ReloadlyJwtAuthenticationRequestFilter reloadlyJwtRequestFilter;
 
-        public ReloadlyAuthWebSecurityConfig(ReloadlyAuthenticationRequestFilter reloadlyJwtRequestFilter) {
+        private final ReloadlyApiKeyAuthenticationRequestFilter apiKeyAuthenticationRequestFilter;
+
+        public ReloadlyAuthWebSecurityConfig(ReloadlyJwtAuthenticationRequestFilter reloadlyJwtRequestFilter,
+                                             ReloadlyApiKeyAuthenticationRequestFilter apiKeyAuthenticationRequestFilter) {
             this.reloadlyJwtRequestFilter = reloadlyJwtRequestFilter;
+            this.apiKeyAuthenticationRequestFilter = apiKeyAuthenticationRequestFilter;
         }
 
         @Override
@@ -64,7 +69,9 @@ public class ReloadlyAuthAutoConfiguration {
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
             //@formatter:on
             // Add a filter to validate the tokens with every request
-            http.addFilterBefore(reloadlyJwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+            http
+                    .addFilterBefore(reloadlyJwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+                    .addFilterBefore(apiKeyAuthenticationRequestFilter, UsernamePasswordAuthenticationFilter.class);
         }
 
         @Configuration
@@ -88,8 +95,13 @@ public class ReloadlyAuthAutoConfiguration {
             }
 
             @Bean
-            public ReloadlyAuthenticationRequestFilter reloadlyJwtRequestFilter(UserDetailsService userDetailsService) {
-                return new ReloadlyAuthenticationRequestFilter(userDetailsService);
+            public ReloadlyJwtAuthenticationRequestFilter reloadlyJwtRequestFilter(UserDetailsService userDetailsService) {
+                return new ReloadlyJwtAuthenticationRequestFilter(userDetailsService);
+            }
+
+            @Bean
+            public ReloadlyApiKeyAuthenticationRequestFilter apiKeyAuthenticationRequestFilter(ReloadlyAuth reloadlyAuth) {
+                return new ReloadlyApiKeyAuthenticationRequestFilter(reloadlyAuth);
             }
         }
     }

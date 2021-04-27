@@ -1,0 +1,51 @@
+= Reloadly Microservices Documentation
+Arun Patra <https://twitter.com/arunkpatra[@arunkpatra]>
+2021.04.27
+:example-caption!:
+:revnumber: {project-version}
+:toc: left
+:toclevels: 3
+:doctype: book
+:sectanchors:
+:sectlinks:
+:sectnums:
+:icons: font
+:icon-set: fa
+:hide-uri-scheme:
+:last-update-label!:
+:tabsize: 2
+:pdf-version: 1.7
+ifndef::imagesdir[:imagesdir: images]
+//ifndef::sourcedir[:sourcedir: ../../main/java]
+
+
+== Introduction
+
+This project implements a hypothetical Fintech Platform. It demonstrates Microservice architecture, design, best practices and production ready features. It was developed as part of a code challenge from https://www.reloadly.com/[Reloadly].
+
+[NOTE]
+====
+The *reloadly* brand name, and logo are copyright of https://www.reloadly.com/[Reloadly]. Permission is hereby granted to https://www.reloadly.com/[Reloadly] to review the architecture, design, source code and documentation of this project. Usage of architecture, design, source code is also being granted to https://www.reloadly.com/[Reloadly] without any constraints, including the right to use in building production systems either in whole or part.
+
+Unless required by applicable law or agreed to in writing, this software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+====
+
+=== Source Code
+
+icon:github[2x] Head over to the GitHub repository https://github.com/arunkpatra/reloadly-services[here].
+
+include::reloadly-summary-and-highlights.adoc[]
+
+include::reloadly-getting-started.adoc[]
+
+include::reloadly-architecture.adoc[]
+
+include::reloadly-microservices.adoc[]
+
+include::reloadly-components.adoc[]
+
+include::reloadly-production-deployment.adoc[]
+
+include::reloadly-production-monitoring.adoc[]
+
+include::reloadly-product-dev-best-practices.adoc[]

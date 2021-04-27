@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>transaction-common</artifactId>
-    <name>Transaction Service - Sharable Components</name>
+    <name>Transaction Common</name>
 
 <dependencies>
 
@@ -24,10 +24,10 @@
         <artifactId>commons</artifactId>
     </dependency>
 
-    <dependency>
-        <groupId>com.reloadly</groupId>
-        <artifactId>security-integration</artifactId>
-    </dependency>
+<!--    <dependency>-->
+<!--        <groupId>com.reloadly</groupId>-->
+<!--        <artifactId>security-integration</artifactId>-->
+<!--    </dependency>-->
 
     <dependency>
         <groupId>org.springframework.boot</groupId>
@@ -66,6 +66,11 @@
         <groupId>org.springframework.kafka</groupId>
         <artifactId>spring-kafka-test</artifactId>
         <scope>test</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-web</artifactId>
     </dependency>
 
 </dependencies>

@@ -102,4 +102,21 @@ public class AccountControllerTests extends AbstractIntegrationTest {
                 .andExpect(status().isNotFound())
                 .andReturn();
     }
+
+    @Test
+    public void should_get_account_balance() throws Exception {
+        String testUid = "c1fe6f0d-420e-4161-a134-9c2342e36c95";
+        // Setup and Act
+        MvcResult mvcResult = mockMvc.perform(get("/account/balance/".concat(testUid))
+                .header("X-Mock-UID", testUid))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        // Assert
+        AccountBalance response =
+                objectMapper.readValue(mvcResult.getResponse().getContentAsString(), AccountBalance.class);
+        assertThat(response.getAccountBalance()).isEqualTo(200.5f);
+    }
+
 }

@@ -4,12 +4,7 @@ management.metrics.distribution.percentiles-histogram.resilience4j.circuitbreake
 management.endpoint.health.show-details: always
 management.health.diskspace.enabled: false
 management.endpoint.logfile.enabled: true
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
+management.endpoints.web.exposure.include: '*'
 
 server:
   port: 8082
@@ -38,16 +33,17 @@ reloadly:
   integration:
     sms:
       twilio:
-        dry-run: true
+        dry-run: ${TWILIO_DRY_RUN}
         enabled: true
-        messaging-service-id: XXX
-        twilio-account-sid: YYY
-        twilio-auth-token: ZZZ
+        messaging-service-id: ${TWILIO_MSG_SVC_ID}
+        twilio-account-sid: ${TWILIO_ACCOUNT_SID}
+        twilio-auth-token: ${TWILIO_AUTH_TOKEN}
     email:
       ses:
         enabled: true
         region: ap-south-1
-        dry-run: true
+        dry-run: ${EMAIL_DRY_RUN}
+        from-email-id: ${SENDER_EMAIL_ID}
     swagger:
       enabled: true
       secured: true

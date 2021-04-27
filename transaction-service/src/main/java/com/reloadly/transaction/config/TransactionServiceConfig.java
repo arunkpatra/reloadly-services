@@ -23,24 +23,4 @@ public class TransactionServiceConfig {
                 .replicas(1)
                 .build();
     }
-
-//    @Bean
-//    public ProducerFactory<String, String> producerFactory(){
-//        Map<String, Object> config = new HashMap<>();
-//        config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, properties.getKafka().getBootstrapServers());
-//        return new DefaultKafkaProducerFactory<>(config);
-//
-//    }
-
-//    @Bean
-//    public KafkaAdmin admin() {
-//        Map<String, Object> configs = new HashMap<>();
-//        configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, properties.getKafka().getBootstrapServers());
-//        return new KafkaAdmin(configs);
-//    }
-
-//    @Bean
-//    public KafkaTemplate<String, String> kafkaTemplate(ProducerFactory<String, String> producerFactory ) {
-//        return new KafkaTemplate<>(producerFactory);
-//    }
 }

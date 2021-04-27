@@ -1,9 +1,21 @@
+spring:
+  datasource:
+    hikari:
+      connection-test-query: SELECT 1 FROM SYSIBM.SYSDUMMY1
+      username: sa
+      password: password
+    initialization-mode: embedded
+    platform: derby
+    url: jdbc:derby:memory:rlacctdb;create=true
+    schema:
+      - classpath:account-services-schema-derby.sql
+    data:
+      - classpath:account-services-data-derby.sql
+
 reloadly:
   notification:
-    enabled: true
     suppress: true
   auth:
+    enabled: false
     mock:
       enabled: true
-    enabled: false
-    reloadly-auth-service-endpoint: http://localhost:9090

@@ -4,10 +4,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 
 public class NotificationResponse {
 
-    private final String message;
+    private String message;
 
     @JsonCreator
     public NotificationResponse(String message) {
+        this.message = message;
+    }
+
+    public NotificationResponse() {
+    }
+
+    public void setMessage(String message) {
         this.message = message;
     }
 

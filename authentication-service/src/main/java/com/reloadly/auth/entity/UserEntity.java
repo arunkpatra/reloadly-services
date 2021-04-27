@@ -17,9 +17,13 @@ public class UserEntity extends AbstractPersistable<Long> implements Serializabl
     @Column(name = "uid")
     private String uid;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "uid", referencedColumnName = "uid")
     private List<AuthorityEntity> authorityEntities = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "uid", referencedColumnName = "uid")
+    private List<ApiKeyEntity> apiKeyEntities = new ArrayList<>();
 
     public Boolean getActive() {
         return active;
@@ -43,5 +47,13 @@ public class UserEntity extends AbstractPersistable<Long> implements Serializabl
 
     public void setAuthorityEntities(List<AuthorityEntity> authorityEntities) {
         this.authorityEntities = authorityEntities;
+    }
+
+    public List<ApiKeyEntity> getApiKeyEntities() {
+        return apiKeyEntities;
+    }
+
+    public void setApiKeyEntities(List<ApiKeyEntity> apiKeyEntities) {
+        this.apiKeyEntities = apiKeyEntities;
     }
 }

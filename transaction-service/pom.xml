@@ -32,19 +32,14 @@
         <!-- TODO: Standup the independent transaction processor cluster-->
         <!-- This dependency exists here for demo purposes only. The transaction processors should
           run on its own cluster and are designed to run as an independently scalable microservice -->
-        <dependency>
-            <groupId>com.reloadly</groupId>
-            <artifactId>transaction-processor</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.reloadly</groupId>-->
+<!--            <artifactId>transaction-processor</artifactId>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>com.reloadly</groupId>
             <artifactId>security-integration</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.reloadly</groupId>
-            <artifactId>notification-integration</artifactId>
         </dependency>
 
         <dependency>

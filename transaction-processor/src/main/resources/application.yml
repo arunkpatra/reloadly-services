@@ -1,0 +1,66 @@
+management.metrics.tags.application: ${spring.application.name}
+management.metrics.distribution.percentiles-histogram.http.server.requests: true
+management.metrics.distribution.percentiles-histogram.resilience4j.circuitbreaker.calls: true
+management.endpoint.health.show-details: always
+management.health.diskspace.enabled: false
+management.endpoint.logfile.enabled: true
+management.endpoints.web.exposure.include: '*'
+
+spring.kafka.bootstrap-servers: localhost:9092
+
+server:
+  port: 8083
+spring:
+  application:
+    name: transaction-processor
+  datasource:
+    continue-on-error: false
+    hikari:
+      connection-test-query: SELECT 1
+      maximum-pool-size: 10
+      minimum-idle: 4
+      pool-name: TxnSvcHikariPool
+      username: ${DB_USER}
+      password: ${DB_PASSWORD}
+    initialization-mode: never
+    name: rltxndb
+    platform: mysql
+    url: jdbc:mysql://localhost:3306/rltxndb
+    generate-unique-name: true
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        id:
+          new_generator_mappings: false
+        format_sql: true
+    show-sql: false
+    open-in-view: false
+  boot:
+    admin:
+      client:
+        auto-deregistration: true
+        auto-registration: true
+        enabled: true
+        instance:
+          metadata:
+            tags:
+              environment: localhost
+          name: ${spring.application.name}
+          prefer-ip: true
+          service-base-url: http://localhost:8083
+        url: http://localhost:9595
+
+reloadly:
+  notification:
+    enabled: true
+    suppress: false
+    reloadly-notification-service-endpoint: http://localhost:8082
+  api:
+    transaction:
+      processor:
+        svc-account-api-key: ${RELOADLY_SVC_ACCT_API_KEY}
+        kafka:
+          inbound-transactions-topic: com.reloadly.inbound.txn.topic
