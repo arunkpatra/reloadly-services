@@ -6,6 +6,6 @@ This module create the documentation for this project. Please keep the documenta
 
 Create PDF format documentation for the project by invoking the `process-resources` goal (configured as the default goal):
 
- $ mvn process-resources
+ $ mvn process-resources -Pdocs
 
 Open the file _target/generated-docs/reloadly-services.pdf_ in your PDF viewer to see the generated PDF.

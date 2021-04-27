@@ -1,17 +1,132 @@
+:sourcedir: ../../../..
+ifndef::imagesdir[:imagesdir: images]
 [[getting-started]]
 == Getting Started
 
-TODO
+This section provides documentation on setting up a local installation of the Reloadly Microservices. Create an issue on GitHub https://github.com/arunkpatra/reloadly-services/issues[here] if you have questions or need help.
 
 [[pre-requisites]]
 === Pre-requisites
 
-TODO
+Following pre-requisites need to be fulfilled before you can run a fully functional instance of the platform on your local development environments. The platform has been tested on macOS Big Sur.
 
-1. Hardware: Either physical or Virtual machines with minimum 4 GB RAM and 2 CPU Cores _(8 GB RAM, 4 CPU Cores if you want to run cluster)_
-2. Operating System: Windows(version 10+), macOS(version 10.15+), Linux (CentOS, RHEL, Ubuntu)
-3. Java - JDK 8
-4. Build Tool - Maven 3.6 or above _(Optional)_
-5. Consul _(Optional)_
-6. Cassandra _(Optional)_
+1. *Hardware*: Either physical or virtual machines with minimum 8 GB RAM and 4 CPU Cores _(16 GB RAM, 8 CPU Cores if you want to do performance testing)_.
+2. *Operating System*: Windows(version 10+), macOS(version 10.15+), Linux (CentOS, RHEL, Ubuntu)
+3. *Java* - JDK 8, or JDK 11.
+4. *Build Tool* - Maven 3.6 or above
+5. *Database* - MySQL, locally running or remotely hosted.
+6. *Kafka* - Local instance with the broker server listening on port 9092. A remotely hosted Kafka cluster is acceptable as well.
+
+[TIP]
+====
+
+*Installation on macOS*
+
+- Install JDK by following the instructions https://github.com/AdoptOpenJDK/homebrew-openjdk/blob/master/README.md[here]. Please install JDK 8 or 11 only. Other JDK versions have not been tested.
+
+- Install Apache Maven by following the instructions https://formulae.brew.sh/formula/maven[here].
+
+- Install Apache Kafka by following the instructions https://formulae.brew.sh/formula/kafka[here].
+
+- Install MySQL by following the instructions https://formulae.brew.sh/formula/mysql[here].
+====
+
+[[githib-checkout]]
+=== Build From Source
+
+Clone the git repository from GitHub into a directory of your choice.
+
+----
+git clone git@github.com:arunkpatra/reloadly-services.git
+----
+
+Build code and run tests. Build should pass, for you to proceed further with the rest of the chapter. From the directory where you cloned the repository, issue the following commands.
+
+----
+cd reloadly-services
+mvn clean install
+----
+
+[NOTE]
+====
+The above commands will build code and run integration tests. The build artifacts are installed to your local maven repository. For building and running tests, you do NOT need a locally running Kafka and MySQL instance. For running tests, in-memory instances of these resources are run.
+====
+
+[[running-locally]]
+=== Development Environment Setup
+
+This is useful, when you want to set a development environment and run all the microservices on a single local machine. Kubernetes deployment support is coming up. See  https://github.com/arunkpatra/reloadly-services/issues/17[this GitHub issue].
+
+[NOTE]
+====
+These instructions are for macOS. Please tailor them to run in other environments like Windows and Linux.
+====
+
+==== Starting Local Services
+Following services need to be started before you run microservices.
+
+===== MySQL Setup
+Issue the following commands. You should have installed MySQL locally and verified it to work correctly as a pre-requisite.
+
+----
+mysql.server start
+----
+
+[WARNING]
+====
+You must secure your local MySQL installation and create a user with database wide access. You can use the admin user for now, on your local machine. See MySQL docs for more information. Take a note of the username and password of the admin user; you will need it in a later step.
+====
+
+All database tables used by the microservices need to be created upfront in your local MySQL database instance. As noted earlier, you do NOT need to do this for running integration tests since tests use in-memory Derby database.
+
+Run the following scripts in order.
+
+====== Authentication Microservice Schema
+
+[source, sql]
+----
+include::{sourcedir}/authentication-service/src/main/resources/auth-services-schema-mysql.sql[]
+----
+
+====== Account Microservice Schema
+[source, sql]
+----
+include::{sourcedir}/account-service/src/main/resources/account-services-schema-mysql.sql[]
+----
+
+====== Transaction Microservice Schema
+
+[NOTE]
+====
+The following script, sets up the tables needed for both the `transaction-processor` and the `transaction-service`. See later sections for details.
+====
+
+[source, sql]
+----
+include::{sourcedir}/transaction-common/src/main/resources/transaction-services-schema-mysql.sql[]
+----
+
+After running these scripts, you must have the schemas correctly created. Please verify. The following image shows the tables in IntelliJ Idea Data Explorer (you can use any tool of your choice).
+
+//[.thumb]
+image::reloadly-db-schemas.png[scaledwidth=100%]
+
+===== Kafka Setup
+Issue the following commands. You should have installed Kafka locally and verified it to work correctly as a pre-requisite.
+
+----
+zookeeper-server-start -daemon /usr/local/etc/kafka/zookeeper.properties & kafka-server-start /usr/local/etc/kafka/server.properties
+----
+
+[NOTE]
+====
+A topic named `com.reloadly.inbound.txn.topic` is needed by the `transaction-processor` (Kafka consumer) and `transaction-service`(Kafka producer) components. This topic is created on the fly by the transaction-service` if it does not exist. While this is acceptable in non-production environments, it is discouraged in higher environments. The `transaction-processor` listens to this topic and won't process messages if this topic does not exist.
+====
+
+[WARNING]
+====
+In your local environment, Kafka uses PLAINTEXT by default. In other environments, you must use strong encryption. Please refer Kafka documentation for securing a Kafka installation.
+====
+
+==== Running Microservices Locally
 

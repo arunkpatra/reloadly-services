@@ -16,7 +16,7 @@ Arun Patra <https://twitter.com/arunkpatra[@arunkpatra]>
 :tabsize: 2
 :pdf-version: 1.7
 ifndef::imagesdir[:imagesdir: images]
-ifndef::sourcedir[:sourcedir: ../../main/java]
+//ifndef::sourcedir[:sourcedir: ../../main/java]
 
 
 == Introduction
