@@ -4,12 +4,7 @@ management.metrics.distribution.percentiles-histogram.resilience4j.circuitbreake
 management.endpoint.health.show-details: always
 management.health.diskspace.enabled: false
 management.endpoint.logfile.enabled: true
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
+management.endpoints.web.exposure.include: '*'
 
 server:
   port: 8080
