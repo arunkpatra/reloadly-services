@@ -106,7 +106,15 @@ The following script, sets up the tables needed for both the `transaction-proces
 include::{sourcedir}/transaction-common/src/main/resources/transaction-services-schema-mysql.sql[]
 ----
 
-After running these scripts, you must have the schemas correctly created. Please verify. The following image shows the tables in IntelliJ Idea Data Explorer (you can use any tool of your choice).
+====== Seed Data
+This data must be seeded into the DB for system to work correctly. It does nothing other than ading a service account and API key which is needed for inter-microservice communication.
+
+[source, sql]
+----
+include::{sourcedir}/authentication-service/src/main/resources/auth-services-data-mysql.sql[]
+----
+
+After running these scripts, you must have the schemas correctly created and seed data populated. Please verify. The following image shows the tables in IntelliJ Idea Data Explorer (you can use any tool of your choice).
 
 //[.thumb]
 image::reloadly-db-schemas.png[scaledwidth=100%]
