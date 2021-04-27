@@ -1,8 +1,19 @@
 spring.kafka.bootstrap-servers: localhost:7092
 
+spring:
+  datasource:
+    hikari:
+      connection-test-query: SELECT 1 FROM SYSIBM.SYSDUMMY1
+      username: sa
+      password: password
+    initialization-mode: embedded
+    platform: derby
+    schema:
+      - classpath:transaction-services-schema-derby.sql
+    data:
+      - classpath:transaction-services-data-derby.sql
+    url: jdbc:derby:memory:rltxndb;create=true
+
 reloadly:
-  api:
-    transaction:
-      processor:
-        kafka:
-          inbound-transactions-topic: com.reloadly.inbound.txn.topic
+  notification:
+    suppress: true
