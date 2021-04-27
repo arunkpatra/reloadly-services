@@ -1,4 +1,4 @@
-= Reloadly Services Documentation
+= Reloadly Microservices Documentation
 Arun Patra <https://twitter.com/arunkpatra[@arunkpatra]>
 2021.04.27
 :example-caption!:
@@ -21,52 +21,21 @@ ifndef::sourcedir[:sourcedir: ../../main/java]
 
 == Introduction
 
-This project does something.
-We just haven't decided what that is yet.
+This project implements a hypothetical Fintech Platform. It demonstrates Microservice architecture, design, best practices and production ready features. It was developed as part of a code challenge from https://www.reloadly.com/[Reloadly].
 
-== Source Code
-
-[source,java]
-.Java code from project
-----
-include::{sourcedir}/example/StringUtils.java[tags=contains,indent=0]
-----
-<1> return statement
-
-This page was built by the following command:
-
- $ mvn
-
-== Images
-
-[.thumb]
-image::sunset.jpg[scaledwidth=75%]
-
-== Attributes
-
-.Built-in
-asciidoctor-version:: {asciidoctor-version}
-safe-mode-name:: {safe-mode-name}
-docdir:: {docdir}
-docfile:: {docfile}
-imagesdir:: {imagesdir}
-
-.Custom
-sourcedir:: {sourcedir}
-
-== Includes
-
-.include::subdir/_b.adoc[]
+[NOTE]
 ====
-include::subdir/_b.adoc[]
+The *reloadly* brand name, and logo are copyright of https://www.reloadly.com/[Reloadly]. Permission is hereby granted to https://www.reloadly.com/[Reloadly] to review the architecture, design, source code and documentation of this project. Usage of architecture, design, source code is also being granted to https://www.reloadly.com/[Reloadly] without any constraints, including the right to use in building production systems either in whole or part.
+
+Unless required by applicable law or agreed to in writing, this software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 ====
 
-WARNING: Includes can be tricky!
+=== Source Code
 
-== Source Code and Syntax Highlighting
+icon:github[2x] Head over to the GitHub repository https://github.com/arunkpatra/reloadly-services[here].
 
-This section shows some code highlighting examples.
+include::reloadly-getting-started.adoc[]
 
-include::subdir/_code_examples.adoc[]
+include::reloadly-architecture.adoc[]
 
-
+include::reloadly-microservices.adoc[]

@@ -8,8 +8,7 @@
 This project implements various microservices. Please see the README files of 
 the respective microservices for more details.
 
-## Build
+## Documentation
 
-- Checkout this repository to your local machine, you would need to install `git` first.
-- Build the project using `./mvnw clean install` while remaining in the root directory of this project. You would need
-  JDK 8 installed on your machine first.
+Head over to the [Reference Docs](https://master.d219ur0ee5uhks.amplifyapp.com/ "Reloadly Code Challenge Microservices Reference Docs") site.
+

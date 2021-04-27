@@ -1,0 +1,17 @@
+[[getting-started]]
+== Getting Started
+
+TODO
+
+[[pre-requisites]]
+=== Pre-requisites
+
+TODO
+
+1. Hardware: Either physical or Virtual machines with minimum 4 GB RAM and 2 CPU Cores _(8 GB RAM, 4 CPU Cores if you want to run cluster)_
+2. Operating System: Windows(version 10+), macOS(version 10.15+), Linux (CentOS, RHEL, Ubuntu)
+3. Java - JDK 8
+4. Build Tool - Maven 3.6 or above _(Optional)_
+5. Consul _(Optional)_
+6. Cassandra _(Optional)_
+
