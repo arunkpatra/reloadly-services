@@ -106,6 +106,7 @@ The following script, sets up the tables needed for both the `transaction-proces
 include::{sourcedir}/transaction-common/src/main/resources/transaction-services-schema-mysql.sql[]
 ----
 
+[[seed-data]]
 ====== Seed Data
 This data must be seeded into the DB for system to work correctly. It does nothing other than ading a service account and API key which is needed for inter-microservice communication.
 
@@ -117,7 +118,7 @@ include::{sourcedir}/authentication-service/src/main/resources/auth-services-dat
 After running these scripts, you must have the schemas correctly created and seed data populated. Please verify. The following image shows the tables in IntelliJ Idea Data Explorer (you can use any tool of your choice).
 
 //[.thumb]
-image::reloadly-db-schemas.png[scaledwidth=100%]
+image::reloadly-db-schemas.png[scaledwidth=65%]
 
 ===== Kafka Setup
 Issue the following commands. You should have installed Kafka locally and verified it to work correctly as a pre-requisite.
@@ -137,4 +138,138 @@ In your local environment, Kafka uses PLAINTEXT by default. In other environment
 ====
 
 ==== Running Microservices Locally
+
+Follow the steps listed below in order to run all components of the platform locally. You should folow these steps sequentially.
+
+===== Environment Variable Configuration
+You would need to set the following Environment variables. Use the method that's appropriate for your operating system. On macOS, you can export environment variables on the command line as follows.
+
+----
+export YOUR_ENV_VARIABLE=env_var_value
+----
+
+|===
+|Environment Variable |Value |Notes
+
+|DB_USER
+|The MySQL DB username
+|Used by all microservices that access the database.
+
+|DB_PASSWORD
+|The MySQL DB password
+|Used by all microservices that access the database.
+
+|AWS_ACCESS_KEY_ID
+|Your AWS account Access key ID
+|Needed to send email via Amazon SES
+
+|AWS_SECRET_ACCESS_KEY
+|Your AWS account Secret access key.
+|Needed to send email via Amazon SES.
+
+|EMAIL_DRY_RUN
+|Set to `true` or `false`
+|Setting `false` suppresses email sending. `true` will send actual emails. You need to configure SES correctly in your AWS account. See Amazon SES documentation.
+
+|SENDER_EMAIL_ID
+|The sender email ID verified by AWS SES to send emails from.
+|Needed to send email via Amazon SES.
+
+|TWILIO_DRY_RUN
+|Set to `true` or `false`
+|Setting `false` suppresses SMS sending. `true` will send actual SMS messages.
+
+|TWILIO_ACCOUNT_SID
+|Your Twilio account SID. Get it from your Twilio account.
+|Needed to send SMS via Twilio (SMS charges will be applied by Twilio).
+
+|TWILIO_AUTH_TOKEN
+|Your Twilio account auth token. Get it from your Twilio account.
+|Needed to send SMS via Twilio.
+
+|TWILIO_MSG_SVC_ID
+|Your Twilio account Message Service ID. Get it from your Twilio account.
+|Needed to send SMS via Twilio.
+
+|RELOADLY_SVC_ACCT_API_KEY
+|The reloadly service account API key. Use the value you inserted in the <<seed-data, Seed Data>> section.
+|Needed for the platform to work correctly. Use the `api-key` value from the final `INSERT` statement in that script.
+|===
+
+[TIP]
+====
+Consider writing a small shell script, or add these in your `~/.zprofile` of `~./bashprofile` file or a suitable method of your liking.
+====
+
+===== Running Microservices
+Run these services in sequence (recommended). You must have done a `mvn clean install` from the root of your cloned repository. That builds all microservices.
+
+[NOTE]
+====
+Ensure that, your MySQL server and Kafka instances are up and running before you proceed with the following steps.
+====
+
+====== Authentication Microservice
+Issue these commands from the root of your cloned repository.
+
+----
+cd authentication-service
+mvn spring-boot:run
+----
+Access Swagger UI of Authentication Microservice at http://localhost:9090/swagger-ui/
+
+====== Account Microservice
+Issue these commands from the root of your cloned repository.
+
+----
+cd account-service
+mvn spring-boot:run
+----
+
+Access Swagger UI of Authentication Microservice at http://localhost:8080/swagger-ui/
+
+====== Transaction Microservice
+Issue these commands from the root of your cloned repository.
+
+----
+cd transaction-service
+mvn spring-boot:run
+----
+
+Access Swagger UI of Authentication Microservice at http://localhost:8081/swagger-ui/
+
+====== Notification Microservice
+Issue these commands from the root of your cloned repository.
+
+----
+cd notification-service
+mvn spring-boot:run
+----
+
+Access Swagger UI of Authentication Microservice at http://localhost:8082/swagger-ui/
+
+====== Transaction Processor
+Issue these commands from the root of your cloned repository.
+
+----
+cd transaction-processor
+mvn spring-boot:run
+----
+
+====== Spring Boot Admin App
+Issue these commands from the root of your cloned repository.
+
+----
+cd admin-service
+mvn spring-boot:run
+----
+
+Access the Admin Service Dashboard at http://localhost:9595/. You should see the following dashboard once all your services register with the Spring Boot Admin app. You should navigate to the `Wallboard` tab of the Spring Boot Admin UI.
+
+//[.thumb]
+image::spring-boot-admin.png[scaledwidth=100%]
+
+Congratulations! Your services are running.
+
+Now head over to the documentation of individual microservices for more details.
 

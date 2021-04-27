@@ -15,7 +15,7 @@ Items grayed out, are proposed. Please see open issues in GitHub https://github.
 
 == Code Challenge Highlights
 
-- *~ 12000 lines of well tested code* covered by JUnit tests.
+- *~ 12000 lines of code* covered by JUnit tests.
 - Modern tech stack, event driven architecture and solid design principles.
 - Fully leverages Spring Boot Technology.
 - Advanced Spring Boot features including auto-configuration.
