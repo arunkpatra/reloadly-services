@@ -19,18 +19,16 @@ spring:
   datasource:
     continue-on-error: false
     hikari:
-      connection-test-query: SELECT 1 FROM SYSIBM.SYSDUMMY1
-      maximum-pool-size: 50
-      minimum-idle: 10
+      connection-test-query: SELECT 1
+      maximum-pool-size: 10
+      minimum-idle: 4
       pool-name: AcctSvcHikariPool
-    initialization-mode: embedded
+      username: ${DB_USER}
+      password: ${DB_PASSWORD}
+    initialization-mode: never
     name: rlacctdb
-    platform: derby
-    schema:
-      - classpath:account-services-schema-derby.sql
-    data:
-      - classpath:account-services-data-derby.sql
-    url: jdbc:derby:memory:rlacctdb;create=true
+    platform: mysql
+    url: jdbc:mysql://localhost:3306/rlacctdb
     generate-unique-name: true
   jpa:
     generate-ddl: false
@@ -57,7 +55,6 @@ spring:
           prefer-ip: true
           service-base-url: http://localhost:8080
         url: http://localhost:9595
-
 
 reloadly:
   notification:
