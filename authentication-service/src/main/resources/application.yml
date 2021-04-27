@@ -19,18 +19,16 @@ spring:
   datasource:
     continue-on-error: false
     hikari:
-      connection-test-query: SELECT 1 FROM SYSIBM.SYSDUMMY1
-      maximum-pool-size: 50
-      minimum-idle: 10
+      connection-test-query: SELECT 1
+      maximum-pool-size: 10
+      minimum-idle: 4
       pool-name: AuthSvcHikariPool
-    initialization-mode: embedded
+      username: ${DB_USER}
+      password: ${DB_PASSWORD}
+    initialization-mode: never
     name: rlauthdb
-    platform: derby
-    schema:
-      - classpath:auth-services-schema-derby.sql
-    data:
-      - classpath:auth-services-data-derby.sql
-    url: jdbc:derby:memory:rlauthdb;create=true
+    platform: mysql
+    url: jdbc:mysql://localhost:3306/rlauthdb
     generate-unique-name: true
   jpa:
     generate-ddl: false

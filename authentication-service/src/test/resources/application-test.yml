@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    hikari:
+      connection-test-query: SELECT 1 FROM SYSIBM.SYSDUMMY1
+      username: sa
+      password: password
+    initialization-mode: embedded
+    platform: derby
+    url: jdbc:derby:memory:rlauthdb;create=true
+    schema:
+      - classpath:auth-services-schema-derby.sql
+    data:
+      - classpath:auth-services-data-derby.sql
+  boot:
+    admin:
+      client:
+        enabled: false
+
+reloadly:
+  integration:
+    swagger:
+      enabled: false
