@@ -14,5 +14,4 @@ This project implements a hypothetical Fintech Platform. For details on the arch
 |Online HTML Format documentation | [HTML Reference](https://master.d219ur0ee5uhks.amplifyapp.com)|
 |PDF Format documentation  | [PDF Reference](https://master.d219ur0ee5uhks.amplifyapp.com/pdf/reloadly-services.pdf)|
 
-Head over to the [Reference Docs](https://master.d219ur0ee5uhks.amplifyapp.com/ "Reloadly Code Challenge Microservices Reference Docs") site.
 
