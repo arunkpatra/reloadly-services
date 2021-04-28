@@ -1,4 +1,4 @@
-= Reloadly Microservices Documentation
+= Fintech Platform Reference Implementation
 Arun Patra <https://twitter.com/arunkpatra[@arunkpatra]>
 2021.04.27
 :example-caption!:
