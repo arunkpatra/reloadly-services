@@ -21,6 +21,11 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 
+/**
+ * An illustrative implementation of a Money Reload transaction processor.
+ *
+ * @author Arun Patra
+ */
 @TransactionHandler(value = "ADD_MONEY", description = "Transaction processor to hand money reload")
 public class MoneyReloadTransactionProcessor extends AbstractTransactionProcessor {
 
@@ -36,7 +41,7 @@ public class MoneyReloadTransactionProcessor extends AbstractTransactionProcesso
     }
 
     @Override
-    public void handleTransaction(TransactionEntity txnEntity) throws ReloadlyTxnProcessingException {
+    public void processTransaction(TransactionEntity txnEntity) throws ReloadlyTxnProcessingException {
 
         LOGGER.info("Handling money reload transaction.");
         markTransactionAsProcessing(txnEntity);

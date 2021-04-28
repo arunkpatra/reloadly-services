@@ -1,7 +1,11 @@
 package com.reloadly.transaction.exception;
 
 import com.reloadly.commons.exceptions.ReloadlyException;
-
+/**
+ * Exception indicating Kafka processing exception.
+ *
+ * @author Arun Patra
+ */
 public class KafkaProcessingException extends ReloadlyException {
 
     private static final String DEFAULT_MESSAGE = "Could not process transaction";

@@ -2,7 +2,11 @@ package com.reloadly.transaction.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
-
+/**
+ * The Transaction Processor Config properties.
+ *
+ * @author Arun Patra
+ */
 @ConfigurationProperties(TransactionProcessorProperties.PREFIX)
 public class TransactionProcessorProperties {
 

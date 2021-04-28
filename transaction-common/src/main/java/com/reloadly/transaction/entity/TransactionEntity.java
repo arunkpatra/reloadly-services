@@ -8,6 +8,11 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Transaction JPA entity.
+ *
+ * @author Arun Patra
+ */
 @Entity
 @Table(name = "transaction_table")
 public class TransactionEntity extends AbstractPersistable<Long> implements Serializable {

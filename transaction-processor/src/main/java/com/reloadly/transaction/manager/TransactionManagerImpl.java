@@ -15,6 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Hashtable;
 import java.util.Map;
 
+/**
+ * The transaction manager is a faćade into the configured transaction processors. Each type of transaction can only
+ * by handled by a specific {@link TransactionProcessor}.
+ * <p>
+ * The transaction manager locates the appropriate transaction processor and delegates.
+ *
+ * @author Arun Patra
+ */
 @Service
 public class TransactionManagerImpl implements TransactionManager, InitializingBean {
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionManagerImpl.class);
@@ -50,12 +58,19 @@ public class TransactionManagerImpl implements TransactionManager, InitializingB
         printGafDetails();
     }
 
+    /**
+     * Delegates to a {@link TransactionProcessor}. If the transaction processor throws an exception, the operation is
+     * rolled back. This operation thus must start a database transaction, or possibly a distributed transaction is XA
+     * is enabled.
+     *
+     * @param txnEntity The transaction entity record.
+     */
     @Override
     @Transactional
     public void handleTransaction(TransactionEntity txnEntity) throws ReloadlyTxnProcessingException {
         if (txnProcessorMap.containsKey(txnEntity.getTransactionType().name())) {
             try {
-                txnProcessorMap.get(txnEntity.getTransactionType().name()).handleTransaction(txnEntity);
+                txnProcessorMap.get(txnEntity.getTransactionType().name()).processTransaction(txnEntity);
             } catch (Exception e) {
                 LOGGER.info("Transaction processor has failed. Root cause: " + e.getMessage());
                 throw e;

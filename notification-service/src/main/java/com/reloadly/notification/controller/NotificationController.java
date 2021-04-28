@@ -13,6 +13,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Notification controller.
+ *
+ * @author Arun Patra
+ */
 @RestController
 @CrossOrigin
 @Api(tags = {"Notification"}, hidden = true, value = "Notification Services")

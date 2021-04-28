@@ -7,6 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
 
+/**
+ * Airtime send JPA entity.
+ *
+ * @author Arun Patra
+ */
 @Entity
 @Table(name = "airtime_send_txn_table")
 public class AirtimeSendTxnEntity extends AbstractPersistable<Long> implements Serializable {

@@ -10,6 +10,11 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
+/**
+ * Notification service to send emails and SMS.
+ *
+ * @author Arun Patra
+ */
 @Service
 public class NotificationServiceImpl implements NotificationService{
 

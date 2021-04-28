@@ -21,6 +21,11 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 
+/**
+ * An illustrative implementation of a Airtime Send transaction processor.
+ *
+ * @author Arun Patra
+ */
 @TransactionHandler(value = "SEND_AIRTIME", description = "Transaction processor to hand sending airtime")
 public class AirTimeSendTransactionProcessor extends AbstractTransactionProcessor {
 
@@ -36,7 +41,7 @@ public class AirTimeSendTransactionProcessor extends AbstractTransactionProcesso
     }
 
     @Override
-    public void handleTransaction(TransactionEntity txnEntity) throws ReloadlyTxnProcessingException {
+    public void processTransaction(TransactionEntity txnEntity) throws ReloadlyTxnProcessingException {
 
         LOGGER.info("Handling airtime send transaction.");
         markTransactionAsProcessing(txnEntity);

@@ -1,6 +1,19 @@
+ifndef::imagesdir[:imagesdir: images]
 [[microservices-notif]]
 
 === Notification Microservice
 
+The Notification microservice allows sending emails and SMS messages. Endpoints are provided for callers to invoke these facilities as REST API calls.
 
+For Email, Amazon SES is used. For SMS, Twilio is used. Other email or SMS providers could be plugged in transparently since the required abstractions exist to easily swap out implementations.
 
+See Swagger UI for API documentation. It's available at http://localhost:8082/swagger-ui/ when you run your services locally.
+
+==== API
+
+image::notification-microservice.png[scaledwidth=100%]
+
+==== Module Dependencies
+
+//[.thumb]
+image::notification-service-deps.png[scaledwidth=50%]

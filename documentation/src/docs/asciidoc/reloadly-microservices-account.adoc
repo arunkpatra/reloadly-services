@@ -6,6 +6,11 @@ The Account microservice, allows interacting with Account domain model. Various 
 
 See Swagger UI for API documentation. It's available at http://localhost:8080/swagger-ui/ when you run your services locally.
 
+==== API
 //[.thumb]
 image::acct-microservice.png[scaledwidth=100%]
 
+==== Module Dependencies
+
+//[.thumb]
+image::account-service-deps.png[scaledwidth=50%]

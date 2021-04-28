@@ -5,6 +5,11 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * Money reload JPA entity.
+ *
+ * @author Arun Patra
+ */
 @Entity
 @Table(name = "money_reload_txn_table")
 public class MoneyReloadTxnEntity extends AbstractPersistable<Long> implements Serializable {

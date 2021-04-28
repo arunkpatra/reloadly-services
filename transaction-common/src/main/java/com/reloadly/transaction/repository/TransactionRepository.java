@@ -6,7 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-
+/**
+ * The Transaction JPA repository.
+ *
+ * @author Arun Patra
+ */
 @Repository
 public interface TransactionRepository extends CrudRepository<TransactionEntity, Long> {
     Optional<TransactionEntity> findByTxnId(String txnId);

@@ -23,6 +23,11 @@ import org.springframework.util.Assert;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * An abstract transaction processor implementing shared functionality for transaction processors.
+ *
+ * @author Arun Patra
+ */
 public abstract class AbstractTransactionProcessor implements TransactionProcessor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractTransactionProcessor.class);
@@ -42,7 +47,7 @@ public abstract class AbstractTransactionProcessor implements TransactionProcess
 
         // Change status
         txnEntity.setTransactionStatus(TransactionStatus.PROCESSING);
-        txnEntity = transactionRepository.save(txnEntity);
+        transactionRepository.save(txnEntity);
     }
 
     protected void markTransactionAsSuccessful(TransactionEntity txnEntity) {

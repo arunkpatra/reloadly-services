@@ -1,5 +1,10 @@
 package com.reloadly.transaction.config;
 
+/**
+ * Kafka configuration properties.
+ *
+ * @author Arun Patra
+ */
 public class KafkaProperties {
 
     private static final String DEFAULT_TRANSACTION_POSTING_TOPIC = "com.reloadly.inbound.txn.topic";

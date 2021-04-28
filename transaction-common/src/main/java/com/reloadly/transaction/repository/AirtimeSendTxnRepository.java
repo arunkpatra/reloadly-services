@@ -6,6 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/**
+ * The Airtime send JPA repository.
+ *
+ * @author Arun Patra
+ */
 @Repository
 public interface AirtimeSendTxnRepository extends CrudRepository<AirtimeSendTxnEntity, Long> {
 
