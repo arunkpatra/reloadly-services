@@ -198,7 +198,7 @@ export YOUR_ENV_VARIABLE=env_var_value
 
 [TIP]
 ====
-Consider writing a small shell script, or add these in your `~/.zprofile` of `~./bashprofile` file or a suitable method of your liking.
+Consider writing a small shell script, or add these in your `~/.zprofile` or `~./bashprofile` file or a suitable method of your liking.
 ====
 
 ===== Running Microservices

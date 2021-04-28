@@ -19,7 +19,7 @@ image::reloadly-arch.svg[scaledwidth=100%]
 
 === Design
 
-The Authentication, Account, Transaction and Notification microservices are Spring Boot applications. Each microservice embrases Domain Driven Design (DDD). Each microservice is responsible for managing data for the domain model it manages.
+The Authentication, Account, Transaction and Notification microservices are Spring Boot applications. Each microservice embraces Domain Driven Design (DDD). Each microservice is responsible for managing data for the domain model it manages.
 
 Additionally, for monitoring, A Spring Boot Admin app is utilized (not shown in illustration above); its optional.
 
