@@ -6,6 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+/**
+ * The User Authority JPA entity.
+ *
+ * @author Arun Patra
+ */
 @Entity
 @Table(name = "authority_table")
 public class AuthorityEntity extends AbstractPersistable<Long> {

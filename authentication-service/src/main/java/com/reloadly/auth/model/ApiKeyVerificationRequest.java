@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * The JWT token verification request.
+ * The API key verification request.
  */
 @ApiModel(value = "ApiKeyVerificationRequest", description = "An API Key verification request.")
 public class ApiKeyVerificationRequest {

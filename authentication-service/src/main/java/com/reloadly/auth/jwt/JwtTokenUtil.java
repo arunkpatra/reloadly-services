@@ -10,7 +10,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-
+/**
+ * A JWT token utility providing various functions.
+ *
+ * @author Arun Patra
+ */
 public class JwtTokenUtil implements Serializable {
 
     private final AuthenticationServiceProperties properties;

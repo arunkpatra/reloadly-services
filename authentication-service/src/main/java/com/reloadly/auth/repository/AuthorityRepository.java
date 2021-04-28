@@ -7,6 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Authority JPA repository.
+ *
+ * @author Arun Patra
+ */
 @Repository
 public interface AuthorityRepository extends CrudRepository<AuthorityEntity, Long> {
 

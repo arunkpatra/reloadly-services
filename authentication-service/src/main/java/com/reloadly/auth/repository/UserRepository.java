@@ -7,6 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+/**
+ * user JPA repository.
+ *
+ * @author Arun Patra
+ */
 @Repository
 public interface UserRepository extends CrudRepository<UserEntity, Long> {
 

@@ -8,6 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+/**
+ * An abstract REST Controller exposing useful facilities for concrete implementation to leverage.
+ *
+ * @author Arun Patra
+ */
 public abstract class AbstractRestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractRestController.class);

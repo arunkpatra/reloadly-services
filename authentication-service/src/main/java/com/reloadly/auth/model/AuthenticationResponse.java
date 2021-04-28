@@ -6,7 +6,11 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.Date;
-
+/**
+ * The authentication response.
+ *
+ * @author Arun Patra
+ */
 @ApiModel(value = "AuthenticationResponse", description = "The Authentication response")
 public class AuthenticationResponse implements Serializable {
 

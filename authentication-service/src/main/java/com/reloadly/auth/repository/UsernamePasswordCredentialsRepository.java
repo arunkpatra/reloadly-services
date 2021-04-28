@@ -6,6 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/**
+ * Username password credentials JPA repository.
+ *
+ * @author Arun Patra
+ */
 @Repository
 public interface UsernamePasswordCredentialsRepository extends CrudRepository<UsernamePasswordCredentialsEntity, Long> {
     Optional<UsernamePasswordCredentialsEntity> findByUsername(String username);

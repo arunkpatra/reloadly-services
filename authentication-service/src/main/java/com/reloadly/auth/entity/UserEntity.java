@@ -6,7 +6,11 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * The User entity.
+ *
+ * @author Arun Patra
+ */
 @Entity
 @Table(name = "user_table")
 public class UserEntity extends AbstractPersistable<Long> implements Serializable {

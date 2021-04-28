@@ -24,7 +24,11 @@ import org.springframework.util.Assert;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
+/**
+ * Provides authentication related services.
+ *
+ * @author Arun Patra
+ */
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
 
@@ -50,8 +54,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     /**
-     * Returns an {@link AuthenticationResponse}. If the supplied credentials match valid token is returned.
-     * Otherwise throws an exception.
+     * Returns an authentication result. If the supplied credentials match, and the username exists, returns true, else false.
      *
      * @param username The username.
      * @param password The password in cleartext. Its is matched up with the encrypted password.
@@ -77,7 +80,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new AuthenticationFailedException();
         }
 
-        // This is the subject
         String uid = upceOptional.get().getUid();
 
         // Generate token
@@ -112,7 +114,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
      * @param apiKey The API key
      * @return A translated API key. The {@link ReloadlyApiKeyIdentity} wraps a user or a service account and the roles attached
      * to it.
-     * @throws ApiKeyVerificationFailedException
+     * @throws ApiKeyVerificationFailedException If verification fails
      */
     @Override
     @Transactional

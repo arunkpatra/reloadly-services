@@ -25,6 +25,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 
+/**
+ * Authentication Microservice REST APIs.
+ *
+ * @author Arun Patra
+ */
 @RestController
 @CrossOrigin
 @Api(tags = {"Authentication"}, hidden = true, value = "Authentication Services")

@@ -2,6 +2,11 @@ package com.reloadly.auth.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+/**
+ * Authentication Service properties. All properties are injectable via spring properties or environment variables.
+ *
+ * @author Arun Patra
+ */
 @ConfigurationProperties(AuthenticationServiceProperties.PREFIX)
 public class AuthenticationServiceProperties {
 

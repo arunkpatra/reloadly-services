@@ -7,6 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+/**
+ * API Key JPA repository.
+ *
+ * @author Arun Patra
+ */
 @Repository
 public interface ApiKeyRepository extends CrudRepository<ApiKeyEntity, Long> {
 

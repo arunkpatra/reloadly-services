@@ -5,7 +5,11 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
-
+/**
+ * The signup response.
+ *
+ * @author Arun Patra
+ */
 @ApiModel(value = "SignupResponse", description = "The signup response")
 public class SignupResponse implements Serializable {
 

@@ -15,6 +15,11 @@ import org.springframework.util.Assert;
 
 import java.util.UUID;
 
+/**
+ * Provides services related to management of users.
+ *
+ * @author Arun Patra
+ */
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -31,7 +36,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Create a new user. A default authority named ROLE_USER is added for every newly created user.
+     * Create a new user.
      *
      * @param username The username
      * @param password The password. It will be stored in an encrypted format.

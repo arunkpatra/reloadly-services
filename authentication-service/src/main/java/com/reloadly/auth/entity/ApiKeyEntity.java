@@ -6,6 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+/**
+ * The API Key JPA entity.
+ *
+ * @author Arun Patra
+ */
 @Entity
 @Table(name = "api_key_table")
 public class ApiKeyEntity extends AbstractPersistable<Long> {

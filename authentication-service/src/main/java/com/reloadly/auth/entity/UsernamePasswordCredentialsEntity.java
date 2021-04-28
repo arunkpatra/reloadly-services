@@ -5,7 +5,11 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
+/**
+ * The UsernamePassword entity.
+ *
+ * @author Arun Patra
+ */
 @Entity
 @Table(name = "username_password_table")
 public class UsernamePasswordCredentialsEntity extends AbstractPersistable<Long> {

@@ -8,6 +8,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * Authentication Service Config.
+ *
+ * @author Arun Patra
+ */
 @EnableConfigurationProperties(AuthenticationServiceProperties.class)
 @Configuration
 @ComponentScan({"com.reloadly.auth"})
