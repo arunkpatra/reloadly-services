@@ -17,6 +17,4 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
-    - name: Coverage
-      run: mvn -B clean test jacoco:report-aggregate coveralls:report -Dcoveralls.repo.token=${{ secrets.GITHUB_TOKEN }}
+      run: mvn -B clean test jacoco:report-aggregate coveralls:report --file pom.xml -Dcoveralls.repo.token=${{ secrets.GITHUB_TOKEN }}
