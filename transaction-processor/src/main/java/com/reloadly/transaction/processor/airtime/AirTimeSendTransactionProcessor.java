@@ -57,7 +57,7 @@ public class AirTimeSendTransactionProcessor extends AbstractTransactionProcesso
             LOGGER.error("Airtime send transaction with txnId: {} has failed with reason {}", txnEntity.getTxnId(), e.getMessage());
             sendNotifications(txnEntity.getUid(), false);
         } catch (Exception e) {
-            throw new ReloadlyTxnProcessingException("Unhandled exception occurred. Rolling back transaction. Root cause: ".concat(e.getMessage()), e);
+            throw new ReloadlyTxnProcessingException("Unhandled exception occurred. Rolling back transaction. Root cause: " + e.getMessage(), e);
         }
 
         markTransactionAsSuccessful(txnEntity);

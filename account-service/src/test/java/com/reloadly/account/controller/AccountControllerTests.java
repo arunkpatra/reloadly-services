@@ -2,6 +2,7 @@ package com.reloadly.account.controller;
 
 import com.reloadly.account.AbstractIntegrationTest;
 import com.reloadly.account.model.*;
+import com.reloadly.commons.model.ErrorResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
@@ -158,6 +159,26 @@ public class AccountControllerTests extends AbstractIntegrationTest {
                 objectMapper.readValue(mvcResult.getResponse().getContentAsString(), AccountDebitResponse.class);
         assertThat(response.getSuccessful()).isTrue();
         assertThat(response.getMessage()).isEqualTo("Account successfully debited");
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void should_not_debit_account() throws Exception {
+        String testUid = "c1fe6f0d-420e-4161-a134-9c2342e36c95";
+        AccountDebitRequest request = new AccountDebitRequest(500f);
+        // Setup and Act
+        MvcResult mvcResult = mockMvc.perform(post("/account/debit/".concat(testUid))
+                .header("X-Mock-UID", testUid).content(objectMapper.writeValueAsString(request))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        // Assert
+        ErrorResponse response =
+                objectMapper.readValue(mvcResult.getResponse().getContentAsString(), ErrorResponse.class);
+        assertThat(response.getErrorDescription()).isEqualTo("Insufficient funds");
     }
 
     @Test

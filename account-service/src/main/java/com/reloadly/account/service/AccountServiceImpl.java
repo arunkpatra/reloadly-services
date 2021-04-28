@@ -142,12 +142,8 @@ public class AccountServiceImpl extends AccountUpdateNotificationSupport impleme
         AccountEntity ae = getAccountEntity(uid);
         AccountBalanceEntity abe = getAccountBalanceEntity(ae.getAccountId());
         abe.setAccountBalance(abe.getAccountBalance() + request.getAmount());
+        accountBalanceRepository.save(abe);
 
-        try {
-            accountBalanceRepository.save(abe);
-        } catch (Exception e) {
-            throw new AccountBalanceException("failed to credit transaction. Root cause: ".concat(e.getMessage()), e);
-        }
         return new AccountCreditResponse("Account successfully credited");
     }
 
@@ -170,13 +166,9 @@ public class AccountServiceImpl extends AccountUpdateNotificationSupport impleme
         if (request.getAmount() > abe.getAccountBalance()) {
             throw new AccountBalanceException("Insufficient funds");
         }
-        abe.setAccountBalance(abe.getAccountBalance() - request.getAmount());
 
-        try {
-            accountBalanceRepository.save(abe);
-        } catch (Exception e) {
-            throw new AccountBalanceException("failed to credit transaction. Root cause: ".concat(e.getMessage()), e);
-        }
+        abe.setAccountBalance(abe.getAccountBalance() - request.getAmount());
+        accountBalanceRepository.save(abe);
         return new AccountDebitResponse(true, "Account successfully debited");
     }
 

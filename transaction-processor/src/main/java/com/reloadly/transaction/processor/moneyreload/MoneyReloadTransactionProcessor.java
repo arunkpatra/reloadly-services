@@ -60,7 +60,7 @@ public class MoneyReloadTransactionProcessor extends AbstractTransactionProcesso
             LOGGER.error("Money reload transaction with txnId: {} has failed with reason {}", txnEntity.getTxnId(), e.getMessage());
             sendNotifications(txnEntity.getUid(), false);
         } catch (Exception e) {
-            throw new ReloadlyTxnProcessingException("Unhandled exception occurred. Rolling back transaction. Root cause: ".concat(e.getMessage()), e);
+            throw new ReloadlyTxnProcessingException("Unhandled exception occurred. Rolling back transaction. Root cause: " + e.getMessage(), e);
         }
 
         markTransactionAsSuccessful(txnEntity);
@@ -137,7 +137,7 @@ public class MoneyReloadTransactionProcessor extends AbstractTransactionProcesso
         }
     }
 
-    private static class AccountCreditResponse {
+    public static class AccountCreditResponse {
         private String message;
 
         @JsonCreator

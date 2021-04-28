@@ -6,4 +6,4 @@ INSERT INTO money_reload_txn_table(txn_id, amount)
 VALUES ('e7fe6f0d-420e-5161-a134-9c2342e36c32', 150.0);
 
 INSERT INTO airtime_send_txn_table(txn_id, amount, phone_number)
-VALUES ('b7fe6f0d-420e-5121-a134-9c2342e36c64', 150.0, '+919999999999');
+VALUES ('b7fe6f0d-420e-5121-a134-9c2342e36c64', 10.0, '+919999999999');
