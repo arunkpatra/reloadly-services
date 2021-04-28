@@ -3,7 +3,11 @@ package com.reloadly.account.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+/**
+ * The account update response.
+ *
+ * @author Arun Patra
+ */
 @ApiModel(value = "AccountUpdateResponse", description = "AccountUpdateResponse")
 public class AccountUpdateResponse {
     @ApiModelProperty(value = "Successful", required = true, position = 1)

@@ -7,7 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-
+/**
+ * Spring Data JPA repository.
+ *
+ * @author Arun Patra
+ */
 @Repository
 public interface AddressRepository extends CrudRepository<AddressEntity, Long> {
     /**

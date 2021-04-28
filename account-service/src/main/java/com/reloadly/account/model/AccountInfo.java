@@ -3,7 +3,11 @@ package com.reloadly.account.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+/**
+ * The account info. A short summary.
+ *
+ * @author Arun Patra
+ */
 @ApiModel(value = "AccountInfo", description = "AccountInfo")
 public class AccountInfo {
 

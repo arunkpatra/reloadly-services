@@ -6,6 +6,11 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * The Account JPA entity.
+ *
+ * @author Arun Patra
+ */
 @Entity
 @Table(name = "account_table")
 public class AccountEntity extends AbstractPersistable<Long> implements Serializable {

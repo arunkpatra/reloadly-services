@@ -9,6 +9,9 @@ import com.reloadly.security.utils.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Provides supporting functions for notification sending.
+ */
 public abstract class AccountUpdateNotificationSupport {
 
     private final ReloadlyNotification notification;

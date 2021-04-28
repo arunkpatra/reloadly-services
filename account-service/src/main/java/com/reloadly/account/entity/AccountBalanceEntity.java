@@ -7,6 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
 
+/**
+ * The account balance JPA entity.
+ *
+ * @author Arun Patra
+ */
 @Entity
 @Table(name = "account_balance_table")
 public class AccountBalanceEntity extends AbstractPersistable<Long> implements Serializable {

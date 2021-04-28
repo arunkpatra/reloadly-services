@@ -2,6 +2,11 @@ package com.reloadly.account.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+/**
+ * The account debit response.
+ *
+ * @author Arun Patra
+ */
 public class AccountDebitResponse {
 
     private final Boolean successful;

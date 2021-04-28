@@ -2,6 +2,11 @@ package com.reloadly.account.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+/**
+ * Account credit response.
+ *
+ * @author Arun Patra
+ */
 public class AccountCreditResponse {
 
     private final String message;

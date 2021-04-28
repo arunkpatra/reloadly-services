@@ -21,6 +21,11 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Supplier;
 
+/**
+ * Core capabilities of the Account microservice are exposed by the Account Service.
+ *
+ * @author Arun Patra
+ */
 @Service
 public class AccountServiceImpl extends AccountUpdateNotificationSupport implements AccountService {
 
@@ -94,6 +99,13 @@ public class AccountServiceImpl extends AccountUpdateNotificationSupport impleme
         return new AccountDetails(ae.getAccountId(), accountInfo, accountBalance, billingAddress);
     }
 
+    /**
+     * Get Account info.
+     *
+     * @param uid The UID of the user.
+     * @return The {@link AccountInfo} object.
+     * @throws AccountNotFoundException If an error occurs.
+     */
     @Override
     public AccountInfo getAccountInfo(String uid) throws AccountNotFoundException {
         Assert.notNull(uid, "UID can not be null");
@@ -101,6 +113,13 @@ public class AccountServiceImpl extends AccountUpdateNotificationSupport impleme
         return new AccountInfo(ae.getName(), ae.getEmail(), ae.getPhoneNumber());
     }
 
+    /**
+     * Get account balance.
+     *
+     * @param uid The UID of the user.
+     * @return The account balance.
+     * @throws AccountBalanceException If an error occurs.
+     */
     @Override
     public AccountBalance getAccountBalance(String uid) throws AccountBalanceException {
 
@@ -110,6 +129,14 @@ public class AccountServiceImpl extends AccountUpdateNotificationSupport impleme
         return new AccountBalance(abe.getAccountBalance(), ae.getCurrencyCode());
     }
 
+    /**
+     * Credit an account.
+     *
+     * @param uid The UID of the user.
+     * @param request The {@link AccountCreditRequest} object.
+     * @return The {@link AccountCreditResponse} object.
+     * @throws AccountBalanceException If an error occurs.
+     */
     @Override
     @Transactional
     public synchronized AccountCreditResponse creditAccountBalance(String uid, AccountCreditRequest request) throws AccountBalanceException {
@@ -127,6 +154,14 @@ public class AccountServiceImpl extends AccountUpdateNotificationSupport impleme
         return new AccountCreditResponse("Account successfully credited");
     }
 
+    /**
+     * Debit an account.
+     *
+     * @param uid The UID of the user.
+     * @param request The {@link AccountDebitRequest} object.
+     * @return The {@link AccountDebitResponse} object.
+     * @throws AccountBalanceException If an error occurs.
+     */
     @Override
     @Transactional
     public synchronized AccountDebitResponse debitAccountBalance(String uid, AccountDebitRequest request) throws AccountBalanceException {

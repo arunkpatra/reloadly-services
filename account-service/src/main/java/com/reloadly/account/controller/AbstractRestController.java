@@ -8,14 +8,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+/**
+ * An abstract REST Controller exposing useful facilities for concrete implementation to leverage.
+ *
+ * @author Arun Patra
+ */
 public abstract class AbstractRestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractRestController.class);
 
+    /**
+     * Handles an exception of type {@link ReloadlyException}.
+     * @param The exception.
+     * @return An error response.
+     */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(ReloadlyException.class)
     public ErrorResponse handleReloadlyException(ReloadlyException e) {
-        //e.printStackTrace();
         String message = "An error occurred";
         String errorDetail = extractMessage(e);
         LOGGER.error("Error occurred: description={}, detail={}", message, errorDetail);

@@ -13,6 +13,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Account Microservice REST APIs.
+ *
+ * @author Arun Patra
+ */
 @RestController
 @CrossOrigin
 @Api(tags = {"Account"}, hidden = true, value = "Account Services")

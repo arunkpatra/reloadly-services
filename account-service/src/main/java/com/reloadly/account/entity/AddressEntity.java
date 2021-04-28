@@ -6,6 +6,11 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * The Address JPA entity.
+ *
+ * @author Arun Patra
+ */
 @Entity
 @Table(name = "address_table")
 public class AddressEntity extends AbstractPersistable<Long> implements Serializable {
