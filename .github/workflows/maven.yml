@@ -18,3 +18,8 @@ jobs:
         java-version: 1.8
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+    - name: Coveralls GitHub Action
+      uses: coverallsapp/github-action@v1.1.2
+      with:
+        base-path: coverage
+        github-token: ${{ secrets.GITHUB_TOKEN }}
