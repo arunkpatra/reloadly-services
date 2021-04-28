@@ -1,9 +1,9 @@
 package com.reloadly.notification.service;
 
-import com.reloadly.email.config.SesProperties;
 import com.reloadly.commons.exceptions.NotificationException;
 import com.reloadly.commons.model.EmailRequest;
 import com.reloadly.commons.model.SmsRequest;
+import com.reloadly.email.config.SesProperties;
 import com.reloadly.sms.exception.SMSProcessingException;
 import com.reloadly.sms.service.SMSService;
 import org.springframework.mail.MailSender;

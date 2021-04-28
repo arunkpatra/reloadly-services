@@ -1,8 +1,8 @@
 package com.reloadly.transaction.annotation;
 
-import org.springframework.stereotype.Component;
-import com.reloadly.transaction.processor.TransactionProcessor;
 import com.reloadly.transaction.model.TransactionType;
+import com.reloadly.transaction.processor.TransactionProcessor;
+import org.springframework.stereotype.Component;
 
 import java.lang.annotation.*;
 

@@ -1,7 +1,5 @@
 package com.reloadly.transaction.service;
 
-import com.reloadly.transaction.exception.ReloadlyTxnProcessingException;
-
 public interface TransactionProcessorService {
 
     /**

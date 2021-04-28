@@ -1,10 +1,10 @@
 package com.reloadly.transaction.processor;
 
+import com.reloadly.transaction.annotation.TransactionHandler;
 import com.reloadly.transaction.entity.TransactionEntity;
 import com.reloadly.transaction.exception.ReloadlyTxnProcessingException;
-import com.reloadly.transaction.model.TransactionType;
 import com.reloadly.transaction.manager.TransactionManager;
-import com.reloadly.transaction.annotation.TransactionHandler;
+import com.reloadly.transaction.model.TransactionType;
 
 /**
  * Service Provider Interface (SPI) for a transaction processor.

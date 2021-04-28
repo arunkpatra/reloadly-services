@@ -1,9 +1,9 @@
 package com.reloadly.notification.controller;
 
-import com.reloadly.commons.model.NotificationResponse;
-import com.reloadly.notification.AbstractIntegrationTest;
 import com.reloadly.commons.model.EmailRequest;
+import com.reloadly.commons.model.NotificationResponse;
 import com.reloadly.commons.model.SmsRequest;
+import com.reloadly.notification.AbstractIntegrationTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;

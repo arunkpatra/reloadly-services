@@ -11,15 +11,12 @@ import com.reloadly.account.repository.AccountBalanceRepository;
 import com.reloadly.account.repository.AccountRepository;
 import com.reloadly.account.repository.AddressRepository;
 import com.reloadly.autoconfig.notification.service.ReloadlyNotification;
-import com.reloadly.commons.exceptions.ReloadlyException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Supplier;
 
 /**
  * Core capabilities of the Account microservice are exposed by the Account Service.

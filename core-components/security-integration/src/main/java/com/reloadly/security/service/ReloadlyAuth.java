@@ -1,7 +1,7 @@
 package com.reloadly.security.service;
 
-import com.reloadly.commons.model.ReloadlyAuthToken;
 import com.reloadly.commons.model.ReloadlyApiKeyIdentity;
+import com.reloadly.commons.model.ReloadlyAuthToken;
 import com.reloadly.security.exception.ReloadlyAuthException;
 
 /**

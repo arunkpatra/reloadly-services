@@ -1,7 +1,6 @@
 package com.reloadly.account.repository;
 
 import com.reloadly.account.entity.AccountBalanceEntity;
-import com.reloadly.account.entity.AccountEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

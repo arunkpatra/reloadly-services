@@ -1,7 +1,7 @@
 package com.reloadly.auth.controller;
 
-import com.reloadly.commons.model.ErrorResponse;
 import com.reloadly.commons.exceptions.ReloadlyException;
+import com.reloadly.commons.model.ErrorResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
