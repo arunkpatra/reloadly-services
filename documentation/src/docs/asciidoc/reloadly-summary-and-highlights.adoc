@@ -16,7 +16,7 @@ Please see open issues in GitHub https://github.com/arunkpatra/reloadly-services
 
 == Code Challenge Highlights
 
-- *~ 12000 lines of code* covered by JUnit tests.
+- *~ 1500 lines of code* covered by JUnit tests.
 - Modern tech stack, event driven architecture and solid design principles.
 - Fully leverages Spring Boot Technology.
 - Advanced Spring Boot features including auto-configuration.
