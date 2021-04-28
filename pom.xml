@@ -24,6 +24,7 @@
         <module>admin-service</module>
         <module>transaction-common</module>
         <module>documentation</module>
+        <module>coverage</module>
     </modules>
     <packaging>pom</packaging>
     <name>Reloadly Microservices Parent</name>
@@ -41,19 +42,12 @@
 
     <dependencyManagement>
         <dependencies>
-
             <dependency>
                 <groupId>software.amazon.awssdk</groupId>
                 <artifactId>bom</artifactId>
                 <version>${aws.sdk.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>de.codecentric</groupId>
-                <artifactId>spring-boot-admin-starter-server</artifactId>
-                <version>${spring.boot.admin.version}</version>
             </dependency>
 
             <dependency>
@@ -70,13 +64,7 @@
 
             <dependency>
                 <groupId>com.reloadly</groupId>
-                <artifactId>swagger-ui-integration</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.reloadly</groupId>
-                <artifactId>security-integration</artifactId>
+                <artifactId>email-integration</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -88,14 +76,44 @@
 
             <dependency>
                 <groupId>com.reloadly</groupId>
-                <artifactId>email-integration</artifactId>
+                <artifactId>notification-integration</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.twilio.sdk</groupId>
-                <artifactId>twilio</artifactId>
-                <version>${twilio.sdk.version}</version>
+                <groupId>com.reloadly</groupId>
+                <artifactId>security-integration</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.reloadly</groupId>
+                <artifactId>swagger-ui-integration</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.reloadly</groupId>
+                <artifactId>account-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.reloadly</groupId>
+                <artifactId>admin-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.reloadly</groupId>
+                <artifactId>authentication-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.reloadly</groupId>
+                <artifactId>notification-service</artifactId>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
@@ -106,10 +124,27 @@
 
             <dependency>
                 <groupId>com.reloadly</groupId>
-                <artifactId>notification-integration</artifactId>
+                <artifactId>transaction-processor</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.reloadly</groupId>
+                <artifactId>transaction-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>${spring.boot.admin.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.twilio.sdk</groupId>
+                <artifactId>twilio</artifactId>
+                <version>${twilio.sdk.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <organization>
@@ -183,6 +218,26 @@
 
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.8.6</version>
+                    <executions>
+                        <execution>
+                            <id>default-prepare-agent</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>report</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>

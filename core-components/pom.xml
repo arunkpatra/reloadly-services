@@ -20,5 +20,12 @@
     <artifactId>core-components</artifactId>
     <name>Core Components Parent</name>
 
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
