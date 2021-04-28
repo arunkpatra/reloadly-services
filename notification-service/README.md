@@ -1,6 +1,6 @@
-# Account Microservice
+# Notification Microservice
 
-This microservice provides Account related services.
+This microservice provides Notification related services.
 
 ## Reference Documentation
 

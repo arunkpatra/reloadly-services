@@ -1,6 +1,6 @@
-# Account Microservice
+# Transaction Processor
 
-This microservice provides Account related services.
+This is the transaction processor for the fintech platform.
 
 ## Reference Documentation
 

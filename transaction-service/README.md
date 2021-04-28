@@ -1,6 +1,6 @@
-# Account Microservice
+# Transaction Service
 
-This microservice provides Account related services.
+This microservice provides transactions related services.
 
 ## Reference Documentation
 

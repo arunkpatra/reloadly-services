@@ -1,12 +1,12 @@
 = Reloadly Services Documentation
 
-This module create the documentation for this project.
-Please keep the documentation up-to-date.
+This module builds the documentation for this project. Please keep documentation up-to-date.
 
 == Usage
 
-Create PDF format documentation for the project by invoking the `process-resources` goal (configured as the default goal):
+Create HTML and PDF format documentation for the project by invoking the `process-resources` goal (configured as the default goal):
 
- $ mvn process-resources -Pdocs
+ $ mvn clean process-resources -Pdocs
 
-Open the file _target/generated-docs/reloadly-services.pdf_ in your PDF viewer to see the generated PDF.
+- Open the _target/generated-docs/index.html_ file in your browser to see HTML Documentation.
+- Open the _target/generated-docs/reloadly-services.pdf_ file in your PDF viewer to see the generated PDF.

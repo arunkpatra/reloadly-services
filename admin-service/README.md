@@ -1,6 +1,6 @@
-# Account Microservice
+# Admin Service
 
-This microservice provides Account related services.
+This is a Spring Boot Admin App.
 
 ## Reference Documentation
 

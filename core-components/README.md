@@ -1,6 +1,6 @@
-# Account Microservice
+# Core Components
 
-This microservice provides Account related services.
+Various reusable core components.
 
 ## Reference Documentation
 
