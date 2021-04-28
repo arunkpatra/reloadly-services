@@ -1,13 +1,22 @@
 [[production-monitoring]]
 == Production Monitoring
 
+Production monitoring is a necessary part of operations, and the right tools need to be utilized to get the job done.
+
 === Spring Boot Admin
+
+This is a great tool to have full visibility into the runtime of Spring Boot Apps over HTTP(S). This is currently supported. One can easily integrate logfile viewers. SBA supports discovery in Kubernetes environments as well.
 
 === Grafana
 
+See this GitHub https://github.com/arunkpatra/reloadly-services/issues/22[issue].
+
+Grafana provides powerful dashboards that can display any application metrics and other performance parameters sent to it. It as excellent integration with Spring and plays well in Kubernetes deployments. See https://grafana.com/ for more details.
+
 === Prometheus
+
+Prometheus is a leading tool to gather metrics from applications and route to Grafana for powerful visualizations. Excellent support exists in the Spring ecosystem and it plays well in Kubernetes deployments. See https://prometheus.io/ for more details.
 
 === Loki
 
-
-
+Loki is a popular choice for log aggregation and integrates well with Grafana. For more details see https://grafana.com/oss/loki/.

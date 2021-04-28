@@ -1,19 +1,43 @@
 [[product-dev-approach]]
 == Product Development Approach
 
+Product development in the Microservices world has its benefits, but it needs a certain approach, culture and the appropriate tools.
+
+The Microservices paradigm, is part technology and part organizational culture. It closely ties with the Agile manifesto. Microservices architecture make adequate sense when the size of the business, the organization and the domain justifies it. Eventually Microservice boundaries would align with team boundaries. That reflects in code organization as well. if these nuances are overlooked, it's very easy to get the entire Microservices approach wrong and rack up huge technical debts in the mid to long term. Microservices done the right way, with the right team organization and tools will go a long way towards increasing developer productivity and keep operational costs low.
+
 === Processes and Methodology
 
+Some salient points:
 
-=== Team Culture
+- Consider adopting Agile methodology for software development and delivery.
+- Consider aligning team boundaries with Microservice domain boundaries. As an example, a dedicated team to work on Account Microservices may be formed. This team should own the software development, release planning and deployment for this microservice. As a best practice, deployment of this microservice should not have software "build time" dependencies with any other microservice. Additionally, the database should be exclusively used by this microservice.
+- Team size should not exceed 5-7 team members with members being full stack engineers.
+- Consider Scrum of Scrums to align all teams well in advance.
+- Scrum meetings (daily standup meetings) may be used. However, this is falling out of fashion and may not work very well in distributed agile. Also consider effective usage of tools like GitHub issues, Gitter, Discord Server, GitHib Discussions etc. These tool go a long way towards increasing productivity.
+- Consider fortnightly software release cycles.
+- Agile Scrum teams are best led by a Project Lead. The project lead has the responsibility and authority to manage software, reviews, merging and releasing. Each microservice should have a project lead, and a team attached to it.
+- A Product Owner or Product Manager is responsible for managing business requirements and planning. A PO can be assigned to multiple logically grouped teams. A PO has no authority over engineering teams but fully owns requirements and what should be delivered in a particular release.
+- Consider a culture of merging often and releasing often.
+- Consider automating every single manual process that you can afford to.
 
 === Tools
 
+Following tools are recommended for their wide adoption, excellent usability and reliability.
 ==== Team Communication
 
+Consider Slack. Consider creating multiple channels as needed and add the right apps, e.g. GitHub, Confluence, Miro etc to Slack.
+
 ==== Defect Management
+Consider using Jira for defect management, Integrate with Slack.
 
 ==== Release Management
 
+Consider release planning and management in GitHub.
+
 ==== Source Code Management
 
+GitHub is the leading platform for DVCS and is recommended. It provides a full set of umbrella services suited for moder teams following industry best practices.
+
 ==== CI/CD and Automation
+
+Consider GitHub Actions and/or other suitable tools to facilitate depployment to Kubernetes.

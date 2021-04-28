@@ -2,6 +2,11 @@ package com.reloadly.commons.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+/**
+ * Notification response.
+ *
+ * @author Arun Patra
+ */
 public class NotificationResponse {
 
     private String message;

@@ -18,6 +18,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * A JWT token based authentication request filter.
+ *
+ * @author Arun Patra
+ */
 public class ReloadlyJwtAuthenticationRequestFilter extends OncePerRequestFilter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReloadlyJwtAuthenticationRequestFilter.class);

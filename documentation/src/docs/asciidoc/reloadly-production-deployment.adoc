@@ -1,14 +1,29 @@
 [[production-deployment]]
 == Production Deployment
 
+The individual microservices may be run as standalone spring boot applications in lower environments. However, for production like environments, where HA, failover and scalability needs exist, a suitable approach may be taken. We discuss some aspects and approaches below.
+
 === Kubernetes Deployment (EKS)
+
+See this GitHub https://github.com/arunkpatra/reloadly-services/issues/17[issue].
+
+Kubernetes would be the ideal way to run and scale the microservices of this platform. Of special interest is the transaction processor which necessarily needs to scale based on transaction volumes. Some aspects to note are:
+
+* It's best to keep databases out of Kubernetes. Consider having a managed database service from a cloud provider like AWS or GCP.
+* Microservices including the transaction processor should be Dockerized and docker images should be created in the build pipeline. Store images in an organizational Docker Registry or a hosted one.
+* Consider a managed Kubernetes Service like Amazon EKS of Google GKE.
 
 ==== Docker Images
 
+* Docker images can be easily created by the Spring Boot maven plugin which currently support creation of Docker images natively.
+
 ==== Helm Charts
 
-=== AWS Beanstalk
+As a best practice, consider using Helm Charts to easily manage deployments and deployment environments. It's beneficial to use Helm Charts since it allows for easy rollback.
 
+=== AWS Beanstalk or EC2 Containers
+
+While deployment to AWS Beanstalk or EC2 containers is possible, it should probably make sense only for small deployments. Managing these environments is fraught with errors and do not support automation very well. For modern microservice deployment strategies consider using Helm Charts and Kubernetes.
 
 
 

@@ -8,7 +8,11 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
-
+/**
+ * Notification service integration auto-configuration class.
+ *
+ * @author Arun Patra
+ */
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(NotificationClientProperties.class)
 @ConditionalOnProperty(name = {"reloadly.notification.enabled"}, matchIfMissing = true)

@@ -63,7 +63,7 @@ These instructions are for macOS. Please tailor them to run in other environment
 ====
 
 ==== Starting Local Services
-Following services need to be started before you run microservices.
+Following the steps below before running your microservices.
 
 ===== MySQL Setup
 Issue the following commands. You should have installed MySQL locally and verified it to work correctly as a pre-requisite.
@@ -115,10 +115,7 @@ This data must be seeded into the DB for system to work correctly. It does nothi
 include::{sourcedir}/authentication-service/src/main/resources/auth-services-data-mysql.sql[]
 ----
 
-After running these scripts, you must have the schemas correctly created and seed data populated. Please verify. The following image shows the tables in IntelliJ Idea Data Explorer (you can use any tool of your choice).
-
-//[.thumb]
-image::reloadly-db-schemas.png[scaledwidth=65%]
+After running these scripts, you must have the schemas correctly created and seed data populated. Please verify.
 
 ===== Kafka Setup
 Issue the following commands. You should have installed Kafka locally and verified it to work correctly as a pre-requisite.
@@ -137,7 +134,7 @@ A topic named `com.reloadly.inbound.txn.topic` is needed by the `transaction-pro
 In your local environment, Kafka uses PLAINTEXT by default. In other environments, you must use strong encryption. Please refer Kafka documentation for securing a Kafka installation.
 ====
 
-==== Running Microservices Locally
+==== Running Microservices
 
 Follow the steps listed below in order to run all components of the platform locally. You should folow these steps sequentially.
 
@@ -198,8 +195,33 @@ export YOUR_ENV_VARIABLE=env_var_value
 
 [TIP]
 ====
-Consider writing a small shell script, or add these in your `~/.zprofile` or `~./bashprofile` file or a suitable method of your liking.
+Consider writing a small shell script, or add these in your `~/.zprofile` or `~./bashprofile` file or a suitable method of your liking. After adding, you should `source` these files for changes to take effect, e.g. `source ~/.zprofile`.
 ====
+
+You may add the following in the script. Supply appropriate values.
+
+[source, shell script]
+----
+#
+# These properties are used by the platform microservices
+#
+export DB_USER=
+export DB_PASSWORD=
+export AWS_ACCESS_KEY_ID=
+export AWS_SECRET_ACCESS_KEY=
+
+# Change this to false, if you want to send actual emails.
+export EMAIL_DRY_RUN=true
+export SENDER_EMAIL_ID=
+
+# Change this to false, if you want to send actual SMS. SMS charges may apply.
+export TWILIO_DRY_RUN=true
+export TWILIO_ACCOUNT_SID=
+export TWILIO_AUTH_TOKEN=
+export TWILIO_MSG_SVC_ID=
+
+export RELOADLY_SVC_ACCT_API_KEY=
+----
 
 ===== Running Microservices
 Run these services in sequence (recommended). You must have done a `mvn clean install` from the root of your cloned repository. That builds all microservices.
@@ -273,3 +295,10 @@ Congratulations! Your services are running.
 
 Now head over to the documentation of individual microservices for more details.
 
+==== Cleanup
+
+1. Shutdown your locally running MySQL instance.
+
+    mysql.server stop
+
+2. Now kill the Kafka process that you had started earlier by hitting `CTRL + C` in the terminal window where Kafka is running.

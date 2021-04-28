@@ -22,6 +22,13 @@ public class ReloadlyAuthServiceImpl implements ReloadlyAuth {
         this.restTemplate = restTemplate;
     }
 
+    /**
+     * Verify an Auth Service issued JWT token.
+     *
+     * @param token The JWT token.
+     * @return A decoded and verified Reloadly auth token.
+     * @throws ReloadlyAuthException If an error occurs.
+     */
     @Override
     public ReloadlyAuthToken verifyToken(String token) throws ReloadlyAuthException {
         Assert.hasLength(properties.getReloadlyAuthServiceEndpoint(), "Authentication endpoint URL can not be empty.");
@@ -43,6 +50,13 @@ public class ReloadlyAuthServiceImpl implements ReloadlyAuth {
         }
     }
 
+    /**
+     * Verify an API key.
+     *
+     * @param key Am auth service issued API key.
+     * @return Identity details attached to the API key.
+     * @throws ReloadlyAuthException If an error occurs.
+     */
     @Override
     public ReloadlyApiKeyIdentity verifyApiKey(String key) throws ReloadlyAuthException {
         Assert.hasLength(properties.getReloadlyAuthServiceEndpoint(), "Authentication endpoint URL can not be empty.");

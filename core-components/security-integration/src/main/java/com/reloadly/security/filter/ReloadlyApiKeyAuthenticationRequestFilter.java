@@ -22,6 +22,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * An API Key based authentication request filter.
+ *
+ * @author Arun Patra
+ */
 public class ReloadlyApiKeyAuthenticationRequestFilter extends OncePerRequestFilter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReloadlyApiKeyAuthenticationRequestFilter.class);

@@ -1,7 +1,11 @@
 package com.reloadly.email.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-
+/**
+ * Email auto-configuration properties.
+ *
+ * @author Arun Patra
+ */
 @ConfigurationProperties(SesProperties.PREFIX)
 public class SesProperties {
 

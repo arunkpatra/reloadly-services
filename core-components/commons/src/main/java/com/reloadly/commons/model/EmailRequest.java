@@ -1,5 +1,10 @@
 package com.reloadly.commons.model;
 
+/**
+ * An email request.
+ *
+ * @author Arun Patra
+ */
 public class EmailRequest {
 
     private final String email;

@@ -13,7 +13,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-
+/**
+ * Java API to interact with the Notification microservice.
+ *
+ * @author Arun Patra
+ */
 public class ReloadlyNotificationImpl implements ReloadlyNotification {
 
     private final NotificationClientProperties properties;

@@ -1,5 +1,10 @@
 package com.reloadly.swagger.config;
 
+/**
+ * Swagger UI contact related attributes.
+ *
+ * @author Arun Patra
+ */
 public class SwaggerContactProperties {
 
     /**

@@ -1,10 +1,15 @@
 package com.reloadly.security.utils;
 
 import com.reloadly.commons.model.ReloadlyCredentials;
+import com.reloadly.security.exception.ReloadlyAuthException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.Assert;
-
+/**
+ * Security util.
+ *
+ * @author Arun Patra
+ */
 public class SecurityUtils {
 
     public static ReloadlyCredentials getCredentials() {

@@ -13,6 +13,11 @@ import org.springframework.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
+/**
+ * User detail service for the auth service.
+ *
+ * @author Arun Patra
+ */
 public class ReloadlyUserDetailsService implements UserDetailsService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReloadlyUserDetailsService.class);

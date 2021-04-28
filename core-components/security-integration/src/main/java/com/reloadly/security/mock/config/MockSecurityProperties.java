@@ -4,7 +4,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Mock security auto-configuration properties.
+ *
+ * @author Arun Patra
+ */
 @ConfigurationProperties(MockSecurityProperties.PREFIX)
 public class MockSecurityProperties {
 

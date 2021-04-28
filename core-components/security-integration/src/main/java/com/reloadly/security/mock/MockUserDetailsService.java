@@ -9,7 +9,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * Mock security user details.
+ *
+ * @author Arun Patra
+ */
 public class MockUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String uid) throws UsernameNotFoundException {

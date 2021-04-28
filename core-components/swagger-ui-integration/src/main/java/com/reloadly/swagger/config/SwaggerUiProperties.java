@@ -2,7 +2,11 @@ package com.reloadly.swagger.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
-
+/**
+ * Swagger UI auto-configuration properties.
+ *
+ * @author Arun Patra
+ */
 @ConfigurationProperties(SwaggerUiProperties.PREFIX)
 public class SwaggerUiProperties {
 

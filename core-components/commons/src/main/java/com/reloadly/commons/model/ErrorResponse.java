@@ -3,6 +3,11 @@ package com.reloadly.commons.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Error message from REST API when unhandled errors occur.
+ *
+ * @author Arun Patra
+ */
 public class ErrorResponse {
 
     @JsonProperty("error")

@@ -1,7 +1,6 @@
 package com.reloadly.sms.service;
 
-
-import com.reloadly.sms.config.TwilioProperties;
+import com.reloadly.sms.config.SmsProperties;
 import com.reloadly.sms.exception.SMSProcessingException;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
@@ -10,16 +9,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
+/**
+ * A Twilio specific implementation.
+ *
+ * @author Arun Patra
+ */
+public class TwilioSMSServiceImpl implements SMSService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TwilioSMSServiceImpl.class);
+    private final SmsProperties properties;
 
-
-public class SMSServiceImpl implements SMSService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SMSServiceImpl.class);
-    private final TwilioProperties properties;
-
-    public SMSServiceImpl(TwilioProperties properties) {
+    public TwilioSMSServiceImpl(SmsProperties properties) {
         this.properties = properties;
     }
 
+    /**
+     * Send an SMS.
+     *
+     * @param toNumber The number to which SMS should be sent.
+     * @param msg The message to be sent.
+     * @throws SMSProcessingException If an error occurs.
+     */
     @Override
     public void sendSMS(final String toNumber, String msg) throws SMSProcessingException {
         if (properties.isDryRun()) {
@@ -31,7 +40,7 @@ public class SMSServiceImpl implements SMSService {
             String numberToSend = toNumber;
 
             if (!toNumber.startsWith("+")) {
-                numberToSend = TwilioProperties.DEFAULT_COUNTRY_CODE + toNumber;
+                numberToSend = SmsProperties.DEFAULT_COUNTRY_CODE + toNumber;
             }
 
             Message message = Message.creator(new PhoneNumber(numberToSend), properties.getMessagingServiceId(), msg).create();

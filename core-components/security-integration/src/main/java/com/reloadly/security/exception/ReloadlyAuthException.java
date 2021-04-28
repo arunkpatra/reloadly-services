@@ -2,6 +2,11 @@ package com.reloadly.security.exception;
 
 import com.reloadly.commons.exceptions.ReloadlyException;
 
+/**
+ * Exception indicating an authentication error.
+ *
+ * @author Arun Patra
+ */
 public class ReloadlyAuthException extends ReloadlyException {
 
     private static final String DEFAULT_MESSAGE = "Auth failed";

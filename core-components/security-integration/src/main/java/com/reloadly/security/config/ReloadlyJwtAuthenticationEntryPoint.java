@@ -21,7 +21,11 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
+/**
+ * Authentication entry point.
+ *
+ * @author Arun Patra
+ */
 public class ReloadlyJwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     private static final long serialVersionUID = -7858869558953243875L;

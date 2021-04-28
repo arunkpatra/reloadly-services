@@ -26,7 +26,8 @@ import java.util.Map;
 public class SimpleEmailServiceMailSender implements MailSender, DisposableBean {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleEmailServiceMailSender.class);
-    private static final String DRY_RUN_INFO_MESSAGE = "This is a dry run since the reloadly.integration.email.ses.dry-run property is active. Disable this property to route emails through Amazon SES.";
+    private static final String DRY_RUN_INFO_MESSAGE = "This is a dry run since the reloadly.integration.email.ses.dry-run " +
+            "property is active. Disable this property to route emails through Amazon SES.";
 
     private final SesClient sesClient;
     private final SesProperties properties;

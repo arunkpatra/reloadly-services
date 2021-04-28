@@ -1,5 +1,10 @@
 package com.reloadly.commons.exceptions;
 
+/**
+ * Base class for all exceptions in the platform.
+ *
+ * @author Arun Patra
+ */
 public class ReloadlyException extends Exception {
     private static final String defaultMessage = "An error occurred";
 

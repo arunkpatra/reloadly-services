@@ -21,6 +21,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * Authentication Service auto-configuration class.
+ *
+ * @author Arun Patra
+ */
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(ReloadlyAuthProperties.class)
 public class ReloadlyAuthAutoConfiguration {

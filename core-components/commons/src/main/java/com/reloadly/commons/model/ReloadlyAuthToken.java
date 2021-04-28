@@ -9,6 +9,8 @@ import java.util.Map;
  * A decoded and verified Reloadly auth token. Can be used to get the uid and other user attributes
  * available in the token. When callers verify a Reloadly issued JWT token, they are given this decoded
  * token back.
+ *
+ * @author Arun Patra
  */
 public final class ReloadlyAuthToken {
 

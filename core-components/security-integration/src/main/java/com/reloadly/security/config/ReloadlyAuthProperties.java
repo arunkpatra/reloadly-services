@@ -1,8 +1,12 @@
 package com.reloadly.security.config;
 
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+/**
+ * Authentication Service auto-configuration properties.
+ *
+ * @author Arun Patra
+ */
 @ConfigurationProperties(ReloadlyAuthProperties.PREFIX)
 public class ReloadlyAuthProperties {
 

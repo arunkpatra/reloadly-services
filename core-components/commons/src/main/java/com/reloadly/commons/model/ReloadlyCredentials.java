@@ -5,6 +5,8 @@ package com.reloadly.commons.model;
  * with another. In such scenarios, the JWT token issued already, may be transmitted in the <code>Authorization</code>
  * header. The format of the header value should be "Bearer _token_", where _token_ is the JWT token string.
  *
+ * This object can also wrap other credentials like API keys and Mock UIDs(for tests).
+ *
  * @author Arun Patra
  */
 public class ReloadlyCredentials {

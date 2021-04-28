@@ -1,5 +1,9 @@
 package com.reloadly.email.model;
-
+/**
+ * Email message data.
+ *
+ * @author Arun Patra
+ */
 public class EmailMessageData {
 
     private String[] toList = new String[]{};

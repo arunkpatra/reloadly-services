@@ -1,9 +1,13 @@
 package com.reloadly.sms.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-
-@ConfigurationProperties(TwilioProperties.PREFIX)
-public class TwilioProperties {
+/**
+ * SMS integration auto-configuration properties.
+ *
+ * @author Arun Patra
+ */
+@ConfigurationProperties(SmsProperties.PREFIX)
+public class SmsProperties {
 
     public static final String PREFIX = "reloadly.integration.sms.twilio";
 

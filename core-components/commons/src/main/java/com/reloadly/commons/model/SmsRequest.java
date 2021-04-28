@@ -1,5 +1,10 @@
 package com.reloadly.commons.model;
 
+/**
+ * An SMS request.
+ *
+ * @author Arun Patra
+ */
 public class SmsRequest {
 
     private final String phoneNumber;

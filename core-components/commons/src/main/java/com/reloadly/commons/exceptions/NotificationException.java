@@ -1,7 +1,10 @@
 package com.reloadly.commons.exceptions;
 
-import com.reloadly.commons.exceptions.ReloadlyException;
-
+/**
+ * Exception indicating notification service errors.
+ *
+ * @author Arun Patra
+ */
 public class NotificationException extends ReloadlyException {
 
     private static final String DEFAULT_MESSAGE = "Notification service error occurred.";

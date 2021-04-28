@@ -2,6 +2,11 @@ package com.reloadly.autoconfig.notification.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+/**
+ * Notification integration auto-configuration properties.
+ *
+ * @author Arun Patra
+ */
 @ConfigurationProperties(NotificationClientProperties.PREFIX)
 public class NotificationClientProperties {
 

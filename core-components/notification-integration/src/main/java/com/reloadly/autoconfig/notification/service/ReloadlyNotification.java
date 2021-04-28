@@ -4,7 +4,11 @@ import com.reloadly.commons.exceptions.NotificationException;
 import com.reloadly.commons.model.EmailRequest;
 import com.reloadly.commons.model.ReloadlyCredentials;
 import com.reloadly.commons.model.SmsRequest;
-
+/**
+ * Java API to interact with the Notification microservice.
+ *
+ * @author Arun Patra
+ */
 public interface ReloadlyNotification {
 
     /**
