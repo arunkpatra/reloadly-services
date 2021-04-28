@@ -2,7 +2,7 @@ package com.reloadly.account.service;
 
 import com.reloadly.account.exception.AccountBalanceException;
 import com.reloadly.account.exception.AccountNotFoundException;
-import com.reloadly.account.exception.AccountUpdatedException;
+import com.reloadly.account.exception.AccountUpdateException;
 import com.reloadly.account.model.*;
 
 /**
@@ -18,9 +18,9 @@ public interface AccountService {
      * @param uid     The UID of the user for whom this account is being created.
      * @param request The {@link AccountUpdateRequest} object.
      * @return A {@link AccountUpdateResponse} instance.
-     * @throws AccountUpdatedException If account update fails.
+     * @throws AccountUpdateException If account update fails.
      */
-    AccountUpdateResponse updateAccount(String uid, AccountUpdateRequest request) throws AccountUpdatedException;
+    AccountUpdateResponse updateAccount(String uid, AccountUpdateRequest request) throws AccountUpdateException;
 
     /**
      * Locates the account for the specified user and returns it.

@@ -1,6 +1,8 @@
 package com.reloadly.account.controller;
 
-import com.reloadly.commons.exceptions.ReloadlyException;
+import com.reloadly.account.exception.AccountBalanceException;
+import com.reloadly.account.exception.AccountNotFoundException;
+import com.reloadly.account.exception.AccountUpdateException;
 import com.reloadly.commons.model.ErrorResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,15 +19,27 @@ public abstract class AbstractRestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractRestController.class);
 
-    /**
-     * Handles an exception of type {@link ReloadlyException}.
-     *
-     * @param The exception.
-     * @return An error response.
-     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(AccountUpdateException.class)
+    public ErrorResponse handleAccountUpdateException(AccountUpdateException e) {
+        return new ErrorResponse("Failed to update account.", e.getMessage(), "");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(AccountBalanceException.class)
+    public ErrorResponse handleAccountBalanceException(AccountBalanceException e) {
+        return new ErrorResponse("Failed to handle account balance.", e.getMessage(), "");
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(AccountNotFoundException.class)
+    public ErrorResponse handleAccountNotFoundException(AccountNotFoundException e) {
+        return new ErrorResponse("Account not found.", e.getMessage(), "");
+    }
+
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(ReloadlyException.class)
-    public ErrorResponse handleReloadlyException(ReloadlyException e) {
+    @ExceptionHandler(Exception.class)
+    public ErrorResponse handleGenericException(Exception e) {
         String message = "An error occurred";
         String errorDetail = extractMessage(e);
         LOGGER.error("Error occurred: description={}, detail={}", message, errorDetail);

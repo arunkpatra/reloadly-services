@@ -7,11 +7,11 @@ import com.reloadly.commons.exceptions.ReloadlyException;
  *
  * @author Arun Patra
  */
-public class AccountUpdatedException extends ReloadlyException {
+public class AccountUpdateException extends ReloadlyException {
 
     private static final String DEFAULT_MESSAGE = "Account update failed";
 
-    public AccountUpdatedException(String message, Exception e) {
+    public AccountUpdateException(String message, Exception e) {
         super(message, e);
     }
 

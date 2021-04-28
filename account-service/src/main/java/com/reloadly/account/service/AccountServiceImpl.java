@@ -5,7 +5,7 @@ import com.reloadly.account.entity.AccountEntity;
 import com.reloadly.account.entity.AddressEntity;
 import com.reloadly.account.exception.AccountBalanceException;
 import com.reloadly.account.exception.AccountNotFoundException;
-import com.reloadly.account.exception.AccountUpdatedException;
+import com.reloadly.account.exception.AccountUpdateException;
 import com.reloadly.account.model.*;
 import com.reloadly.account.repository.AccountBalanceRepository;
 import com.reloadly.account.repository.AccountRepository;
@@ -45,11 +45,11 @@ public class AccountServiceImpl extends AccountUpdateNotificationSupport impleme
      * @param uid     The UID of the user for whom this account is being created.
      * @param request The {@link AccountUpdateRequest} object.
      * @return A {@link AccountUpdateResponse} instance.
-     * @throws AccountUpdatedException If account update fails.
+     * @throws AccountUpdateException If account update fails.
      */
     @Override
     @Transactional
-    public AccountUpdateResponse updateAccount(String uid, AccountUpdateRequest request) throws AccountUpdatedException {
+    public AccountUpdateResponse updateAccount(String uid, AccountUpdateRequest request) throws AccountUpdateException {
 
         try {
             boolean newAccount = isNewAccount(uid);
@@ -68,7 +68,7 @@ public class AccountServiceImpl extends AccountUpdateNotificationSupport impleme
 
             return new AccountUpdateResponse(true, ae.getAccountId(), "Account update successful");
         } catch (Exception e) {
-            throw new AccountUpdatedException("Account update failed. Root cause: " + e.getMessage(), e);
+            throw new AccountUpdateException("Account update failed. Root cause: " + e.getMessage(), e);
         }
     }
 
