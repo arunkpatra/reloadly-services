@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
+
 /**
  * A Twilio specific implementation.
  *
@@ -26,7 +27,7 @@ public class TwilioSMSServiceImpl implements SMSService {
      * Send an SMS.
      *
      * @param toNumber The number to which SMS should be sent.
-     * @param msg The message to be sent.
+     * @param msg      The message to be sent.
      * @throws SMSProcessingException If an error occurs.
      */
     @Override

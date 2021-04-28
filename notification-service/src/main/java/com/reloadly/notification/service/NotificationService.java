@@ -13,6 +13,7 @@ public interface NotificationService {
 
     /**
      * Send an email.
+     *
      * @param request The email request.
      * @throws NotificationException If an exception occurs.
      */
@@ -20,6 +21,7 @@ public interface NotificationService {
 
     /**
      * Send an SMS.
+     *
      * @param request The SMS request.
      * @throws NotificationException If an exception occurs.
      */

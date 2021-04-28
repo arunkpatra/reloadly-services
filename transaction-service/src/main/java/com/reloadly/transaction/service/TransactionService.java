@@ -16,12 +16,12 @@ public interface TransactionService {
      * returned immediately. However, the transaction is picked up by the Transaction Processor component and
      * processed as needed. Their is no guarantee that a transaction eventually succeeds, but whatever the result,
      * the caller is necessarily notified.
-     *
+     * <p>
      * The caller can always query back the status of a transaction.
+     *
      * @param request The transaction request object.
      * @return A transaction response object.
      * @throws ReloadlyTxnSvcException If the transaction could not be handled.
-     *
      * @author Arun Patra
      */
     TransactionResponse acceptTransaction(TransactionRequest request) throws ReloadlyTxnSvcException;

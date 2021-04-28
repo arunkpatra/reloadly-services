@@ -14,7 +14,7 @@ import org.springframework.util.Assert;
 import java.util.Optional;
 
 @Service
-public class TransactionProcessorServiceImpl  implements TransactionProcessorService {
+public class TransactionProcessorServiceImpl implements TransactionProcessorService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionProcessorServiceImpl.class);
     private final TransactionRepository transactionRepository;

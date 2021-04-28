@@ -13,7 +13,7 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 public class TransactionServiceProperties {
 
     public static final String PREFIX = "reloadly.api.transaction.service";
-    
+
     /**
      * Kafka properties.
      */

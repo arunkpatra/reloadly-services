@@ -15,7 +15,7 @@ import com.reloadly.transaction.model.TransactionType;
  * <p>
  * Distributed transaction handling is a complex topic and has far reaching consequences on system scalability. Hence,
  * follow transaction management best practices while implementing this SPI.
- *<p>
+ * <p>
  * Concrete implementations of this SPI must apply the {@link TransactionHandler} annotation at the type level.
  *
  * @author Arun Patra

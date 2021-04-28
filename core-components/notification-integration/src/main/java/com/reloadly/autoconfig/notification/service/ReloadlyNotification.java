@@ -4,6 +4,7 @@ import com.reloadly.commons.exceptions.NotificationException;
 import com.reloadly.commons.model.EmailRequest;
 import com.reloadly.commons.model.ReloadlyCredentials;
 import com.reloadly.commons.model.SmsRequest;
+
 /**
  * Java API to interact with the Notification microservice.
  *
@@ -16,7 +17,7 @@ public interface ReloadlyNotification {
      *
      * @param credentials The credentials object containing a valid Reloadly Auth Service issued JWT token or a similar
      *                    identifier which identifies the user under whose authority the API call will be made.
-     * @param request The email request object.
+     * @param request     The email request object.
      * @throws NotificationException If an error occurs.
      */
     void sendEmail(ReloadlyCredentials credentials, EmailRequest request) throws NotificationException;
@@ -26,7 +27,7 @@ public interface ReloadlyNotification {
      *
      * @param credentials The credentials object containing a valid Reloadly Auth Service issued JWT token or a similar
      *                    identifier which identifies the user under whose authority the API call will be made.
-     * @param request The SMS request object.
+     * @param request     The SMS request object.
      * @throws NotificationException If an error occurs.
      */
     void sendSms(ReloadlyCredentials credentials, SmsRequest request) throws NotificationException;

@@ -67,7 +67,7 @@ public class ReloadlyApiKeyAuthenticationRequestFilter extends OncePerRequestFil
     }
 
     private String getApiKey(HttpServletRequest request) {
-        return  request.getHeader("RELOADLY-API-KEY");
+        return request.getHeader("RELOADLY-API-KEY");
     }
 
     private ReloadlyCredentials getCredentials(ReloadlyCredentials.CredentialType credentialType, String credential) {

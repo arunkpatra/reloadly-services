@@ -91,6 +91,7 @@ public class ReloadlyAuthServiceImpl implements ReloadlyAuth {
             return apiKey;
         }
     }
+
     static class AuthRequest {
         final String token;
 

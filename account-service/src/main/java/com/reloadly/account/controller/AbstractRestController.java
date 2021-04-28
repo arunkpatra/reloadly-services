@@ -19,6 +19,7 @@ public abstract class AbstractRestController {
 
     /**
      * Handles an exception of type {@link ReloadlyException}.
+     *
      * @param The exception.
      * @return An error response.
      */

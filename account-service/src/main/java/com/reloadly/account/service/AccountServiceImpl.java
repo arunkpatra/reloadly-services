@@ -129,7 +129,7 @@ public class AccountServiceImpl extends AccountUpdateNotificationSupport impleme
     /**
      * Credit an account.
      *
-     * @param uid The UID of the user.
+     * @param uid     The UID of the user.
      * @param request The {@link AccountCreditRequest} object.
      * @return The {@link AccountCreditResponse} object.
      * @throws AccountBalanceException If an error occurs.
@@ -154,7 +154,7 @@ public class AccountServiceImpl extends AccountUpdateNotificationSupport impleme
     /**
      * Debit an account.
      *
-     * @param uid The UID of the user.
+     * @param uid     The UID of the user.
      * @param request The {@link AccountDebitRequest} object.
      * @return The {@link AccountDebitResponse} object.
      * @throws AccountBalanceException If an error occurs.

@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 /**
  * Transaction Microservice REST APIs.
  *
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin
 @Api(tags = {"Transaction"}, hidden = true, value = "Transaction Services")
-public class TransactionController extends AbstractRestController{
+public class TransactionController extends AbstractRestController {
 
     private final TransactionService transactionService;
 
@@ -67,7 +68,7 @@ public class TransactionController extends AbstractRestController{
     @ResponseBody
     @PutMapping(value = "/transaction/{txnId}", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<TransactionResponse> updateTransactionStatus(
-            @ApiParam(name = "Transaction ID", required = true) @PathVariable(name = "txnId")String txnId,
+            @ApiParam(name = "Transaction ID", required = true) @PathVariable(name = "txnId") String txnId,
             @ApiParam(name = "Transaction Status Update Request", required = true) @RequestBody TransactionStatusUpdateRequest request) throws ReloadlyException {
 
         return new ResponseEntity<>(new TransactionResponse(txnId, request.getTransactionStatus()), HttpStatus.OK);
@@ -88,7 +89,7 @@ public class TransactionController extends AbstractRestController{
     @ResponseBody
     @GetMapping(value = "/transaction/{txnId}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<TransactionResponse> getTransactionStatus(
-            @ApiParam(name = "Transaction ID", required = true) @PathVariable(name = "txnId")String txnId) throws ReloadlyException {
+            @ApiParam(name = "Transaction ID", required = true) @PathVariable(name = "txnId") String txnId) throws ReloadlyException {
         return new ResponseEntity<>(new TransactionResponse(txnId, TransactionStatus.SUCCESSFUL), HttpStatus.OK
         );
     }

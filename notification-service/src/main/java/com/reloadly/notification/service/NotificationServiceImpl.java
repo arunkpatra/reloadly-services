@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  * @author Arun Patra
  */
 @Service
-public class NotificationServiceImpl implements NotificationService{
+public class NotificationServiceImpl implements NotificationService {
 
     private final SMSService smsService;
     private final MailSender mailSender;

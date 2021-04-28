@@ -1,6 +1,7 @@
 package com.reloadly.transaction.exception;
 
 import com.reloadly.commons.exceptions.ReloadlyException;
+
 /**
  * Exception indicating Kafka processing exception.
  *

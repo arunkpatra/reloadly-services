@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS user_table;
 CREATE TABLE user_table
 (
     id     BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    uid    VARCHAR(40)           NOT NULL UNIQUE,
+    uid    VARCHAR(40) NOT NULL UNIQUE,
     active BOOLEAN DEFAULT true
 );
 
@@ -23,7 +23,7 @@ CREATE TABLE user_table
 create table role_table
 (
     id        BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    role_name VARCHAR(32)           NOT NULL UNIQUE
+    role_name VARCHAR(32) NOT NULL UNIQUE
 );
 
 --
@@ -32,8 +32,8 @@ create table role_table
 CREATE TABLE authority_table
 (
     id        BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    uid       VARCHAR(40)           NOT NULL,
-    authority VARCHAR(32)           NOT NULL,
+    uid       VARCHAR(40) NOT NULL,
+    authority VARCHAR(32) NOT NULL,
     CONSTRAINT unique_user_id_authority UNIQUE (uid, authority),
     CONSTRAINT fk_igc_authority_user_name_igc_user_user_name
         FOREIGN KEY (uid)
@@ -49,9 +49,9 @@ CREATE TABLE authority_table
 CREATE TABLE username_password_table
 (
     id        BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    user_name VARCHAR(64)           NOT NULL UNIQUE,
-    password  VARCHAR(128)          NOT NULL,
-    uid       VARCHAR(40)           NOT NULL,
+    user_name VARCHAR(64)  NOT NULL UNIQUE,
+    password  VARCHAR(128) NOT NULL,
+    uid       VARCHAR(40)  NOT NULL,
     CONSTRAINT fk_username_password_table_user_id_user_table
         FOREIGN KEY (uid)
             REFERENCES user_table (uid)
@@ -60,8 +60,8 @@ CREATE TABLE username_password_table
 create TABLE api_key_table
 (
     id      BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    uid     VARCHAR(40)           NOT NULL,
-    api_key VARCHAR(40)           NOT NULL UNIQUE,
+    uid     VARCHAR(40) NOT NULL,
+    api_key VARCHAR(40) NOT NULL UNIQUE,
     active  BOOLEAN DEFAULT true,
     CONSTRAINT fk_api_key_table_uid_user_table
         FOREIGN KEY (uid)

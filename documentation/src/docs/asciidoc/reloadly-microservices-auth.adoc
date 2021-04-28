@@ -4,13 +4,18 @@ ifndef::imagesdir[:imagesdir: images]
 
 The Authentication service allows multiple enterprise facilities like:
 
-* User signup - Currently username and password based login is supported. Can be extended to other auth channels. Users are issued JWT tokens.
+* User signup - Currently username and password based login is supported.
+Can be extended to other auth channels.
+Users are issued JWT tokens.
 * Signup - Users can signup by choosing a username and password.
 * Token Verification - Verify JWT tokens.
-* API Key verification and issue functions. API keys are issued to users and service accounts.
-*  All other microservices call into the Auth Service to validate tokens and API keys. It is a foundational service.
+* API Key verification and issue functions.
+API keys are issued to users and service accounts.
+* All other microservices call into the Auth Service to validate tokens and API keys.
+It is a foundational service.
 
-See Swagger UI for API documentation. It's available at http://localhost:9090/swagger-ui/ when you run your services locally.
+See Swagger UI for API documentation.
+It's available at http://localhost:9090/swagger-ui/ when you run your services locally.
 
 ==== API
 

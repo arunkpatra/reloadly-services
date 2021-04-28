@@ -1,6 +1,7 @@
 package com.reloadly.account.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+
 /**
  * Account credit request.
  *

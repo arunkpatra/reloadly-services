@@ -3,12 +3,14 @@ ifndef::imagesdir[:imagesdir: images]
 [[getting-started]]
 == Getting Started
 
-This section provides documentation on setting up a local installation of the Reloadly Microservices. Create an issue on GitHub https://github.com/arunkpatra/reloadly-services/issues[here] if you have questions or need help.
+This section provides documentation on setting up a local installation of the Reloadly Microservices.
+Create an issue on GitHub https://github.com/arunkpatra/reloadly-services/issues[here] if you have questions or need help.
 
 [[pre-requisites]]
 === Pre-requisites
 
-Following pre-requisites need to be fulfilled before you can run a fully functional instance of the platform on your local development environments. The platform has been tested on macOS Big Sur.
+Following pre-requisites need to be fulfilled before you can run a fully functional instance of the platform on your local development environments.
+The platform has been tested on macOS Big Sur.
 
 1. *Hardware*: Either physical or virtual machines with minimum 8 GB RAM and 4 CPU Cores _(16 GB RAM, 8 CPU Cores if you want to do performance testing)_.
 2. *Operating System*: Windows(version 10+), macOS(version 10.15+), Linux (CentOS, RHEL, Ubuntu)
@@ -22,7 +24,9 @@ Following pre-requisites need to be fulfilled before you can run a fully functio
 
 *Installation on macOS*
 
-- Install JDK by following the instructions https://github.com/AdoptOpenJDK/homebrew-openjdk/blob/master/README.md[here]. Please install JDK 8 or 11 only. Other JDK versions have not been tested.
+- Install JDK by following the instructions https://github.com/AdoptOpenJDK/homebrew-openjdk/blob/master/README.md[here].
+Please install JDK 8 or 11 only.
+Other JDK versions have not been tested.
 
 - Install Apache Maven by following the instructions https://formulae.brew.sh/formula/maven[here].
 
@@ -40,7 +44,9 @@ Clone the git repository from GitHub into a directory of your choice.
 git clone git@github.com:arunkpatra/reloadly-services.git
 ----
 
-Build code and run tests. Build should pass, for you to proceed further with the rest of the chapter. From the directory where you cloned the repository, issue the following commands.
+Build code and run tests.
+Build should pass, for you to proceed further with the rest of the chapter.
+From the directory where you cloned the repository, issue the following commands.
 
 ----
 cd reloadly-services
@@ -49,24 +55,33 @@ mvn clean install
 
 [NOTE]
 ====
-The above commands will build code and run integration tests. The build artifacts are installed to your local maven repository. For building and running tests, you do NOT need a locally running Kafka and MySQL instance. For running tests, in-memory instances of these resources are run.
+The above commands will build code and run integration tests.
+The build artifacts are installed to your local maven repository.
+For building and running tests, you do NOT need a locally running Kafka and MySQL instance.
+For running tests, in-memory instances of these resources are run.
 ====
 
 [[running-locally]]
 === Development Environment Setup
 
-This is useful, when you want to set a development environment and run all the microservices on a single local machine. Kubernetes deployment support is coming up. See  https://github.com/arunkpatra/reloadly-services/issues/17[this GitHub issue].
+This is useful, when you want to set a development environment and run all the microservices on a single local machine.
+Kubernetes deployment support is coming up.
+See  https://github.com/arunkpatra/reloadly-services/issues/17[this GitHub issue].
 
 [NOTE]
 ====
-These instructions are for macOS. Please tailor them to run in other environments like Windows and Linux.
+These instructions are for macOS.
+Please tailor them to run in other environments like Windows and Linux.
 ====
 
 ==== Starting Local Services
+
 Following the steps below before running your microservices.
 
 ===== MySQL Setup
-Issue the following commands. You should have installed MySQL locally and verified it to work correctly as a pre-requisite.
+
+Issue the following commands.
+You should have installed MySQL locally and verified it to work correctly as a pre-requisite.
 
 ----
 mysql.server start
@@ -74,22 +89,27 @@ mysql.server start
 
 [WARNING]
 ====
-You must secure your local MySQL installation and create a user with database wide access. You can use the admin user for now, on your local machine. See MySQL docs for more information. Take a note of the username and password of the admin user; you will need it in a later step.
+You must secure your local MySQL installation and create a user with database wide access.
+You can use the admin user for now, on your local machine.
+See MySQL docs for more information.
+Take a note of the username and password of the admin user; you will need it in a later step.
 ====
 
-All database tables used by the microservices need to be created upfront in your local MySQL database instance. As noted earlier, you do NOT need to do this for running integration tests since tests use in-memory Derby database.
+All database tables used by the microservices need to be created upfront in your local MySQL database instance.
+As noted earlier, you do NOT need to do this for running integration tests since tests use in-memory Derby database.
 
 Run the following scripts in order.
 
 ====== Authentication Microservice Schema
 
-[source, sql]
+[source,sql]
 ----
 include::{sourcedir}/authentication-service/src/main/resources/auth-services-schema-mysql.sql[]
 ----
 
 ====== Account Microservice Schema
-[source, sql]
+
+[source,sql]
 ----
 include::{sourcedir}/account-service/src/main/resources/account-services-schema-mysql.sql[]
 ----
@@ -98,27 +118,33 @@ include::{sourcedir}/account-service/src/main/resources/account-services-schema-
 
 [NOTE]
 ====
-The following script, sets up the tables needed for both the `transaction-processor` and the `transaction-service`. See later sections for details.
+The following script, sets up the tables needed for both the `transaction-processor` and the `transaction-service`.
+See later sections for details.
 ====
 
-[source, sql]
+[source,sql]
 ----
 include::{sourcedir}/transaction-common/src/main/resources/transaction-services-schema-mysql.sql[]
 ----
 
 [[seed-data]]
 ====== Seed Data
-This data must be seeded into the DB for system to work correctly. It does nothing other than ading a service account and API key which is needed for inter-microservice communication.
 
-[source, sql]
+This data must be seeded into the DB for system to work correctly.
+It does nothing other than ading a service account and API key which is needed for inter-microservice communication.
+
+[source,sql]
 ----
 include::{sourcedir}/authentication-service/src/main/resources/auth-services-data-mysql.sql[]
 ----
 
-After running these scripts, you must have the schemas correctly created and seed data populated. Please verify.
+After running these scripts, you must have the schemas correctly created and seed data populated.
+Please verify.
 
 ===== Kafka Setup
-Issue the following commands. You should have installed Kafka locally and verified it to work correctly as a pre-requisite.
+
+Issue the following commands.
+You should have installed Kafka locally and verified it to work correctly as a pre-requisite.
 
 ----
 zookeeper-server-start -daemon /usr/local/etc/kafka/zookeeper.properties & kafka-server-start /usr/local/etc/kafka/server.properties
@@ -126,20 +152,29 @@ zookeeper-server-start -daemon /usr/local/etc/kafka/zookeeper.properties & kafka
 
 [NOTE]
 ====
-A topic named `com.reloadly.inbound.txn.topic` is needed by the `transaction-processor` (Kafka consumer) and `transaction-service`(Kafka producer) components. This topic is created on the fly by the transaction-service` if it does not exist. While this is acceptable in non-production environments, it is discouraged in higher environments. The `transaction-processor` listens to this topic and won't process messages if this topic does not exist.
+A topic named `com.reloadly.inbound.txn.topic` is needed by the `transaction-processor` (Kafka consumer) and `transaction-service`(Kafka producer) components.
+This topic is created on the fly by the transaction-service` if it does not exist.
+While this is acceptable in non-production environments, it is discouraged in higher environments.
+The `transaction-processor` listens to this topic and won't process messages if this topic does not exist.
 ====
 
 [WARNING]
 ====
-In your local environment, Kafka uses PLAINTEXT by default. In other environments, you must use strong encryption. Please refer Kafka documentation for securing a Kafka installation.
+In your local environment, Kafka uses PLAINTEXT by default.
+In other environments, you must use strong encryption.
+Please refer Kafka documentation for securing a Kafka installation.
 ====
 
 ==== Running Microservices
 
-Follow the steps listed below in order to run all components of the platform locally. You should folow these steps sequentially.
+Follow the steps listed below in order to run all components of the platform locally.
+You should folow these steps sequentially.
 
 ===== Environment Variable Configuration
-You would need to set the following Environment variables. Use the method that's appropriate for your operating system. On macOS, you can export environment variables on the command line as follows.
+
+You would need to set the following Environment variables.
+Use the method that's appropriate for your operating system.
+On macOS, you can export environment variables on the command line as follows.
 
 ----
 export YOUR_ENV_VARIABLE=env_var_value
@@ -166,7 +201,9 @@ export YOUR_ENV_VARIABLE=env_var_value
 
 |EMAIL_DRY_RUN
 |Set to `true` or `false`
-|Setting `false` suppresses email sending. `true` will send actual emails. You need to configure SES correctly in your AWS account. See Amazon SES documentation.
+|Setting `false` suppresses email sending. `true` will send actual emails.
+You need to configure SES correctly in your AWS account.
+See Amazon SES documentation.
 
 |SENDER_EMAIL_ID
 |The sender email ID verified by AWS SES to send emails from.
@@ -177,30 +214,37 @@ export YOUR_ENV_VARIABLE=env_var_value
 |Setting `false` suppresses SMS sending. `true` will send actual SMS messages.
 
 |TWILIO_ACCOUNT_SID
-|Your Twilio account SID. Get it from your Twilio account.
+|Your Twilio account SID.
+Get it from your Twilio account.
 |Needed to send SMS via Twilio (SMS charges will be applied by Twilio).
 
 |TWILIO_AUTH_TOKEN
-|Your Twilio account auth token. Get it from your Twilio account.
+|Your Twilio account auth token.
+Get it from your Twilio account.
 |Needed to send SMS via Twilio.
 
 |TWILIO_MSG_SVC_ID
-|Your Twilio account Message Service ID. Get it from your Twilio account.
+|Your Twilio account Message Service ID.
+Get it from your Twilio account.
 |Needed to send SMS via Twilio.
 
 |RELOADLY_SVC_ACCT_API_KEY
-|The reloadly service account API key. Use the value you inserted in the <<seed-data, Seed Data>> section.
-|Needed for the platform to work correctly. Use the `api-key` value from the final `INSERT` statement in that script.
+|The reloadly service account API key.
+Use the value you inserted in the <<seed-data, Seed Data>> section.
+|Needed for the platform to work correctly.
+Use the `api-key` value from the final `INSERT` statement in that script.
 |===
 
 [TIP]
 ====
-Consider writing a small shell script, or add these in your `~/.zprofile` or `~./bashprofile` file or a suitable method of your liking. After adding, you should `source` these files for changes to take effect, e.g. `source ~/.zprofile`.
+Consider writing a small shell script, or add these in your `~/.zprofile` or `~./bashprofile` file or a suitable method of your liking.
+After adding, you should `source` these files for changes to take effect, e.g. `source ~/.zprofile`.
 ====
 
-You may add the following in the script. Supply appropriate values.
+You may add the following in the script.
+Supply appropriate values.
 
-[source, shell script]
+[source,shell script]
 ----
 #
 # These properties are used by the platform microservices
@@ -224,7 +268,10 @@ export RELOADLY_SVC_ACCT_API_KEY=
 ----
 
 ===== Running Microservices
-Run these services in sequence (recommended). You must have done a `mvn clean install` from the root of your cloned repository. That builds all microservices.
+
+Run these services in sequence (recommended).
+You must have done a `mvn clean install` from the root of your cloned repository.
+That builds all microservices.
 
 [NOTE]
 ====
@@ -232,15 +279,18 @@ Ensure that, your MySQL server and Kafka instances are up and running before you
 ====
 
 ====== Authentication Microservice
+
 Issue these commands from the root of your cloned repository.
 
 ----
 cd authentication-service
 mvn spring-boot:run
 ----
+
 Access Swagger UI of Authentication Microservice at http://localhost:9090/swagger-ui/
 
 ====== Account Microservice
+
 Issue these commands from the root of your cloned repository.
 
 ----
@@ -251,6 +301,7 @@ mvn spring-boot:run
 Access Swagger UI of Authentication Microservice at http://localhost:8080/swagger-ui/
 
 ====== Transaction Microservice
+
 Issue these commands from the root of your cloned repository.
 
 ----
@@ -261,6 +312,7 @@ mvn spring-boot:run
 Access Swagger UI of Authentication Microservice at http://localhost:8081/swagger-ui/
 
 ====== Notification Microservice
+
 Issue these commands from the root of your cloned repository.
 
 ----
@@ -271,6 +323,7 @@ mvn spring-boot:run
 Access Swagger UI of Authentication Microservice at http://localhost:8082/swagger-ui/
 
 ====== Transaction Processor
+
 Issue these commands from the root of your cloned repository.
 
 ----
@@ -279,6 +332,7 @@ mvn spring-boot:run
 ----
 
 ====== Spring Boot Admin App
+
 Issue these commands from the root of your cloned repository.
 
 ----
@@ -286,12 +340,15 @@ cd admin-service
 mvn spring-boot:run
 ----
 
-Access the Admin Service Dashboard at http://localhost:9595/. You should see the following dashboard once all your services register with the Spring Boot Admin app. You should navigate to the `Wallboard` tab of the Spring Boot Admin UI.
+Access the Admin Service Dashboard at http://localhost:9595/.
+You should see the following dashboard once all your services register with the Spring Boot Admin app.
+You should navigate to the `Wallboard` tab of the Spring Boot Admin UI.
 
 //[.thumb]
 image::spring-boot-admin.png[scaledwidth=100%]
 
-Congratulations! Your services are running.
+Congratulations!
+Your services are running.
 
 Now head over to the documentation of individual microservices for more details.
 

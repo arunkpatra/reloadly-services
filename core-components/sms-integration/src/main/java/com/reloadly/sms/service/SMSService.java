@@ -14,7 +14,7 @@ public interface SMSService {
      * Send an SMS.
      *
      * @param toNumber The number to which SMS should be sent.
-     * @param message The message to be sent.
+     * @param message  The message to be sent.
      * @throws SMSProcessingException If an error occurs.
      */
     void sendSMS(String toNumber, String message) throws SMSProcessingException;

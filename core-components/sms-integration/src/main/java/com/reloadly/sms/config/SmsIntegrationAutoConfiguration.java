@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 /**
  * SMS integration auto-configuration class.
  *
@@ -14,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(SmsProperties.class)
-@ConditionalOnProperty(name = "meelu.integration.sms.twilio", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(name = "reloadly.integration.sms.twilio", matchIfMissing = true)
 public class SmsIntegrationAutoConfiguration {
 
     @Bean

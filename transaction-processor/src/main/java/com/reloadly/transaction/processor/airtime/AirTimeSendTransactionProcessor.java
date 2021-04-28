@@ -67,12 +67,13 @@ public class AirTimeSendTransactionProcessor extends AbstractTransactionProcesso
 
     /**
      * Send notifications
-     * @param uid The UID
+     *
+     * @param uid    The UID
      * @param status If the transaction has failed.
      */
     private void sendNotifications(String uid, boolean status) {
-        String emailSub = status? "Airtime Send Successful" : "Airtime Send Failed";
-        String message = status? "Airtime has been sent successfully. Thank you." :
+        String emailSub = status ? "Airtime Send Successful" : "Airtime Send Failed";
+        String message = status ? "Airtime has been sent successfully. Thank you." :
                 "Your airtime send transaction has failed.";
         try {
             AccountInfo accountInfo = getAccountInfo(uid);
@@ -80,7 +81,7 @@ public class AirTimeSendTransactionProcessor extends AbstractTransactionProcesso
             sendSMSMessage(accountInfo, message);
         } catch (Exception e) {
             // Log and ignore
-            LOGGER.error("Error while sending notification. Root cause: {}",e.getMessage());
+            LOGGER.error("Error while sending notification. Root cause: {}", e.getMessage());
         }
     }
 
@@ -118,15 +119,17 @@ public class AirTimeSendTransactionProcessor extends AbstractTransactionProcesso
 
     private static class AccountDebitRequest {
         private Float amount;
+
         @JsonCreator
         public AccountDebitRequest(Float amount) {
             this.amount = amount;
         }
-        public Float getAmount() {
-            return amount;
-        }
 
         public AccountDebitRequest() {
+        }
+
+        public Float getAmount() {
+            return amount;
         }
 
         public void setAmount(Float amount) {
@@ -137,6 +140,7 @@ public class AirTimeSendTransactionProcessor extends AbstractTransactionProcesso
     private static class AccountDebitResponse {
         private Boolean successful;
         private String message;
+
         @JsonCreator
         public AccountDebitResponse(Boolean successful, String message) {
             this.successful = successful;
@@ -146,19 +150,20 @@ public class AirTimeSendTransactionProcessor extends AbstractTransactionProcesso
         public AccountDebitResponse() {
         }
 
-        public void setSuccessful(Boolean successful) {
-            this.successful = successful;
+        public String getMessage() {
+            return message;
         }
 
         public void setMessage(String message) {
             this.message = message;
         }
 
-        public String getMessage() {
-            return message;
-        }
         public Boolean getSuccessful() {
             return successful;
+        }
+
+        public void setSuccessful(Boolean successful) {
+            this.successful = successful;
         }
     }
 }

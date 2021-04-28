@@ -1,6 +1,7 @@
 package com.reloadly.email.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
 /**
  * Email auto-configuration properties.
  *

@@ -4,6 +4,7 @@ import com.reloadly.commons.model.ReloadlyCredentials;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.Assert;
+
 /**
  * Security util.
  *

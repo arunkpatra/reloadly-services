@@ -37,10 +37,10 @@ public class TransactionServiceImpl extends TransactionProcessingSupport impleme
      * the caller is necessarily notified.
      * <p>
      * The caller can always query back the status of a transaction.
+     *
      * @param request The transaction request object.
      * @return A transaction response object.
      * @throws ReloadlyTxnSvcException If the transaction could not be handled.
-     *
      * @author Arun Patra
      */
     @Override
@@ -56,10 +56,10 @@ public class TransactionServiceImpl extends TransactionProcessingSupport impleme
         switch (request.getTransactionType()) {
             case ADD_MONEY:
                 addMoneyReloadTxnRecord(te, request);
-            break;
+                break;
             case SEND_AIRTIME:
                 addSendAirtimeTxnRecord(te, request);
-            break;
+                break;
             default:
                 throw new ReloadlyTxnSvcException("Unknown transaction type");
         }

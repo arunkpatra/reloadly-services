@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AccountUpdateNotificationSupport {
 
-    private final ReloadlyNotification notification;
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountUpdateNotificationSupport.class);
+    private final ReloadlyNotification notification;
 
     protected AccountUpdateNotificationSupport(ReloadlyNotification notification) {
         this.notification = notification;

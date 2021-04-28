@@ -52,7 +52,7 @@ public class ReloadlyAuthAutoConfiguration {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            LOGGER.info("Enabling Firebase Auth based HTTP Security.");
+            LOGGER.info("Enabling Auth service based HTTP Security.");
             //@formatter:off
             http
                     .csrf().disable()

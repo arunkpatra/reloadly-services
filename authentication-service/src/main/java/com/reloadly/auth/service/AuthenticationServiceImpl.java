@@ -24,6 +24,7 @@ import org.springframework.util.Assert;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
 /**
  * Provides authentication related services.
  *

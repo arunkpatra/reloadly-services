@@ -60,7 +60,7 @@ public abstract class AbstractTransactionProcessor implements TransactionProcess
     }
 
     protected HttpHeaders getHeaders() {
-        HttpHeaders  headers = new HttpHeaders();
+        HttpHeaders headers = new HttpHeaders();
         headers.set("RELOADLY-API-KEY", properties.getSvcAccountApiKey());
         headers.set("Content-Type", "application/json");
         headers.set("Accept", "application/json");
@@ -111,6 +111,7 @@ public abstract class AbstractTransactionProcessor implements TransactionProcess
             // Ignore
         }
     }
+
     protected static class AccountInfo {
 
         private String name;
@@ -127,28 +128,28 @@ public abstract class AbstractTransactionProcessor implements TransactionProcess
         public AccountInfo() {
         }
 
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public void setPhoneNumber(String phoneNumber) {
-            this.phoneNumber = phoneNumber;
-        }
-
         public String getName() {
             return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
         }
 
         public String getEmail() {
             return email;
         }
 
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
         public String getPhoneNumber() {
             return phoneNumber;
+        }
+
+        public void setPhoneNumber(String phoneNumber) {
+            this.phoneNumber = phoneNumber;
         }
 
     }

@@ -70,12 +70,13 @@ public class MoneyReloadTransactionProcessor extends AbstractTransactionProcesso
 
     /**
      * Send notifications
-     * @param uid The UID
+     *
+     * @param uid    The UID
      * @param status If the transaction has failed.
      */
     private void sendNotifications(String uid, boolean status) {
-        String emailSub = status? "Money Reloaded Successful" : "Money Reloaded Failed";
-        String message = status? "Your money reload transaction has been processed. Thank you." :
+        String emailSub = status ? "Money Reloaded Successful" : "Money Reloaded Failed";
+        String message = status ? "Your money reload transaction has been processed. Thank you." :
                 "Your money reload transaction has failed.";
         try {
             AccountInfo accountInfo = getAccountInfo(uid);
@@ -83,9 +84,10 @@ public class MoneyReloadTransactionProcessor extends AbstractTransactionProcesso
             sendSMSMessage(accountInfo, message);
         } catch (Exception e) {
             // Log and ignore
-            LOGGER.error("Error while sending notification. Root cause: {}",e.getMessage());
+            LOGGER.error("Error while sending notification. Root cause: {}", e.getMessage());
         }
     }
+
     private void creditAccount(TransactionEntity txnEntity) throws ReloadlyTxnProcessingException {
         String uid = txnEntity.getUid();
         Optional<MoneyReloadTxnEntity> mrTxnOpt = moneyReloadTxnRepository.getByTxnId(txnEntity.getTxnId());
@@ -117,6 +119,7 @@ public class MoneyReloadTransactionProcessor extends AbstractTransactionProcesso
 
     private static class AccountCreditRequest {
         private Float amount;
+
         @JsonCreator
         public AccountCreditRequest(Float amount) {
             this.amount = amount;
@@ -136,15 +139,17 @@ public class MoneyReloadTransactionProcessor extends AbstractTransactionProcesso
 
     private static class AccountCreditResponse {
         private String message;
+
         @JsonCreator
         public AccountCreditResponse(String message) {
             this.message = message;
         }
-        public String getMessage() {
-            return message;
-        }
 
         public AccountCreditResponse() {
+        }
+
+        public String getMessage() {
+            return message;
         }
 
         public void setMessage(String message) {

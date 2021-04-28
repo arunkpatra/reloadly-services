@@ -1,6 +1,7 @@
 package com.reloadly.auth.exception;
 
 import com.reloadly.commons.exceptions.ReloadlyException;
+
 /**
  * Exception indicating invalid password format.
  *

@@ -4,6 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Mock security auto-configuration properties.
  *
@@ -15,7 +16,7 @@ public class MockSecurityProperties {
     public static final String PREFIX = "reloadly.auth.mock";
 
     /**
-     * (Optional) Is Firebase integration enabled?
+     * (Optional) Is Auth Service mock integration enabled?
      */
     private boolean enabled;
 

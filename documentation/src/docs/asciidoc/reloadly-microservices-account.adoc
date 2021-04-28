@@ -2,9 +2,11 @@ ifndef::imagesdir[:imagesdir: images]
 [[microservices-acct]]
 === Account Microservice
 
-The Account microservice, allows interacting with Account domain model. Various update and query operations can be performed.
+The Account microservice, allows interacting with Account domain model.
+Various update and query operations can be performed.
 
-See Swagger UI for API documentation. It's available at http://localhost:8080/swagger-ui/ when you run your services locally.
+See Swagger UI for API documentation.
+It's available at http://localhost:8080/swagger-ui/ when you run your services locally.
 
 ==== API
 //[.thumb]

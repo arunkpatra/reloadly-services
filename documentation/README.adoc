@@ -1,6 +1,7 @@
 = Reloadly Services Documentation
 
-This module create the documentation for this project. Please keep the documentation up-to-date.
+This module create the documentation for this project.
+Please keep the documentation up-to-date.
 
 == Usage
 

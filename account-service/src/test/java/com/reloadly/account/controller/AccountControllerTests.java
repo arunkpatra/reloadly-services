@@ -43,7 +43,7 @@ public class AccountControllerTests extends AbstractIntegrationTest {
     @Test
     @Transactional
     @Rollback
-    public void should_update_existing_account() throws Exception{
+    public void should_update_existing_account() throws Exception {
 
         String testUid = "c1fe6f0d-420e-4161-a134-9c2342e36c95";
         AccountInfo accountInfo = new AccountInfo("aa2", "bb2@email.com", "+911234567892");
@@ -67,7 +67,7 @@ public class AccountControllerTests extends AbstractIntegrationTest {
     }
 
     @Test
-    public void should_find_existing_account() throws Exception{
+    public void should_find_existing_account() throws Exception {
         String testUid = "c1fe6f0d-420e-4161-a134-9c2342e36c95";
         String testAccountId = "f1fe6f0d-420e-4161-a134-9c2342e36c99";
         // Setup and Act
@@ -91,7 +91,7 @@ public class AccountControllerTests extends AbstractIntegrationTest {
     }
 
     @Test
-    public void should_not_find_non_existent_account() throws Exception{
+    public void should_not_find_non_existent_account() throws Exception {
         String testUid = "01fe6f0d-420e-4161-a134-9c2342e36c95";
         // Act and Assert
         mockMvc.perform(get("/account/".concat(testUid))

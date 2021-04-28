@@ -14,7 +14,8 @@ public interface AccountService {
 
     /**
      * Update an account. If an account does not exist, one will be created.
-     * @param uid The UID of the user for whom this account is being created.
+     *
+     * @param uid     The UID of the user for whom this account is being created.
      * @param request The {@link AccountUpdateRequest} object.
      * @return A {@link AccountUpdateResponse} instance.
      * @throws AccountUpdatedException If account update fails.
@@ -23,6 +24,7 @@ public interface AccountService {
 
     /**
      * Locates the account for the specified user and returns it.
+     *
      * @param uid The UID of the user.
      * @return The account details object.
      * @throws AccountNotFoundException If no account was found for the user.
@@ -41,7 +43,7 @@ public interface AccountService {
     /**
      * Credit an account.
      *
-     * @param uid The UID of the user.
+     * @param uid     The UID of the user.
      * @param request The {@link AccountCreditRequest} object.
      * @return The {@link AccountCreditResponse} object.
      * @throws AccountBalanceException If an error occurs.
@@ -51,7 +53,7 @@ public interface AccountService {
     /**
      * Debit an account.
      *
-     * @param uid The UID of the user.
+     * @param uid     The UID of the user.
      * @param request The {@link AccountDebitRequest} object.
      * @return The {@link AccountDebitResponse} object.
      * @throws AccountBalanceException If an error occurs.
@@ -65,5 +67,7 @@ public interface AccountService {
      * @return The {@link AccountInfo} object.
      * @throws AccountNotFoundException If an error occurs.
      */
-    AccountInfo getAccountInfo(String uid) throws AccountNotFoundException;;
+    AccountInfo getAccountInfo(String uid) throws AccountNotFoundException;
+
+    ;
 }

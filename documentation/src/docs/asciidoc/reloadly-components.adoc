@@ -1,13 +1,17 @@
 [[components]]
 == Reloadly Modules
 
-Foundational modules are reusable pieces of software that can be easily integrated in other modules. The following modules are used in the rest of the platform. Note that, in a Microservices architecture, individual microservices should share reusable code only if makes sense and if sharable code is well managed by a team which keeps pace with others.
+Foundational modules are reusable pieces of software that can be easily integrated in other modules.
+The following modules are used in the rest of the platform.
+Note that, in a Microservices architecture, individual microservices should share reusable code only if makes sense and if sharable code is well managed by a team which keeps pace with others.
 
 === Email
 
-This module supports email sending facilities. This is a drop-in solution. Add the following dependency in any Spring Boot application and Spring Boot Autoconfiguration would wire the necessary beans.
+This module supports email sending facilities.
+This is a drop-in solution.
+Add the following dependency in any Spring Boot application and Spring Boot Autoconfiguration would wire the necessary beans.
 
-[source, xml]
+[source,xml]
 ----
 <dependency>
     <groupId>com.reloadly</groupId>
@@ -16,13 +20,16 @@ This module supports email sending facilities. This is a drop-in solution. Add t
 </dependency>
 ----
 
-This component is configurable. See the configuration properties of this module.
+This component is configurable.
+See the configuration properties of this module.
 
 === SMS
 
-This module supports SMS sending facilities. This is a drop-in solution. Add the following dependency in any Spring Boot application and Spring Boot Autoconfiguration would wire the necessary beans.
+This module supports SMS sending facilities.
+This is a drop-in solution.
+Add the following dependency in any Spring Boot application and Spring Boot Autoconfiguration would wire the necessary beans.
 
-[source, xml]
+[source,xml]
 ----
 <dependency>
     <groupId>com.reloadly</groupId>
@@ -31,13 +38,16 @@ This module supports SMS sending facilities. This is a drop-in solution. Add the
 </dependency>
 ----
 
-This component is configurable. See the configuration properties of this module.
+This component is configurable.
+See the configuration properties of this module.
 
 === Security Integration
 
-This module automatically secures all Web API endpoints with Auth Service security via Spring Security. This is a drop-in solution. Add the following dependency in any Spring Boot application and Spring Boot Autoconfiguration would wire the necessary beans.
+This module automatically secures all Web API endpoints with Auth Service security via Spring Security.
+This is a drop-in solution.
+Add the following dependency in any Spring Boot application and Spring Boot Autoconfiguration would wire the necessary beans.
 
-[source, xml]
+[source,xml]
 ----
 <dependency>
     <groupId>com.reloadly</groupId>
@@ -45,13 +55,19 @@ This module automatically secures all Web API endpoints with Auth Service securi
     <version>1.0.0</version>
 </dependency>
 ----
-This component is configurable. See the configuration properties of this module.
+
+This component is configurable.
+See the configuration properties of this module.
 
 === Notification Integration
 
-This module integrates Notification Service via an SDK. You would not need to make REST API calls to send out notifications, and use a Java API instead. The Java API wraps the REST AP calls into the Notification microservice. This is a drop-in solution. Add the following dependency in any Spring Boot application and Spring Boot Autoconfiguration would wire the necessary beans.
+This module integrates Notification Service via an SDK.
+You would not need to make REST API calls to send out notifications, and use a Java API instead.
+The Java API wraps the REST AP calls into the Notification microservice.
+This is a drop-in solution.
+Add the following dependency in any Spring Boot application and Spring Boot Autoconfiguration would wire the necessary beans.
 
-[source, xml]
+[source,xml]
 ----
 <dependency>
     <groupId>com.reloadly</groupId>
@@ -60,13 +76,16 @@ This module integrates Notification Service via an SDK. You would not need to ma
 </dependency>
 ----
 
-This component is configurable. See the configuration properties of this module.
+This component is configurable.
+See the configuration properties of this module.
 
 === Swagger UI Integration
 
-This module adds Swagger UI integration to any Spring Boot app. This is a drop-in solution. Add the following dependency in any Spring Boot application and Spring Boot Autoconfiguration would wire the necessary beans.
+This module adds Swagger UI integration to any Spring Boot app.
+This is a drop-in solution.
+Add the following dependency in any Spring Boot application and Spring Boot Autoconfiguration would wire the necessary beans.
 
-[source, xml]
+[source,xml]
 ----
 <dependency>
     <groupId>com.reloadly</groupId>
@@ -75,4 +94,5 @@ This module adds Swagger UI integration to any Spring Boot app. This is a drop-i
 </dependency>
 ----
 
-This component is configurable. See the configuration properties of this module.
+This component is configurable.
+See the configuration properties of this module.

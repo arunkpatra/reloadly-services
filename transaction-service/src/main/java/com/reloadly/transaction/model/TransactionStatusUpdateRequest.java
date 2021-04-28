@@ -1,4 +1,5 @@
 package com.reloadly.transaction.model;
+
 /**
  * The transaction status update request.
  *

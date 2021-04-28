@@ -1,16 +1,17 @@
 ifndef::imagesdir[:imagesdir: images]
 [[summary-highlights]]
-
 == Code Challenge Summary
 
-The solution developed for the code challenge, embraces modern architectural styles, battle tested architectural principles and robust engineering practices. The following features have been implemented.
+The solution developed for the code challenge, embraces modern architectural styles, battle tested architectural principles and robust engineering practices.
+The following features have been implemented.
 
 //[.thumb]
 image::reloadly-solution-highlights-and-summary.png[scaledwidth=100%]
 
 [NOTE]
 ====
-Items grayed out, are proposed. Please see open issues in GitHub https://github.com/arunkpatra/reloadly-services/issues[here].
+Items grayed out, are proposed.
+Please see open issues in GitHub https://github.com/arunkpatra/reloadly-services/issues[here].
 ====
 
 == Code Challenge Highlights

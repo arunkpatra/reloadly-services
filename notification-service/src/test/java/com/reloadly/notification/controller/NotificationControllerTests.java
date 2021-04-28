@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class NotificationControllerTests extends AbstractIntegrationTest {
 
     @Test
-    public void should_send_email() throws Exception{
+    public void should_send_email() throws Exception {
         String testUid = "fefe6f0d-420e-4161-a134-9c2342e36c95";
         EmailRequest request = new EmailRequest("email@email.com", "Hello Subject", "Hello Body");
         // Setup and Act

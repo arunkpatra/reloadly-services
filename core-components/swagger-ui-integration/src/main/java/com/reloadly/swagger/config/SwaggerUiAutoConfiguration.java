@@ -18,6 +18,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 /**
  * Swagger UI auto-configuration.
  *

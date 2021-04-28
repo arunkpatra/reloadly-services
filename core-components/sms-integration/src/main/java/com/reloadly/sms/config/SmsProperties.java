@@ -1,6 +1,7 @@
 package com.reloadly.sms.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
 /**
  * SMS integration auto-configuration properties.
  *

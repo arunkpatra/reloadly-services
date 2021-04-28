@@ -11,6 +11,7 @@ import org.springframework.mail.MailSender;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.ses.SesClient;
 import software.amazon.awssdk.services.ses.SesClientBuilder;
+
 /**
  * Email auto-configuration class.
  *

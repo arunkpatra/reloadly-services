@@ -13,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+
 /**
  * Java API to interact with the Notification microservice.
  *
@@ -20,9 +21,9 @@ import org.springframework.web.client.RestTemplate;
  */
 public class ReloadlyNotificationImpl implements ReloadlyNotification {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReloadlyNotificationImpl.class);
     private final NotificationClientProperties properties;
     private final RestTemplate restTemplate;
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReloadlyNotificationImpl.class);
 
     public ReloadlyNotificationImpl(NotificationClientProperties properties, RestTemplate restTemplate) {
         this.properties = properties;
@@ -34,7 +35,7 @@ public class ReloadlyNotificationImpl implements ReloadlyNotification {
      *
      * @param credentials The credentials object containing a valid Reloadly Auth Service issued JWT token or a similar
      *                    identifier which identifies the user under whose authority the API call will be made.
-     * @param request The email request object.
+     * @param request     The email request object.
      * @throws NotificationException If an error occurs.
      */
     @Override
@@ -63,7 +64,7 @@ public class ReloadlyNotificationImpl implements ReloadlyNotification {
      *
      * @param credentials The credentials object containing a valid Reloadly Auth Service issued JWT token or a similar
      *                    identifier which identifies the user under whose authority the API call will be made.
-     * @param request The SMS request object.
+     * @param request     The SMS request object.
      * @throws NotificationException If an error occurs.
      */
     @Override
@@ -87,7 +88,7 @@ public class ReloadlyNotificationImpl implements ReloadlyNotification {
     }
 
     private HttpHeaders getHeaders(ReloadlyCredentials credentials) {
-        HttpHeaders  headers = new HttpHeaders();
+        HttpHeaders headers = new HttpHeaders();
 
         switch (credentials.getType()) {
             case RELOADLY_JWT_TOKEN:

@@ -28,6 +28,7 @@ public class TransactionManagerImpl implements TransactionManager, InitializingB
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionManagerImpl.class);
     private final ApplicationContext context;
     private final Map<String, TransactionProcessor> txnProcessorMap = new Hashtable<>();
+
     public TransactionManagerImpl(ApplicationContext context) {
         this.context = context;
     }

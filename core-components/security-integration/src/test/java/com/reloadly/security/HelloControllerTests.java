@@ -39,7 +39,7 @@ public class HelloControllerTests extends AbstractIntegrationTest {
                 .andReturn();
     }
 
-//    @Test
+    //    @Test
     public void should_get_hello_message() throws Exception {
 
         // Setup and Act
@@ -56,7 +56,7 @@ public class HelloControllerTests extends AbstractIntegrationTest {
         assertThat(response.getMessage()).isEqualTo("Hello World!");
     }
 
-//    @Test
+    //    @Test
     public void should_get_hello_message_with_api_key() throws Exception {
         String apiKey = "d3fe6f0d-120e-4161-a134-8c2342e36ca6";
         // Setup and Act

@@ -104,15 +104,15 @@ public class AccountEntity extends AbstractPersistable<Long> implements Serializ
         return accountBalanceEntity;
     }
 
+    public void setAccountBalanceEntity(AccountBalanceEntity accountBalanceEntity) {
+        this.accountBalanceEntity = accountBalanceEntity;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public void setAccountBalanceEntity(AccountBalanceEntity accountBalanceEntity) {
-        this.accountBalanceEntity = accountBalanceEntity;
     }
 }

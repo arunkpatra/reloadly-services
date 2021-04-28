@@ -1,4 +1,5 @@
 package com.reloadly.account.model;
+
 /**
  * The adress type.
  *

@@ -1,4 +1,5 @@
 package com.reloadly.email.model;
+
 /**
  * Email message data.
  *
