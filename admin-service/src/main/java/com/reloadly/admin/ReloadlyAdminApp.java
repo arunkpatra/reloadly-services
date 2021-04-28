@@ -15,6 +15,11 @@ import org.springframework.core.convert.support.DefaultConversionService;
 
 import java.time.format.DateTimeFormatter;
 
+/**
+ * The Spring Boot Admin app for monitoring.
+ *
+ * @author Arun Patra
+ */
 @Configuration
 @EnableAutoConfiguration
 @EnableAdminServer
