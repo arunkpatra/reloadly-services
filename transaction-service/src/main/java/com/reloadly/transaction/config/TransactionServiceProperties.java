@@ -3,6 +3,12 @@ package com.reloadly.transaction.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
+/**
+ * The Transaction Microservice Config properties.
+ *
+ * @author Arun Patra
+ */
+
 @ConfigurationProperties(TransactionServiceProperties.PREFIX)
 public class TransactionServiceProperties {
 

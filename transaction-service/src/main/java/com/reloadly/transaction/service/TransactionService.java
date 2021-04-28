@@ -4,6 +4,11 @@ import com.reloadly.transaction.exception.ReloadlyTxnSvcException;
 import com.reloadly.transaction.model.TransactionRequest;
 import com.reloadly.transaction.model.TransactionResponse;
 
+/**
+ * This exposes capabilities related to user transaction requests.
+ *
+ * @author Arun Patra
+ */
 public interface TransactionService {
 
     /**

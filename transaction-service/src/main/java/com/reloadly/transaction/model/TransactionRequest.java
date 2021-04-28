@@ -2,6 +2,11 @@ package com.reloadly.transaction.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+/**
+ * The user transaction request.
+ *
+ * @author Arun Patra
+ */
 public class TransactionRequest {
 
     private final TransactionType transactionType;

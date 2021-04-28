@@ -5,7 +5,11 @@ import com.reloadly.transaction.entity.TransactionEntity;
 import com.reloadly.transaction.exception.KafkaProcessingException;
 import com.reloadly.transaction.model.TransactionRequest;
 import org.springframework.kafka.core.KafkaTemplate;
-
+/**
+ * This provides Kafka support.
+ *
+ * @author Arun Patra
+ */
 public abstract class KafkaSupport {
 
     protected final TransactionServiceProperties properties;

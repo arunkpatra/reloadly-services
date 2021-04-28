@@ -2,6 +2,11 @@ package com.reloadly.transaction.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+/**
+ * The Add money request.
+ *
+ * @author Arun Patra
+ */
 public class AddMoneyRequest {
 
     private final Float amount;

@@ -1,5 +1,10 @@
 package com.reloadly.transaction.model;
 
+/**
+ * The transaction response.
+ *
+ * @author Arun Patra
+ */
 public class TransactionResponse {
 
     private final String transactionId;

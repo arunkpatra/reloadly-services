@@ -2,6 +2,11 @@ package com.reloadly.transaction.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+/**
+ * The Send Airtime request.
+ *
+ * @author Arun Patra
+ */
 public class SendAirtimeRequest {
     private final Float amount;
     private final String phoneNumber;

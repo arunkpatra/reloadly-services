@@ -19,6 +19,11 @@ import org.springframework.util.Assert;
 
 import java.util.UUID;
 
+/**
+ * Various transaction processing support functions..
+ *
+ * @author Arun Patra
+ */
 public abstract class TransactionProcessingSupport extends KafkaSupport {
 
     protected final TransactionRepository transactionRepository;

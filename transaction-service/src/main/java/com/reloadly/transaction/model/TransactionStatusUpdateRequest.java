@@ -1,5 +1,9 @@
 package com.reloadly.transaction.model;
-
+/**
+ * The transaction status update request.
+ *
+ * @author Arun Patra
+ */
 public class TransactionStatusUpdateRequest {
 
     private final TransactionStatus transactionStatus;

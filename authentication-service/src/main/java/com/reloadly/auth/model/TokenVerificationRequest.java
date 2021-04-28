@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * The JWT token verification request.
+ *
+ * @author Arun Patra
  */
 @ApiModel(value = "TokenVerificationRequest", description = "A Reloadly issued JWT token verification request.")
 public class TokenVerificationRequest {

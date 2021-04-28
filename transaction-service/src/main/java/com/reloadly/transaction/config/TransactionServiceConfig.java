@@ -6,6 +6,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;
 
+/**
+ * The Transaction Microservice Config.
+ *
+ * @author Arun Patra
+ */
 @Configuration
 @EnableConfigurationProperties(TransactionServiceProperties.class)
 public class TransactionServiceConfig {

@@ -14,6 +14,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+/**
+ * This exposes capabilities related to user transaction requests.
+ *
+ * @author Arun Patra
+ */
 @Service
 public class TransactionServiceImpl extends TransactionProcessingSupport implements TransactionService {
 
@@ -32,10 +37,10 @@ public class TransactionServiceImpl extends TransactionProcessingSupport impleme
      * the caller is necessarily notified.
      * <p>
      * The caller can always query back the status of a transaction.
-     *
      * @param request The transaction request object.
      * @return A transaction response object.
      * @throws ReloadlyTxnSvcException If the transaction could not be handled.
+     *
      * @author Arun Patra
      */
     @Override

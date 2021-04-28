@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * The API key verification request.
+ *
+ * @author Arun Patra
  */
 @ApiModel(value = "ApiKeyVerificationRequest", description = "An API Key verification request.")
 public class ApiKeyVerificationRequest {

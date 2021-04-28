@@ -8,6 +8,8 @@ import java.io.Serializable;
 
 /**
  * The request object for username/password based authentication.
+ *
+ * @author Arun Patra
  */
 @ApiModel(value = "UsernamePasswordAuthRequest", description = "The request object for username/password based authentication")
 public class UsernamePasswordAuthRequest implements Serializable {
