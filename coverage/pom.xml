@@ -128,6 +128,15 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <excludes>
+                        <exclude>**/com/reloadly/account/ReloadlyAccountServiceApp**</exclude>
+                        <exclude>**/com/reloadly/auth/ReloadlyAuthenticationServiceApp**</exclude>
+                        <exclude>**/com/reloadly/notification/ReloadlyNotificationServiceApp**</exclude>
+                        <exclude>**/com/reloadly/transaction/ReloadlyTransactionProcessorApp**</exclude>
+                        <exclude>**/com/reloadly/transaction/ReloadlyTransactionServiceApp**</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
