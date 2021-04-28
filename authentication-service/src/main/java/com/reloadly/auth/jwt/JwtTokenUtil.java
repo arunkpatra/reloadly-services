@@ -60,10 +60,10 @@ public class JwtTokenUtil implements Serializable {
     }
 
     //generate token for user
-    public String generateToken(String subject) {
-        Map<String, Object> claims = new HashMap<>();
-        return doGenerateToken(claims, subject);
-    }
+//    public String generateToken(String subject) {
+//        Map<String, Object> claims = new HashMap<>();
+//        return doGenerateToken(claims, subject);
+//    }
 
     public String generateToken(Map<String, Object> claims, String subject) {
         return doGenerateToken(claims, subject);

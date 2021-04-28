@@ -15,15 +15,4 @@ public class EmailProcessingException extends ReloadlyException {
         super(message);
     }
 
-    public EmailProcessingException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public EmailProcessingException(Throwable cause) {
-        super(cause);
-    }
-
-    public EmailProcessingException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
 }

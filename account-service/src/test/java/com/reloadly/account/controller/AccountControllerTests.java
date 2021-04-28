@@ -117,4 +117,65 @@ public class AccountControllerTests extends AbstractIntegrationTest {
         assertThat(response.getAccountBalance()).isEqualTo(200.5f);
     }
 
+    @Test
+    @Transactional
+    @Rollback
+    public void should_credit_account() throws Exception {
+
+        String testUid = "c1fe6f0d-420e-4161-a134-9c2342e36c95";
+        AccountCreditRequest request = new AccountCreditRequest(150.5f);
+        // Setup and Act
+        MvcResult mvcResult = mockMvc.perform(post("/account/credit/".concat(testUid))
+                .header("X-Mock-UID", testUid).content(objectMapper.writeValueAsString(request))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        // Assert
+        AccountCreditResponse response =
+                objectMapper.readValue(mvcResult.getResponse().getContentAsString(), AccountCreditResponse.class);
+        assertThat(response.getMessage()).isEqualTo("Account successfully credited");
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void should_debit_account() throws Exception {
+
+        String testUid = "c1fe6f0d-420e-4161-a134-9c2342e36c95";
+        AccountDebitRequest request = new AccountDebitRequest(10.5f);
+        // Setup and Act
+        MvcResult mvcResult = mockMvc.perform(post("/account/debit/".concat(testUid))
+                .header("X-Mock-UID", testUid).content(objectMapper.writeValueAsString(request))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        // Assert
+        AccountDebitResponse response =
+                objectMapper.readValue(mvcResult.getResponse().getContentAsString(), AccountDebitResponse.class);
+        assertThat(response.getSuccessful()).isTrue();
+        assertThat(response.getMessage()).isEqualTo("Account successfully debited");
+    }
+
+    @Test
+    public void should_get_account_info() throws Exception {
+        String testUid = "c1fe6f0d-420e-4161-a134-9c2342e36c95";
+        // Setup and Act
+        MvcResult mvcResult = mockMvc.perform(get("/account/info/".concat(testUid))
+                .header("X-Mock-UID", testUid))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        // Assert
+        AccountInfo response =
+                objectMapper.readValue(mvcResult.getResponse().getContentAsString(), AccountInfo.class);
+        assertThat(response.getName()).isEqualTo("John Doe");
+        assertThat(response.getEmail()).isEqualTo("email@email.com");
+        assertThat(response.getPhoneNumber()).isEqualTo("+19999999999");
+    }
+
 }

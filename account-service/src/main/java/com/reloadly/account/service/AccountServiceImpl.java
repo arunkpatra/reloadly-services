@@ -177,7 +177,7 @@ public class AccountServiceImpl extends AccountUpdateNotificationSupport impleme
         } catch (Exception e) {
             throw new AccountBalanceException("failed to credit transaction. Root cause: ".concat(e.getMessage()), e);
         }
-        return new AccountDebitResponse(true, "Account successfully credited");
+        return new AccountDebitResponse(true, "Account successfully debited");
     }
 
     private AccountEntity getAccountEntity(String uid) throws AccountBalanceException {

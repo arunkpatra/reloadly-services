@@ -14,10 +14,6 @@ public class UsernameAlreadyTakenException extends ReloadlyException {
         super(DEFAULT_MESSAGE);
     }
 
-    public UsernameAlreadyTakenException(Exception e) {
-        super(DEFAULT_MESSAGE, e);
-    }
-
     public UsernameAlreadyTakenException(String message, Exception e) {
         super(message, e);
     }

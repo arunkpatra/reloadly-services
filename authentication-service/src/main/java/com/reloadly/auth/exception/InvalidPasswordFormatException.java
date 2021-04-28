@@ -14,11 +14,4 @@ public class InvalidPasswordFormatException extends ReloadlyException {
         super(DEFAULT_MESSAGE);
     }
 
-    public InvalidPasswordFormatException(Exception e) {
-        super(DEFAULT_MESSAGE, e);
-    }
-
-    public InvalidPasswordFormatException(String message, Exception e) {
-        super(message, e);
-    }
 }

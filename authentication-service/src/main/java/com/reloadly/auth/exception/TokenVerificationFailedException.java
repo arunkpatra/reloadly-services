@@ -14,11 +14,4 @@ public class TokenVerificationFailedException extends ReloadlyException {
         super(DEFAULT_MESSAGE);
     }
 
-    public TokenVerificationFailedException(Exception e) {
-        super(DEFAULT_MESSAGE, e);
-    }
-
-    public TokenVerificationFailedException(String message, Exception e) {
-        super(message, e);
-    }
 }

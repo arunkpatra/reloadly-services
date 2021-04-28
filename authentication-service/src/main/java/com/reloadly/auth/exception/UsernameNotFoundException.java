@@ -14,7 +14,4 @@ public class UsernameNotFoundException extends ReloadlyException {
         super(DEFAULT_MESSAGE);
     }
 
-    public UsernameNotFoundException(Exception e) {
-        super(DEFAULT_MESSAGE, e);
-    }
 }
