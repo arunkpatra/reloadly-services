@@ -1,7 +1,5 @@
 package com.reloadly.auth.controller;
 
-import com.reloadly.auth.exception.InvalidPasswordFormatException;
-import com.reloadly.auth.exception.UsernameAlreadyTakenException;
 import com.reloadly.auth.model.SignupResponse;
 import com.reloadly.auth.model.UsernamePasswordSignupRequest;
 import com.reloadly.auth.service.UserService;
@@ -46,13 +44,7 @@ public class UserController extends AbstractRestController {
     @ResponseBody
     @PostMapping(value = "/signup/username", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<SignupResponse> signupUsingUsernamePassword(@RequestBody UsernamePasswordSignupRequest request) throws ReloadlyException {
-        try {
             String uid = userService.createUserForUsernamePassword(request.getUsername(), request.getPassword());
             return new ResponseEntity<>(new SignupResponse("Signup successful", uid), HttpStatus.CREATED);
-        } catch (UsernameAlreadyTakenException | InvalidPasswordFormatException e) {
-            return new ResponseEntity<>(new SignupResponse(String.format("Signup failed. Reason: %s", e.getMessage()), null), HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            throw new ReloadlyException("An internal error has occurred", e);
-        }
     }
 }

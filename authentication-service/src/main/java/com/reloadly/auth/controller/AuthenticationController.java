@@ -57,15 +57,10 @@ public class AuthenticationController extends AbstractRestController {
     @ResponseBody
     @PostMapping(value = "/login", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<AuthenticationResponse> login(@RequestBody UsernamePasswordAuthRequest request) throws ReloadlyException {
-        try {
+
             AuthenticationResponse authenticationResponse =
                     authenticationService.authenticateUsingUsernamePassword(request.getUsername(), request.getPassword());
             return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
-        } catch (UsernameNotFoundException | AuthenticationFailedException e) {
-            return new ResponseEntity<>(new AuthenticationResponse("", null, null), HttpStatus.UNAUTHORIZED);
-        } catch (Exception e) {
-            throw new ReloadlyException("An internal error has occurred", e);
-        }
     }
 
     @ApiOperation(value = "Verify a reloadly issued JWT token",
@@ -82,15 +77,9 @@ public class AuthenticationController extends AbstractRestController {
     @ResponseBody
     @PostMapping(value = "/verify/token", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<ReloadlyAuthToken> verifyToken(@RequestBody TokenVerificationRequest request) throws ReloadlyException {
-        try {
-            ReloadlyAuthToken reloadlyAuthToken =
-                    authenticationService.verifyToken(request.getToken());
+
+            ReloadlyAuthToken reloadlyAuthToken = authenticationService.verifyToken(request.getToken());
             return new ResponseEntity<>(reloadlyAuthToken, HttpStatus.OK);
-        } catch (TokenVerificationFailedException e) {
-            return new ResponseEntity<>(new ReloadlyAuthToken(Collections.singletonMap("sub", "unauthorized")), HttpStatus.UNAUTHORIZED);
-        } catch (Exception e) {
-            throw new ReloadlyException("An internal error has occurred", e);
-        }
     }
 
     @ApiOperation(value = "Verify an API Key",
@@ -107,17 +96,8 @@ public class AuthenticationController extends AbstractRestController {
     @ResponseBody
     @PostMapping(value = "/verify/apikey", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<ReloadlyApiKeyIdentity> verifyApiKey(@RequestBody ApiKeyVerificationRequest request) throws ReloadlyException {
-        try {
-            ReloadlyApiKeyIdentity reloadlyApiKeyIdentity =
-                    authenticationService.verifyApiKey(request.getApiKey());
+
+            ReloadlyApiKeyIdentity reloadlyApiKeyIdentity = authenticationService.verifyApiKey(request.getApiKey());
             return new ResponseEntity<>(reloadlyApiKeyIdentity, HttpStatus.OK);
-        } catch (ApiKeyVerificationFailedException e) {
-            ReloadlyApiKeyIdentity id = new ReloadlyApiKeyIdentity();
-            id.setUid("");
-            id.setRoles(Collections.emptyList());
-            return new ResponseEntity<>(id, HttpStatus.UNAUTHORIZED);
-        } catch (Exception e) {
-            throw new ReloadlyException("An internal error has occurred", e);
-        }
     }
 }
