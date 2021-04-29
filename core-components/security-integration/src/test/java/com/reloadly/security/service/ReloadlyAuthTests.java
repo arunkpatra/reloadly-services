@@ -54,10 +54,7 @@ public class ReloadlyAuthTests {
         String testToken = "test-token";
 
         // Act and Assert
-        assertThrows(ReloadlyAuthException.class,
-                ()->{
-                    reloadlyAuth.verifyToken(testToken);
-                });
+        assertThrows(ReloadlyAuthException.class, () -> reloadlyAuth.verifyToken(testToken));
 
         clear_mocks();
 
@@ -66,10 +63,7 @@ public class ReloadlyAuthTests {
                 .thenThrow(new RestClientException("Things went south"));
 
         // Act and Assert
-        assertThrows(ReloadlyAuthException.class,
-                ()->{
-                    reloadlyAuth.verifyToken(testToken);
-                });
+        assertThrows(ReloadlyAuthException.class, () -> reloadlyAuth.verifyToken(testToken));
 
         clear_mocks();
     }
@@ -87,10 +81,7 @@ public class ReloadlyAuthTests {
 
         // Act and Assert
         String apiKey = "d3fe6f0d-120e-4161-a134-8c2342e36ca6";
-        assertThrows(ReloadlyAuthException.class,
-                ()->{
-                    reloadlyAuth.verifyApiKey(apiKey);
-                });
+        assertThrows(ReloadlyAuthException.class, () -> reloadlyAuth.verifyApiKey(apiKey));
 
         clear_mocks();
 
@@ -99,10 +90,7 @@ public class ReloadlyAuthTests {
                 .thenThrow(new RestClientException("Things went south"));
 
         // Act and Assert
-        assertThrows(ReloadlyAuthException.class,
-                ()->{
-                    reloadlyAuth.verifyApiKey(apiKey);
-                });
+        assertThrows(ReloadlyAuthException.class, () -> reloadlyAuth.verifyApiKey(apiKey));
 
         clear_mocks();
     }
