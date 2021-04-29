@@ -45,13 +45,9 @@ public class TransactionController extends AbstractRestController {
     @PostMapping(value = "/transaction", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<TransactionResponse> postTransaction(
             @ApiParam(name = "Transaction Request", required = true) @RequestBody TransactionRequest request) throws ReloadlyException {
-        try {
+
             return new ResponseEntity<>(transactionService.acceptTransaction(request), HttpStatus.ACCEPTED);
-        } catch (ReloadlyTxnSvcException e) {
-            return new ResponseEntity<>(new TransactionResponse("", TransactionStatus.REJECTED), HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            throw new ReloadlyException("An error occurred. Root cause: ".concat(e.getMessage()), e);
-        }
+
     }
 
     @ApiOperation(value = "Update transaction status",
@@ -70,9 +66,8 @@ public class TransactionController extends AbstractRestController {
     public ResponseEntity<TransactionResponse> updateTransactionStatus(
             @ApiParam(name = "Transaction ID", required = true) @PathVariable(name = "txnId") String txnId,
             @ApiParam(name = "Transaction Status Update Request", required = true) @RequestBody TransactionStatusUpdateRequest request) throws ReloadlyException {
-
+        // TODO: Implement me
         return new ResponseEntity<>(new TransactionResponse(txnId, request.getTransactionStatus()), HttpStatus.OK);
-
     }
 
     @ApiOperation(value = "Get Transaction Status",
@@ -90,7 +85,7 @@ public class TransactionController extends AbstractRestController {
     @GetMapping(value = "/transaction/{txnId}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<TransactionResponse> getTransactionStatus(
             @ApiParam(name = "Transaction ID", required = true) @PathVariable(name = "txnId") String txnId) throws ReloadlyException {
-        return new ResponseEntity<>(new TransactionResponse(txnId, TransactionStatus.SUCCESSFUL), HttpStatus.OK
-        );
+        // TODO: Implement me
+        return new ResponseEntity<>(new TransactionResponse(txnId, TransactionStatus.SUCCESSFUL), HttpStatus.OK);
     }
 }

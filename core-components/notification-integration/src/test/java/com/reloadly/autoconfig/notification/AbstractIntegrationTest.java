@@ -1,10 +1,10 @@
-package com.reloadly.email;
+package com.reloadly.autoconfig.notification;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
-@ActiveProfiles({"test", "mock-ses-client"})
+@ActiveProfiles({"test"})
 public abstract class AbstractIntegrationTest {
 
 }

@@ -1,0 +1,4 @@
+reloadly:
+  notification:
+    enabled: true
+    suppress: false

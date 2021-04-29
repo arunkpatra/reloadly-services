@@ -24,7 +24,4 @@ public class ReloadlyException extends Exception {
         super(defaultMessage, cause);
     }
 
-    public ReloadlyException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
 }

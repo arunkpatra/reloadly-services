@@ -1,6 +1,7 @@
-package com.reloadly.security.mock;
+package com.reloadly.security.filter;
 
 import com.reloadly.commons.model.ReloadlyCredentials;
+import com.reloadly.security.model.ReloadlyUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,21 +18,19 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Mock security authentication request filter.
  *
  * @author Arun Patra
  */
-public class MockAuthenticationRequestFilter extends OncePerRequestFilter {
+public class ReloadlyMockAuthenticationRequestFilter extends OncePerRequestFilter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MockAuthenticationRequestFilter.class);
-
-    private final UserDetailsService userDetailsService;
-
-    public MockAuthenticationRequestFilter(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReloadlyMockAuthenticationRequestFilter.class);
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
@@ -47,7 +46,7 @@ public class MockAuthenticationRequestFilter extends OncePerRequestFilter {
         }
         try {
             if (uid != null) {
-                UserDetails userDetails = userDetailsService.loadUserByUsername(uid);
+                UserDetails userDetails = loadUserByUsername(uid);
                 if (userDetails != null) {
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(userDetails,
@@ -76,5 +75,21 @@ public class MockAuthenticationRequestFilter extends OncePerRequestFilter {
         credentials.setType(credentialType);
         credentials.setCredentials(credential);
         return credentials;
+    }
+
+
+    public UserDetails loadUserByUsername(String uid) throws UsernameNotFoundException {
+        ReloadlyUserDetails userDetails = new ReloadlyUserDetails();
+        userDetails.setUid(uid);
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("sub", uid);
+        claims.put("iss", "Reloadly Mock Authentication Service");
+        claims.put("aud", "reloadly-platform");
+        List<String> roles = new ArrayList<>();
+        roles.add("ROLE_USER");
+        claims.put("roles", roles);
+        userDetails.setClaims(claims);
+
+        return userDetails;
     }
 }

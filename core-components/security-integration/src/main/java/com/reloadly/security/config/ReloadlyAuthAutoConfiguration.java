@@ -2,6 +2,7 @@ package com.reloadly.security.config;
 
 import com.reloadly.security.filter.ReloadlyApiKeyAuthenticationRequestFilter;
 import com.reloadly.security.filter.ReloadlyJwtAuthenticationRequestFilter;
+import com.reloadly.security.filter.ReloadlyMockAuthenticationRequestFilter;
 import com.reloadly.security.service.ReloadlyAuth;
 import com.reloadly.security.service.ReloadlyAuthServiceImpl;
 import com.reloadly.security.service.ReloadlyUserDetailsService;
@@ -30,9 +31,6 @@ import org.springframework.web.client.RestTemplate;
 @EnableConfigurationProperties(ReloadlyAuthProperties.class)
 public class ReloadlyAuthAutoConfiguration {
 
-    public ReloadlyAuthAutoConfiguration() {
-    }
-
     @EnableWebSecurity
     @EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
     @ConditionalOnProperty(name = {"reloadly.auth.enabled"}, matchIfMissing = true)
@@ -40,14 +38,20 @@ public class ReloadlyAuthAutoConfiguration {
 
         private static final Logger LOGGER = LoggerFactory.getLogger(ReloadlyAuthWebSecurityConfig.class);
 
+        private final ReloadlyAuthProperties properties;
+
         private final ReloadlyJwtAuthenticationRequestFilter reloadlyJwtRequestFilter;
 
         private final ReloadlyApiKeyAuthenticationRequestFilter apiKeyAuthenticationRequestFilter;
 
-        public ReloadlyAuthWebSecurityConfig(ReloadlyJwtAuthenticationRequestFilter reloadlyJwtRequestFilter,
-                                             ReloadlyApiKeyAuthenticationRequestFilter apiKeyAuthenticationRequestFilter) {
+        private final ReloadlyMockAuthenticationRequestFilter reloadlyMockAuthenticationRequestFilter;
+
+        public ReloadlyAuthWebSecurityConfig(ReloadlyAuthProperties properties, ReloadlyJwtAuthenticationRequestFilter reloadlyJwtRequestFilter,
+                                             ReloadlyApiKeyAuthenticationRequestFilter apiKeyAuthenticationRequestFilter, ReloadlyMockAuthenticationRequestFilter reloadlyMockAuthenticationRequestFilter) {
+            this.properties = properties;
             this.reloadlyJwtRequestFilter = reloadlyJwtRequestFilter;
             this.apiKeyAuthenticationRequestFilter = apiKeyAuthenticationRequestFilter;
+            this.reloadlyMockAuthenticationRequestFilter = reloadlyMockAuthenticationRequestFilter;
         }
 
         @Override
@@ -70,13 +74,17 @@ public class ReloadlyAuthAutoConfiguration {
                     .antMatchers("/**").hasAnyRole("USER").anyRequest().authenticated()
                     .and()
                     .exceptionHandling()
-                    .authenticationEntryPoint(new ReloadlyJwtAuthenticationEntryPoint()).and().sessionManagement()
+                    .authenticationEntryPoint(new ReloadlyAuthenticationEntryPoint()).and().sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
             //@formatter:on
             // Add a filter to validate the tokens with every request
             http
                     .addFilterBefore(reloadlyJwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                     .addFilterBefore(apiKeyAuthenticationRequestFilter, UsernamePasswordAuthenticationFilter.class);
+            if (properties.isMock()) {
+                http
+                        .addFilterBefore(reloadlyMockAuthenticationRequestFilter, UsernamePasswordAuthenticationFilter.class);
+            }
         }
 
         @Configuration
@@ -107,6 +115,11 @@ public class ReloadlyAuthAutoConfiguration {
             @Bean
             public ReloadlyApiKeyAuthenticationRequestFilter apiKeyAuthenticationRequestFilter(ReloadlyAuth reloadlyAuth) {
                 return new ReloadlyApiKeyAuthenticationRequestFilter(reloadlyAuth);
+            }
+
+            @Bean
+            public ReloadlyMockAuthenticationRequestFilter mockAuthenticationRequestFilter() {
+                return new ReloadlyMockAuthenticationRequestFilter();
             }
         }
     }

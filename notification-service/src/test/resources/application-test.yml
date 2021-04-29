@@ -1,8 +1,6 @@
 reloadly:
   auth:
-    enabled: false
-    mock:
-      enabled: true
+    mock: true
   integration:
     sms:
       twilio:

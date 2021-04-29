@@ -16,6 +16,4 @@ spring:
 
 reloadly:
   auth:
-    enabled: false
-    mock:
-      enabled: true
+    mock: true

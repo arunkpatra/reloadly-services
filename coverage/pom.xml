@@ -130,11 +130,14 @@
                 </executions>
                 <configuration>
                     <excludes>
+                        <exclude>**/com/reloadly/admin/ReloadlyAdminApp**</exclude>
                         <exclude>**/com/reloadly/account/ReloadlyAccountServiceApp**</exclude>
                         <exclude>**/com/reloadly/auth/ReloadlyAuthenticationServiceApp**</exclude>
                         <exclude>**/com/reloadly/notification/ReloadlyNotificationServiceApp**</exclude>
                         <exclude>**/com/reloadly/transaction/ReloadlyTransactionProcessorApp**</exclude>
                         <exclude>**/com/reloadly/transaction/ReloadlyTransactionServiceApp**</exclude>
+                        <exclude>**/com/reloadly/sms/service/TwilioSMSServiceImpl**</exclude>
+                        <exclude>**/com/reloadly/sms/exception/SMSProcessingException**</exclude>
                     </excludes>
                 </configuration>
             </plugin>

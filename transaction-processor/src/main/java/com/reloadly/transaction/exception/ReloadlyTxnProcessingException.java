@@ -11,16 +11,8 @@ public class ReloadlyTxnProcessingException extends ReloadlyException {
 
     private static final String DEFAULT_MESSAGE = "Could not process transaction";
 
-    public ReloadlyTxnProcessingException() {
-        super(DEFAULT_MESSAGE);
-    }
-
     public ReloadlyTxnProcessingException(String message) {
         super(message);
-    }
-
-    public ReloadlyTxnProcessingException(Exception e) {
-        super(DEFAULT_MESSAGE, e);
     }
 
     public ReloadlyTxnProcessingException(String message, Exception e) {
