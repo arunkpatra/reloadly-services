@@ -9,7 +9,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
+@ActiveProfiles({"test", "mock-authsvc"})
 public abstract class AbstractIntegrationTest {
 
     @Autowired

@@ -27,7 +27,7 @@ import java.io.IOException;
  *
  * @author Arun Patra
  */
-public class ReloadlyJwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
+public class ReloadlyAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     private static final long serialVersionUID = -7858869558953243875L;
 

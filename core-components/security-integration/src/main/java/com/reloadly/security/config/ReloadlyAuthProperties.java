@@ -16,11 +16,14 @@ public class ReloadlyAuthProperties {
      * (Optional) Is Reloadly auth integration enabled?
      */
     private boolean enabled;
-
+    /**
+     * Is authentication to be mocked?
+     */
+    private boolean mock = false;
     /**
      * Reloadly auth service endpoint..
      */
-    private String reloadlyAuthServiceEndpoint;
+    private String reloadlyAuthServiceEndpoint = "http://localhost:8080";
 
     public boolean isEnabled() {
         return enabled;
@@ -36,5 +39,13 @@ public class ReloadlyAuthProperties {
 
     public void setReloadlyAuthServiceEndpoint(String reloadlyAuthServiceEndpoint) {
         this.reloadlyAuthServiceEndpoint = reloadlyAuthServiceEndpoint;
+    }
+
+    public boolean isMock() {
+        return mock;
+    }
+
+    public void setMock(boolean mock) {
+        this.mock = mock;
     }
 }

@@ -1,16 +1,28 @@
-package com.reloadly.security;
+package com.reloadly.security.controller;
 
+import com.reloadly.commons.model.ReloadlyApiKeyIdentity;
+import com.reloadly.commons.model.ReloadlyAuthToken;
+import com.reloadly.security.AbstractIntegrationTest;
 import com.reloadly.security.model.HelloResponse;
+import com.reloadly.security.service.ReloadlyAuth;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.util.*;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class HelloControllerTests extends AbstractIntegrationTest {
+
+    @Autowired
+    private ReloadlyAuth reloadlyAuth;
 
     @Test
     public void should_get_hello_message_with_mock_security() throws Exception {
@@ -30,8 +42,7 @@ public class HelloControllerTests extends AbstractIntegrationTest {
     }
 
     @Test
-    public void should_not_get_hello_message_without_mock_security_header() throws Exception {
-        String testUid = "c1fe6f0d-420e-4161-a134-9c2342e36c95";
+    public void should_not_get_hello_message_without_any_security_header() throws Exception {
         // Act and Assert
         mockMvc.perform(get("/hello")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -39,26 +50,29 @@ public class HelloControllerTests extends AbstractIntegrationTest {
                 .andReturn();
     }
 
-    //    @Test
-    public void should_get_hello_message() throws Exception {
+    @Test
+    public void should_not_get_hello_message() throws Exception {
+        Map<String, Object> claims = new HashMap<>();
+        ReloadlyAuthToken mockAuthToken = new ReloadlyAuthToken(claims);
+        Mockito.when(reloadlyAuth.verifyToken(getBearerTestToken(false))).thenReturn(mockAuthToken);
 
         // Setup and Act
-        MvcResult mvcResult = mockMvc.perform(get("/hello")
-                .header("Authorization", getBearerTestToken(true))
+        mockMvc.perform(get("/hello")
+                .header("Authorization", getBearerTestToken(false).substring(7))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized())
                 .andReturn();
-
-        // Assert
-        HelloResponse response =
-                objectMapper.readValue(mvcResult.getResponse().getContentAsString(), HelloResponse.class);
-        assertThat(response.getMessage()).isEqualTo("Hello World!");
     }
 
-    //    @Test
+    @Test
     public void should_get_hello_message_with_api_key() throws Exception {
         String apiKey = "d3fe6f0d-120e-4161-a134-8c2342e36ca6";
+        ReloadlyApiKeyIdentity mockIdentity = new ReloadlyApiKeyIdentity();
+        mockIdentity.setUid("test-uid");
+        mockIdentity.setRoles(Collections.singletonList("ROLE_USER"));
+
+        Mockito.when(reloadlyAuth.verifyApiKey(eq(apiKey))).thenReturn(mockIdentity);
+
         // Setup and Act
         MvcResult mvcResult = mockMvc.perform(get("/hello")
                 .header("RELOADLY-API-KEY", apiKey)
@@ -73,15 +87,34 @@ public class HelloControllerTests extends AbstractIntegrationTest {
         assertThat(response.getMessage()).isEqualTo("Hello World!");
     }
 
-    //    @Test
-    public void should_not_get_hello_message() throws Exception {
+    @Test
+    public void should_get_hello_message_with_jwt_token() throws Exception {
+        String uid = "c1fe6f0d-420e-4161-a134-9c2342e36c95";
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("uid", uid);
+        claims.put("sub", uid);
+        claims.put("iss", "Reloadly Mock Authentication Service");
+        claims.put("aud", "reloadly-platform");
+        List<String> roles = new ArrayList<>();
+        roles.add("ROLE_USER");
+        claims.put("roles", roles);
+        claims.put("claims", claims);
+
+        ReloadlyAuthToken mockAuthToken = new ReloadlyAuthToken(claims);
+        Mockito.when(reloadlyAuth.verifyToken(eq(getBearerTestToken(true).substring(7)))).thenReturn(mockAuthToken);
 
         // Setup and Act
         MvcResult mvcResult = mockMvc.perform(get("/hello")
-                .header("Authorization", getBearerTestToken(false))
+                .header("Authorization", getBearerTestToken(true))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isUnauthorized())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
+
+        // Assert
+        HelloResponse response =
+                objectMapper.readValue(mvcResult.getResponse().getContentAsString(), HelloResponse.class);
+        assertThat(response.getMessage()).isEqualTo("Hello World!");
     }
 
     private String getBearerTestToken(boolean validToken) {

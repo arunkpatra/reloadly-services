@@ -16,6 +16,5 @@ reloadly:
   notification:
     suppress: true
   auth:
-    enabled: false
-    mock:
-      enabled: true
+    mock: true
+
