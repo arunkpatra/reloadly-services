@@ -1,6 +1,5 @@
 package com.reloadly.notification.controller;
 
-import com.reloadly.commons.exceptions.NotificationException;
 import com.reloadly.commons.exceptions.ReloadlyException;
 import com.reloadly.commons.model.EmailRequest;
 import com.reloadly.commons.model.ErrorResponse;
@@ -41,14 +40,8 @@ public class NotificationController extends AbstractRestController {
     @PostMapping(value = "/notification/email", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<NotificationResponse> sendEMail(
             @ApiParam(name = "Account Creation Request", required = true) @RequestBody EmailRequest request) throws ReloadlyException {
-        try {
             notificationService.sendEmail(request);
             return new ResponseEntity<>(new NotificationResponse("Accepted"), HttpStatus.ACCEPTED);
-        } catch (NotificationException e) {
-            return new ResponseEntity<>(new NotificationResponse("Rejected"), HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            throw new ReloadlyException("An internal error occurred. Root cause: ".concat(e.getMessage()), e);
-        }
     }
 
     @ApiOperation(value = "Send a SMS",
@@ -63,13 +56,7 @@ public class NotificationController extends AbstractRestController {
     @PostMapping(value = "/notification/sms", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<NotificationResponse> sendSMS(
             @ApiParam(name = "Account Creation Request", required = true) @RequestBody SmsRequest request) throws ReloadlyException {
-        try {
             notificationService.sendSms(request);
             return new ResponseEntity<>(new NotificationResponse("Accepted"), HttpStatus.ACCEPTED);
-        } catch (NotificationException e) {
-            return new ResponseEntity<>(new NotificationResponse("Rejected"), HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            throw new ReloadlyException("An internal error occurred. Root cause: ".concat(e.getMessage()), e);
-        }
     }
 }
