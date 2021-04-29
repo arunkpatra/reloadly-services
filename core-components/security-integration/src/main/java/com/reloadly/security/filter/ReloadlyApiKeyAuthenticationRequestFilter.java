@@ -51,7 +51,7 @@ public class ReloadlyApiKeyAuthenticationRequestFilter extends OncePerRequestFil
         }
         try {
             if (apiKey != null) {
-                UserDetails userDetails = getApiUserDetails(apiKey);
+                UserDetails userDetails = getApiKeyUserDetails(apiKey);
                 if (userDetails != null) {
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(userDetails,
@@ -77,7 +77,7 @@ public class ReloadlyApiKeyAuthenticationRequestFilter extends OncePerRequestFil
         return credentials;
     }
 
-    private UserDetails getApiUserDetails(String apiKey) {
+    private UserDetails getApiKeyUserDetails(String apiKey) {
         ReloadlyUserDetails user = null;
         try {
             if (apiKey != null) {
