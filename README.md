@@ -1,6 +1,7 @@
 # Fintech Platform Reference Implementation
 
 ![Build Status](https://github.com/arunkpatra/reloadly-services/workflows/build/badge.svg)
+[![codecov](https://codecov.io/gh/arunkpatra/reloadly-services/branch/main/graph/badge.svg?token=8HFMSEUV4H)](https://codecov.io/gh/arunkpatra/reloadly-services)
 [![Latest Release](https://img.shields.io/github/v/release/arunkpatra/reloadly-services?include_prereleases&sort=semver)](https://github.com/arunkpatra/reloadly-services/releases)
 
 This project implements a hypothetical Fintech Platform. It was in response to a code challenge from [Reloadly]. For
