@@ -3,7 +3,11 @@ package com.reloadly.account.service;
 import com.reloadly.account.exception.AccountBalanceException;
 import com.reloadly.account.exception.AccountNotFoundException;
 import com.reloadly.account.exception.AccountUpdateException;
-import com.reloadly.account.model.*;
+import com.reloadly.account.model.AccountBalance;
+import com.reloadly.account.model.AccountDetails;
+import com.reloadly.account.model.AccountUpdateRequest;
+import com.reloadly.account.model.AccountUpdateResponse;
+import com.reloadly.commons.model.account.*;
 
 /**
  * Core capabilities of the Account microservice are exposed by the Account Service.
@@ -44,21 +48,21 @@ public interface AccountService {
      * Credit an account.
      *
      * @param uid     The UID of the user.
-     * @param request The {@link AccountCreditRequest} object.
-     * @return The {@link AccountCreditResponse} object.
+     * @param request The {@link AccountCreditReq} object.
+     * @return The {@link AccountCreditResp} object.
      * @throws AccountBalanceException If an error occurs.
      */
-    AccountCreditResponse creditAccountBalance(String uid, AccountCreditRequest request) throws AccountBalanceException;
+    AccountCreditResp creditAccountBalance(String uid, AccountCreditReq request) throws AccountBalanceException;
 
     /**
      * Debit an account.
      *
      * @param uid     The UID of the user.
-     * @param request The {@link AccountDebitRequest} object.
-     * @return The {@link AccountDebitResponse} object.
+     * @param request The {@link AccountDebitReq} object.
+     * @return The {@link AccountDebitResp} object.
      * @throws AccountBalanceException If an error occurs.
      */
-    AccountDebitResponse debitAccountBalance(String uid, AccountDebitRequest request) throws AccountBalanceException;
+    AccountDebitResp debitAccountBalance(String uid, AccountDebitReq request) throws AccountBalanceException;
 
     /**
      * Get Account info.
@@ -68,6 +72,4 @@ public interface AccountService {
      * @throws AccountNotFoundException If an error occurs.
      */
     AccountInfo getAccountInfo(String uid) throws AccountNotFoundException;
-
-    ;
 }

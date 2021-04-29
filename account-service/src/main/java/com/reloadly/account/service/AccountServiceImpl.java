@@ -11,6 +11,7 @@ import com.reloadly.account.repository.AccountBalanceRepository;
 import com.reloadly.account.repository.AccountRepository;
 import com.reloadly.account.repository.AddressRepository;
 import com.reloadly.autoconfig.notification.service.ReloadlyNotification;
+import com.reloadly.commons.model.account.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -130,13 +131,13 @@ public class AccountServiceImpl extends AccountUpdateNotificationSupport impleme
      * Credit an account.
      *
      * @param uid     The UID of the user.
-     * @param request The {@link AccountCreditRequest} object.
-     * @return The {@link AccountCreditResponse} object.
+     * @param request The {@link AccountCreditReq} object.
+     * @return The {@link AccountCreditResp} object.
      * @throws AccountBalanceException If an error occurs.
      */
     @Override
     @Transactional
-    public synchronized AccountCreditResponse creditAccountBalance(String uid, AccountCreditRequest request) throws AccountBalanceException {
+    public synchronized AccountCreditResp creditAccountBalance(String uid, AccountCreditReq request) throws AccountBalanceException {
         Assert.notNull(request.getAmount(), "Credit amount can not be null");
 
         AccountEntity ae = getAccountEntity(uid);
@@ -144,20 +145,20 @@ public class AccountServiceImpl extends AccountUpdateNotificationSupport impleme
         abe.setAccountBalance(abe.getAccountBalance() + request.getAmount());
         accountBalanceRepository.save(abe);
 
-        return new AccountCreditResponse("Account successfully credited");
+        return new AccountCreditResp("Account successfully credited");
     }
 
     /**
      * Debit an account.
      *
      * @param uid     The UID of the user.
-     * @param request The {@link AccountDebitRequest} object.
-     * @return The {@link AccountDebitResponse} object.
+     * @param request The {@link AccountDebitReq} object.
+     * @return The {@link AccountDebitResp} object.
      * @throws AccountBalanceException If an error occurs.
      */
     @Override
     @Transactional
-    public synchronized AccountDebitResponse debitAccountBalance(String uid, AccountDebitRequest request) throws AccountBalanceException {
+    public synchronized AccountDebitResp debitAccountBalance(String uid, AccountDebitReq request) throws AccountBalanceException {
         Assert.notNull(request.getAmount(), "debit amount can not be null");
 
         AccountEntity ae = getAccountEntity(uid);
@@ -169,7 +170,7 @@ public class AccountServiceImpl extends AccountUpdateNotificationSupport impleme
 
         abe.setAccountBalance(abe.getAccountBalance() - request.getAmount());
         accountBalanceRepository.save(abe);
-        return new AccountDebitResponse(true, "Account successfully debited");
+        return new AccountDebitResp(true, "Account successfully debited");
     }
 
     private AccountEntity getAccountEntity(String uid) throws AccountBalanceException {

@@ -3,6 +3,7 @@ package com.reloadly.account.controller;
 import com.reloadly.account.AbstractIntegrationTest;
 import com.reloadly.account.model.*;
 import com.reloadly.commons.model.ErrorResponse;
+import com.reloadly.commons.model.account.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
@@ -124,7 +125,7 @@ public class AccountControllerTests extends AbstractIntegrationTest {
     public void should_credit_account() throws Exception {
 
         String testUid = "c1fe6f0d-420e-4161-a134-9c2342e36c95";
-        AccountCreditRequest request = new AccountCreditRequest(150.5f);
+        AccountCreditReq request = new AccountCreditReq(150.5f);
         // Setup and Act
         MvcResult mvcResult = mockMvc.perform(post("/account/credit/".concat(testUid))
                 .header("X-Mock-UID", testUid).content(objectMapper.writeValueAsString(request))
@@ -134,8 +135,8 @@ public class AccountControllerTests extends AbstractIntegrationTest {
                 .andReturn();
 
         // Assert
-        AccountCreditResponse response =
-                objectMapper.readValue(mvcResult.getResponse().getContentAsString(), AccountCreditResponse.class);
+        AccountCreditResp response =
+                objectMapper.readValue(mvcResult.getResponse().getContentAsString(), AccountCreditResp.class);
         assertThat(response.getMessage()).isEqualTo("Account successfully credited");
     }
 
@@ -145,7 +146,7 @@ public class AccountControllerTests extends AbstractIntegrationTest {
     public void should_debit_account() throws Exception {
 
         String testUid = "c1fe6f0d-420e-4161-a134-9c2342e36c95";
-        AccountDebitRequest request = new AccountDebitRequest(10.5f);
+        AccountDebitReq request = new AccountDebitReq(10.5f);
         // Setup and Act
         MvcResult mvcResult = mockMvc.perform(post("/account/debit/".concat(testUid))
                 .header("X-Mock-UID", testUid).content(objectMapper.writeValueAsString(request))
@@ -155,8 +156,8 @@ public class AccountControllerTests extends AbstractIntegrationTest {
                 .andReturn();
 
         // Assert
-        AccountDebitResponse response =
-                objectMapper.readValue(mvcResult.getResponse().getContentAsString(), AccountDebitResponse.class);
+        AccountDebitResp response =
+                objectMapper.readValue(mvcResult.getResponse().getContentAsString(), AccountDebitResp.class);
         assertThat(response.getSuccessful()).isTrue();
         assertThat(response.getMessage()).isEqualTo("Account successfully debited");
     }
@@ -166,7 +167,7 @@ public class AccountControllerTests extends AbstractIntegrationTest {
     @Rollback
     public void should_not_debit_account() throws Exception {
         String testUid = "c1fe6f0d-420e-4161-a134-9c2342e36c95";
-        AccountDebitRequest request = new AccountDebitRequest(500f);
+        AccountDebitReq request = new AccountDebitReq(500f);
         // Setup and Act
         MvcResult mvcResult = mockMvc.perform(post("/account/debit/".concat(testUid))
                 .header("X-Mock-UID", testUid).content(objectMapper.writeValueAsString(request))

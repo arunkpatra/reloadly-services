@@ -1,11 +1,11 @@
 package com.reloadly.transaction.processor;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.reloadly.autoconfig.notification.service.ReloadlyNotification;
 import com.reloadly.commons.exceptions.NotificationException;
 import com.reloadly.commons.model.EmailRequest;
 import com.reloadly.commons.model.ReloadlyCredentials;
 import com.reloadly.commons.model.SmsRequest;
+import com.reloadly.commons.model.account.AccountInfo;
 import com.reloadly.transaction.config.TransactionProcessorProperties;
 import com.reloadly.transaction.entity.TransactionEntity;
 import com.reloadly.transaction.exception.AccountInfoRetrievalException;
@@ -96,7 +96,7 @@ public abstract class AbstractTransactionProcessor implements TransactionProcess
 
     protected void sendEmailMessage(AccountInfo accountInfo, String subject, String body) {
         try {
-            notification.sendEmail(getReloadlyCredentials(), new EmailRequest(accountInfo.email, subject, body));
+            notification.sendEmail(getReloadlyCredentials(), new EmailRequest(accountInfo.getEmail(), subject, body));
         } catch (NotificationException e) {
             LOGGER.error("Notification service call failed for email, root cause: " + e.getMessage());
             // Ignore
@@ -105,52 +105,11 @@ public abstract class AbstractTransactionProcessor implements TransactionProcess
 
     protected void sendSMSMessage(AccountInfo accountInfo, String message) {
         try {
-            notification.sendSms(getReloadlyCredentials(), new SmsRequest(accountInfo.phoneNumber, message));
+            notification.sendSms(getReloadlyCredentials(), new SmsRequest(accountInfo.getPhoneNumber(), message));
         } catch (NotificationException e) {
             LOGGER.error("Notification service call failed for sms, root cause: " + e.getMessage());
             // Ignore
         }
     }
 
-    protected static class AccountInfo {
-
-        private String name;
-        private String email;
-        private String phoneNumber;
-
-        @JsonCreator
-        public AccountInfo(String name, String email, String phoneNumber) {
-            this.name = name;
-            this.email = email;
-            this.phoneNumber = phoneNumber;
-        }
-
-        public AccountInfo() {
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public String getPhoneNumber() {
-            return phoneNumber;
-        }
-
-        public void setPhoneNumber(String phoneNumber) {
-            this.phoneNumber = phoneNumber;
-        }
-
-    }
 }

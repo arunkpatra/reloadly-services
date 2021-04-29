@@ -1,7 +1,9 @@
 package com.reloadly.transaction.processor.moneyreload;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.reloadly.autoconfig.notification.service.ReloadlyNotification;
+import com.reloadly.commons.model.account.AccountCreditReq;
+import com.reloadly.commons.model.account.AccountCreditResp;
+import com.reloadly.commons.model.account.AccountInfo;
 import com.reloadly.transaction.annotation.TransactionHandler;
 import com.reloadly.transaction.config.TransactionProcessorProperties;
 import com.reloadly.transaction.entity.MoneyReloadTxnEntity;
@@ -102,10 +104,10 @@ public class MoneyReloadTransactionProcessor extends AbstractTransactionProcesso
 
         // Exchange
         try {
-            ResponseEntity<AccountCreditResponse> response =
+            ResponseEntity<AccountCreditResp> response =
                     restTemplate.postForEntity(properties.getReloadlyAccountServiceEndpoint().concat("/account/credit/".concat(uid)),
-                            new HttpEntity<>(new AccountCreditRequest(amount), getHeaders()),
-                            AccountCreditResponse.class);
+                            new HttpEntity<>(new AccountCreditReq(amount), getHeaders()),
+                            AccountCreditResp.class);
             if (response.getStatusCode().is2xxSuccessful()) {
                 LOGGER.info("Credit transaction successful");
             } else {
@@ -114,46 +116,6 @@ public class MoneyReloadTransactionProcessor extends AbstractTransactionProcesso
             }
         } catch (RestClientException e) {
             throw new ReloadlyTxnProcessingException("An error occurred. Root cause: " + e.getMessage());
-        }
-    }
-
-    private static class AccountCreditRequest {
-        private Float amount;
-
-        @JsonCreator
-        public AccountCreditRequest(Float amount) {
-            this.amount = amount;
-        }
-
-        public AccountCreditRequest() {
-        }
-
-        public Float getAmount() {
-            return amount;
-        }
-
-        public void setAmount(Float amount) {
-            this.amount = amount;
-        }
-    }
-
-    public static class AccountCreditResponse {
-        private String message;
-
-        @JsonCreator
-        public AccountCreditResponse(String message) {
-            this.message = message;
-        }
-
-        public AccountCreditResponse() {
-        }
-
-        public String getMessage() {
-            return message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
         }
     }
 }

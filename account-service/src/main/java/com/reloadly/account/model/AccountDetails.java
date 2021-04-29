@@ -1,6 +1,7 @@
 package com.reloadly.account.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.reloadly.commons.model.account.AccountInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 

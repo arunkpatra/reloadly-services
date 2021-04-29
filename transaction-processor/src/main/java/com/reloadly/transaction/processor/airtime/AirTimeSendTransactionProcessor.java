@@ -1,7 +1,9 @@
 package com.reloadly.transaction.processor.airtime;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.reloadly.autoconfig.notification.service.ReloadlyNotification;
+import com.reloadly.commons.model.account.AccountDebitReq;
+import com.reloadly.commons.model.account.AccountDebitResp;
+import com.reloadly.commons.model.account.AccountInfo;
 import com.reloadly.transaction.annotation.TransactionHandler;
 import com.reloadly.transaction.config.TransactionProcessorProperties;
 import com.reloadly.transaction.entity.AirtimeSendTxnEntity;
@@ -102,10 +104,10 @@ public class AirTimeSendTransactionProcessor extends AbstractTransactionProcesso
 
         // Exchange - Debit call to Account microservice
         try {
-            ResponseEntity<AccountDebitResponse> response =
+            ResponseEntity<AccountDebitResp> response =
                     restTemplate.postForEntity(properties.getReloadlyAccountServiceEndpoint().concat("/account/debit/".concat(uid)),
-                            new HttpEntity<>(new AccountDebitRequest(amount), getHeaders()),
-                            AccountDebitResponse.class);
+                            new HttpEntity<>(new AccountDebitReq(amount), getHeaders()),
+                            AccountDebitResp.class);
             if (response.getStatusCode().is2xxSuccessful()) {
                 LOGGER.info("Debit transaction successful");
             } else {
@@ -114,56 +116,6 @@ public class AirTimeSendTransactionProcessor extends AbstractTransactionProcesso
             }
         } catch (RestClientException e) {
             throw new ReloadlyTxnProcessingException("An error occurred. Root cause: " + e.getMessage());
-        }
-    }
-
-    private static class AccountDebitRequest {
-        private Float amount;
-
-        @JsonCreator
-        public AccountDebitRequest(Float amount) {
-            this.amount = amount;
-        }
-
-        public AccountDebitRequest() {
-        }
-
-        public Float getAmount() {
-            return amount;
-        }
-
-        public void setAmount(Float amount) {
-            this.amount = amount;
-        }
-    }
-
-    private static class AccountDebitResponse {
-        private Boolean successful;
-        private String message;
-
-        @JsonCreator
-        public AccountDebitResponse(Boolean successful, String message) {
-            this.successful = successful;
-            this.message = message;
-        }
-
-        public AccountDebitResponse() {
-        }
-
-        public String getMessage() {
-            return message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
-
-        public Boolean getSuccessful() {
-            return successful;
-        }
-
-        public void setSuccessful(Boolean successful) {
-            this.successful = successful;
         }
     }
 }
