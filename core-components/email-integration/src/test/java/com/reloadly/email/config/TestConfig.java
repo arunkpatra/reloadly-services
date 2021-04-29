@@ -13,8 +13,7 @@ public class TestConfig {
     @Bean
     @Primary
     @Profile("mock-ses-client")
-    public SesClient reloadlyAuth() {
+    public SesClient sesClient() {
         return Mockito.mock(SesClient.class);
     }
-
 }
