@@ -1,9 +1,5 @@
 package com.reloadly.auth.controller;
 
-import com.reloadly.auth.exception.ApiKeyVerificationFailedException;
-import com.reloadly.auth.exception.AuthenticationFailedException;
-import com.reloadly.auth.exception.TokenVerificationFailedException;
-import com.reloadly.auth.exception.UsernameNotFoundException;
 import com.reloadly.auth.model.ApiKeyVerificationRequest;
 import com.reloadly.auth.model.AuthenticationResponse;
 import com.reloadly.auth.model.TokenVerificationRequest;
@@ -22,8 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collections;
 
 /**
  * Authentication Microservice REST APIs.

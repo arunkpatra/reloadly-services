@@ -10,9 +10,9 @@ import org.springframework.util.StringUtils;
 import software.amazon.awssdk.services.ses.SesClient;
 import software.amazon.awssdk.services.ses.model.*;
 
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.any;
 import java.util.Date;
+
+import static org.mockito.ArgumentMatchers.any;
 
 public class SimpleEmailServiceMailSenderTests extends AbstractIntegrationTest {
 

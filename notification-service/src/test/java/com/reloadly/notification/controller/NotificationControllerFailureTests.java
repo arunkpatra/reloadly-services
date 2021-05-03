@@ -2,12 +2,9 @@ package com.reloadly.notification.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.reloadly.commons.exceptions.NotificationException;
-import com.reloadly.commons.exceptions.ReloadlyException;
 import com.reloadly.commons.model.EmailRequest;
-import com.reloadly.commons.model.ErrorResponse;
 import com.reloadly.commons.model.NotificationResponse;
 import com.reloadly.commons.model.SmsRequest;
-import com.reloadly.notification.AbstractIntegrationTest;
 import com.reloadly.notification.service.NotificationService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -21,8 +18,6 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

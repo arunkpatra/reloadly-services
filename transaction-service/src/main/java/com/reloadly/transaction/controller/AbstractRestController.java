@@ -1,8 +1,6 @@
 package com.reloadly.transaction.controller;
 
 import com.reloadly.commons.controller.BaseAbstractRestController;
-import com.reloadly.commons.exceptions.ReloadlyException;
-import com.reloadly.commons.model.ErrorResponse;
 import com.reloadly.transaction.exception.ReloadlyTxnSvcException;
 import com.reloadly.transaction.model.TransactionResponse;
 import com.reloadly.transaction.model.TransactionStatus;
