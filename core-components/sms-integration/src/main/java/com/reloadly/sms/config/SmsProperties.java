@@ -15,11 +15,6 @@ public class SmsProperties {
     public static final String DEFAULT_COUNTRY_CODE = "+91";
 
     /**
-     * (Optional) Is twilio integration enabled?
-     */
-    private boolean enabled = true;
-
-    /**
      * Does not send actual SMS if set.
      */
     private boolean dryRun = true;
@@ -38,14 +33,6 @@ public class SmsProperties {
      * Twilio Auth Token
      */
     private String twilioAuthToken;
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
 
     public String getTwilioAccountSid() {
         return twilioAccountSid;

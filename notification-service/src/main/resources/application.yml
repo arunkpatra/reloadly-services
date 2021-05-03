@@ -34,7 +34,6 @@ reloadly:
     sms:
       twilio:
         dry-run: ${TWILIO_DRY_RUN}
-        enabled: true
         messaging-service-id: ${TWILIO_MSG_SVC_ID}
         twilio-account-sid: ${TWILIO_ACCOUNT_SID}
         twilio-auth-token: ${TWILIO_AUTH_TOKEN}

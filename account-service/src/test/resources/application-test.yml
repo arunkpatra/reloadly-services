@@ -13,6 +13,10 @@ spring:
       - classpath:account-services-data-derby.sql
 
 reloadly:
+  integration:
+    swagger:
+      enabled: true
+      secured: false
   notification:
     suppress: true
   auth:

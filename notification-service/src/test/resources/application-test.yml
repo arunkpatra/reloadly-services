@@ -5,7 +5,6 @@ reloadly:
     sms:
       twilio:
         dry-run: true
-        enabled: true
         messaging-service-id: X
         twilio-account-sid: Y
         twilio-auth-token: Z
