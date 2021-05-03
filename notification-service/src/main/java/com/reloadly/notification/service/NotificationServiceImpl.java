@@ -40,7 +40,7 @@ public class NotificationServiceImpl implements NotificationService {
             SimpleMailMessage simpleMailMessage = createSimpleMailMessage(request);
             mailSender.send(simpleMailMessage);
         } catch (Exception e) {
-            throw new NotificationException("Email sending failed. Root cause: ".concat(e.getMessage()), e);
+            throw new NotificationException("Email sending failed. Root cause: " + e.getMessage(), e);
         }
     }
 
@@ -55,7 +55,7 @@ public class NotificationServiceImpl implements NotificationService {
         try {
             smsService.sendSMS(request.getPhoneNumber(), request.getMessage());
         } catch (SMSProcessingException e) {
-            throw new NotificationException("SMS sending failed. Root cause: ".concat(e.getMessage()), e);
+            throw new NotificationException("SMS sending failed. Root cause: " + e.getMessage(), e);
         }
     }
 
