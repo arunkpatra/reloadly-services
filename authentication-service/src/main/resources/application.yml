@@ -57,7 +57,7 @@ reloadly:
       enabled: true
       api-title: Reloadly Authentication Services API
       api-description: Reloadly Authentication Services API
-      api-version: 1.0.0
+      api-version: 1.1.0
       base-url: /
       host: localhost:9090
       base-package: com.reloadly.auth.controller

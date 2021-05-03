@@ -10,23 +10,16 @@ image::reloadly-arch.svg[scaledwidth=100%]
 === Salient Points
 
 - The client facing microservices are Authentication, Account and Transaction.
-- The Transaction microservice, posts inbound transactions to Kafka and also maintains transaction status in its DB.
-Transaction microservice is this a Kafka Producer.
-- The Transaction Processor is a Kafka Consumer and potentially runs a number of instances.
-All instances are part of a Kafka consumer group.
-- Transaction processor updates transaction status once processed.
-Transactions can be retried.
-- Notification microservice is called internally by other microservices and transaction processor.
-- Authentication microservice is used to issue JWT tokens, User signup, token verification, API key verification etc.
-- All microservices are secured using Spring Security.
-Inbound HTTP requests into any microservice are expected to carry either an Auth service issued JWT token, or a valid API key.
-Security infrastructure will validate tokens with Auth service.
+- The Transaction microservice, posts inbound transactions to Kafka and also maintains transaction status in its DB. Transaction microservice is acts as a Kafka Producer.
+- The Transaction Processor is a Kafka Consumer and potentially runs a number of instances. All instances of the transaction processor form a Kafka Consumer Group.
+- The transaction processor updates transaction status once a transaction is processed. Transactions may be retried.
+- Notification microservice is called internally by other microservices and the transaction processor.
+- Authentication microservice is used to issue JWT tokens, user signup, token verification, API key verification etc.
+- All microservices are secured using Spring Security. Inbound HTTP requests into any microservice are expected to carry either an Auth service issued JWT token, or a valid API key. Security infrastructure validates tokens and API keys with the Auth service.
 
 === Design
 
-The Authentication, Account, Transaction and Notification microservices are Spring Boot applications.
-Each microservice embraces Domain Driven Design (DDD).
-Each microservice is responsible for managing data for the domain model it manages.
+The Authentication, Account, Transaction and Notification microservices are Spring Boot applications. Each microservice embraces Domain Driven Design (DDD) and is responsible for managing data for the domain it owns.
 
 Additionally, for monitoring, A Spring Boot Admin app is utilized (not shown in illustration above); its optional.
 

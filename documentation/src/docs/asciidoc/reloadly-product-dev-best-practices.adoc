@@ -14,17 +14,17 @@ Microservices done the right way, with the right team organization and tools wil
 
 Some salient points:
 
-- Consider adopting Agile methodology for software development and delivery.
+- Consider adopting Agile Methodology for software development and delivery.
 - Consider aligning team boundaries with Microservice domain boundaries.
 As an example, a dedicated team to work on Account Microservices may be formed.
 This team should own the software development, release planning and deployment for this microservice.
 As a best practice, deployment of this microservice should not have software "build time" dependencies with any other microservice.
-Additionally, the database should be exclusively used by this microservice.
+Additionally, the database should be exclusively owned and used by this microservice.
 - Team size should not exceed 5-7 team members with members being full stack engineers.
 - Consider Scrum of Scrums to align all teams well in advance.
 - Scrum meetings (daily standup meetings) may be used.
-However, this is falling out of fashion and may not work very well in distributed agile.
-Also consider effective usage of tools like GitHub issues, Gitter, Discord Server, GitHib Discussions etc.
+However, this is falling out of fashion and may not work very well in Distributed Agile.
+Also consider effective usage of tools like GitHub Issues, Gitter, Discord Server, GitHib Discussions, Slack etc.
 These tool go a long way towards increasing productivity.
 - Consider fortnightly software release cycles.
 - Agile Scrum teams are best led by a Project Lead.
@@ -39,10 +39,10 @@ A PO has no authority over engineering teams but fully owns requirements and wha
 === Tools
 
 Following tools are recommended for their wide adoption, excellent usability and reliability.
+
 ==== Team Communication
 
-Consider Slack.
-Consider creating multiple channels as needed and add the right apps, e.g. GitHub, Confluence, Miro etc to Slack.
+Consider Slack. Consider creating multiple channels as needed and add the right apps, e.g. GitHub, Confluence, Miro etc to Slack.
 
 ==== Defect Management
 
@@ -54,9 +54,8 @@ Consider release planning and management in GitHub.
 
 ==== Source Code Management
 
-GitHub is the leading platform for DVCS and is recommended.
-It provides a full set of umbrella services suited for moder teams following industry best practices.
+GitHub is the leading platform for DVCS and is recommended. It provides a full set of umbrella services suited for modern teams following industry best practices.
 
 ==== CI/CD and Automation
 
-Consider GitHub Actions and/or other suitable tools to facilitate depployment to Kubernetes.
+Consider GitHub Actions and/or other suitable tools to facilitate deployment to Kubernetes.

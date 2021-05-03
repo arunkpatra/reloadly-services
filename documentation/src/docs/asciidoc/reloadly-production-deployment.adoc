@@ -13,7 +13,7 @@ Kubernetes would be the ideal way to run and scale the microservices of this pla
 Of special interest is the transaction processor which necessarily needs to scale based on transaction volumes.
 Some aspects to note are:
 
-* It's best to keep databases out of Kubernetes.
+* It's best to keep databases outside the scope of Kubernetes.
 Consider having a managed database service from a cloud provider like AWS or GCP.
 * Microservices including the transaction processor should be Dockerized and docker images should be created in the build pipeline.
 Store images in an organizational Docker Registry or a hosted one.
@@ -21,18 +21,26 @@ Store images in an organizational Docker Registry or a hosted one.
 
 ==== Docker Images
 
-* Docker images can be easily created by the Spring Boot maven plugin which currently support creation of Docker images natively.
+* Docker images can be easily created by the Spring Boot maven plugin which currently supports creation of Docker images natively.
 
 ==== Helm Charts
 
 As a best practice, consider using Helm Charts to easily manage deployments and deployment environments.
 It's beneficial to use Helm Charts since it allows for easy rollback.
 
+==== Service Mesh
+
+Consider using https://istio.io/[Istio] or https://linkerd.io/[Linkerd] as a service mesh. This would allow you to handle load balancing, retries and TLS offloading.
+
+==== Distributed Tracing
+
+Consider using https://www.jaegertracing.io/[Jaeger] for distributed tracing. This should serve as a very useful tool in a microservices context.
+
 === AWS Beanstalk or EC2 Containers
 
 While deployment to AWS Beanstalk or EC2 containers is possible, it should probably make sense only for small deployments.
 Managing these environments is fraught with errors and do not support automation very well.
-For modern microservice deployment strategies consider using Helm Charts and Kubernetes.
+For modern microservice deployment strategies, consider using Helm Charts and Kubernetes.
 
 
 

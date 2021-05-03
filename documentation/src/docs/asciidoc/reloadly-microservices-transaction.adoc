@@ -4,14 +4,13 @@ ifndef::imagesdir[:imagesdir: images]
 
 The Transaction service allows users to initiate user transactions, like money reload and airtime send operations.
 Note that, the transaction service, accepts user requests and posts to a reliable and resilient Kafka cluster.
-It also persists the user request in persistent storage so that that its status can be queries.
-User requests return immediately.
+It also persists the user request in persistent storage so that its status can be queried. User requests return immediately.
 The transactions posted to Kafka are picked up later asynchronously by the *Transaction Processor* component.
+
+==== API
 
 See Swagger UI for API documentation.
 It's available at http://localhost:8081/swagger-ui/ when you run your services locally.
-
-==== API
 
 //[.thumb]
 image::txn-microservice.png[scaledwidth=100%]

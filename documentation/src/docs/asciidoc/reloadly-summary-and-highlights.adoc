@@ -2,7 +2,7 @@ ifndef::imagesdir[:imagesdir: images]
 [[summary-highlights]]
 == Code Challenge Summary
 
-The solution developed for the code challenge, embraces modern architectural styles, battle tested architectural principles and robust engineering practices.
+This reference implementation embraces modern architectural styles, sound architectural principles and robust engineering practices.
 The following features have been implemented.
 
 //[.thumb]
@@ -17,10 +17,10 @@ Please see open issues in GitHub https://github.com/arunkpatra/reloadly-services
 == Code Challenge Highlights
 
 - *~ 1500 lines of code* covered by JUnit tests.
-- Modern tech stack, event driven architecture and solid design principles.
+- Modern tech stack, event driven architecture and SOLID design principles.
 - Fully leverages Spring Boot Technology.
 - Advanced Spring Boot features including auto-configuration.
-- Ultra scalable and resilient transaction processor built on Kafka technology.
+- Ultra-scalable and resilient transaction processor built on Kafka technology.
 - End to end enterprise security using dedicated Authentication Service designed to be used across the enterprise.
 - Production ready features, e.g. Spring Boot Admin.
 - Extensive documentation.

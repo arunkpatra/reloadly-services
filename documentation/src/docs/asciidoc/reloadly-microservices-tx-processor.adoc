@@ -4,16 +4,15 @@ ifndef::imagesdir[:imagesdir: images]
 
 The Transaction Processor is at the heart of the platform and has the responsibility of processing inbound user transactions.
 The transactions could be related to any business functionality, like sending airtime or reloading money into your own account.
-Business operations that are ideally suited to be routed to the transaction processor are those that are potentially expensive and have strict guarantees to fulfill.
-Also, such operations may be retried e.g. a airtime send operation may be retried.
+Business operations that are ideally suited to be routed to the transaction processor are those that are potentially expensive and have strict consistency guarantees to fulfill.
+Also, such operations may be retried e.g. an airtime send operation may be retried.
 
-The transaction processor listens to transaction requests that are processed to Kafka.
-Part of the objective here is to scale the transaction processing horizontally.
-Kafka listeners(and the transaction processing is one) can for consumer groups.
+The transaction processor listens to transaction requests that are posted to a Kafka topic. Part of the objective here is to scale the transaction processing horizontally.
+Kafka listeners(like the transaction processor) can form Consumer Groups(see Kafka documentation for more details).
 Essentially, when the transaction processor is deployed for example to a Kubernetes cluster, one could scale very easily by increasing/decreasing the number of replicas.
-All the other production grade features of Kafka are available by default to the transaction processor.
+All other production grade features of Kafka are available by default to the transaction processor.
 
-Once the Transaction Processor processes a transaction, it ensures that notifications are sent out to the user so that they know the status of the transaction.
+Once the Transaction Processor processes a transaction, it ensures that notifications are sent out to the user who initiated the transaction.
 
 ==== Module Dependencies
 

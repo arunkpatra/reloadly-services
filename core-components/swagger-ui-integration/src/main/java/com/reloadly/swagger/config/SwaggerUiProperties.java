@@ -40,7 +40,7 @@ public class SwaggerUiProperties {
     /**
      * The API version.
      */
-    private String apiVersion = "1.0.0";
+    private String apiVersion = "1.1.0";
     /**
      * The API title.
      */

@@ -9,15 +9,15 @@ Create an issue on GitHub https://github.com/arunkpatra/reloadly-services/issues
 [[pre-requisites]]
 === Pre-requisites
 
-Following pre-requisites need to be fulfilled before you can run a fully functional instance of the platform on your local development environments.
+Following pre-requisites need to be fulfilled before you can run a fully functional instance of the platform on your local development environment.
 The platform has been tested on macOS Big Sur.
 
-1. *Hardware*: Either physical or virtual machines with minimum 8 GB RAM and 4 CPU Cores _(16 GB RAM, 8 CPU Cores if you want to do performance testing)_.
+1. *Hardware*: Either physical or virtual machines with minimum 8 GB RAM and 4 CPU Cores _(16 GB RAM, 8 CPU Cores recommended)_.
 2. *Operating System*: Windows(version 10+), macOS(version 10.15+), Linux (CentOS, RHEL, Ubuntu)
 3. *Java* - JDK 8, or JDK 11.
 4. *Build Tool* - Maven 3.6 or above
 5. *Database* - MySQL, locally running or remotely hosted.
-6. *Kafka* - Local instance with the broker server listening on port 9092. A remotely hosted Kafka cluster is acceptable as well.
+6. *Kafka* - Local instance with the broker server listening on port 9092.
 
 [TIP]
 ====
@@ -38,7 +38,7 @@ Other JDK versions have not been tested.
 [[githib-checkout]]
 === Build From Source
 
-Clone the git repository from GitHub into a directory of your choice.
+Clone the git https://github.com/arunkpatra/reloadly-services[repository] from GitHub into a directory of your choice on your local machine.
 
 ----
 git clone git@github.com:arunkpatra/reloadly-services.git
@@ -64,9 +64,8 @@ For running tests, in-memory instances of these resources are run.
 [[running-locally]]
 === Development Environment Setup
 
-This is useful, when you want to set a development environment and run all the microservices on a single local machine.
-Kubernetes deployment support is coming up.
-See  https://github.com/arunkpatra/reloadly-services/issues/17[this GitHub issue].
+This is useful, when you want to setup a development environment and run all the microservices on a single local machine.
+Kubernetes Deployment support is coming up. See  https://github.com/arunkpatra/reloadly-services/issues/17[this GitHub issue].
 
 [NOTE]
 ====
@@ -96,7 +95,7 @@ Take a note of the username and password of the admin user; you will need it in 
 ====
 
 All database tables used by the microservices need to be created upfront in your local MySQL database instance.
-As noted earlier, you do NOT need to do this for running integration tests since tests use in-memory Derby database.
+As noted earlier, you do not need to set up Kafka and MySQL for running integration tests since tests use in-memory Derby database.
 
 Run the following scripts in order.
 
@@ -354,8 +353,9 @@ Now head over to the documentation of individual microservices for more details.
 
 ==== Cleanup
 
-1. Shutdown your locally running MySQL instance.
+1. Kill all microservices by hitting `CTRL  + C` on the terminal windows where you started the services.
+2. Shutdown your locally running MySQL instance.
 
     mysql.server stop
 
-2. Now kill the Kafka process that you had started earlier by hitting `CTRL + C` in the terminal window where Kafka is running.
+3. Now kill the Kafka process that you had started earlier by hitting `CTRL + C` in the terminal window where Kafka is running.

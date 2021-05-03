@@ -29,7 +29,6 @@ It was developed as part of a code challenge from https://www.reloadly.com/[Relo
 ====
 The *reloadly* brand name, and logo are copyright of https://www.reloadly.com/[Reloadly].
 Permission is hereby granted to https://www.reloadly.com/[Reloadly] to review the architecture, design, source code and documentation of this project.
-Usage of architecture, design, source code is also being granted to https://www.reloadly.com/[Reloadly] without any constraints, including the right to use in building production systems either in whole or part.
 
 Unless required by applicable law or agreed to in writing, this software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 ====
@@ -37,6 +36,9 @@ Unless required by applicable law or agreed to in writing, this software is dist
 === Source Code
 
 icon:github[2x] Head over to the GitHub repository https://github.com/arunkpatra/reloadly-services[here].
+
+=== License
+This Software is released under the https://opensource.org/licenses/MIT[MIT License]
 
 include::reloadly-summary-and-highlights.adoc[]
 

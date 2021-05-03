@@ -63,7 +63,7 @@ reloadly:
       secured: true
       api-title: Reloadly Transaction Services API
       api-description: Reloadly Transaction Services API
-      api-version: 1.0.0
+      api-version: 1.1.0
       base-url: /
       host: localhost:8081
       base-package: com.reloadly.transaction.controller
