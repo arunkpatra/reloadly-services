@@ -7,6 +7,10 @@ on: [ push, pull_request ]
 
 env:
   ACCOUNT_SVC_IMAGE_NAME: account-service
+  TRANSACTION_SVC_IMAGE_NAME: transaction-service
+  NOTIFICATION_SVC_IMAGE_NAME: notification-service
+  TRANSACTION_PROCESSOR_IMAGE_NAME: transaction-processor
+  ADMIN_SVC_IMAGE_NAME: admin-service
 
 jobs:
   build:
@@ -49,9 +53,17 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build
-        run: mvn -B package
-      - name: Build image
-        run: docker build ./account-service --tag $ACCOUNT_SVC_IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
+        run: mvn -B package -DskipTests=true
+      - name: Build Account Service
+        run: docker build ./$ACCOUNT_SVC_IMAGE_NAME --tag $ACCOUNT_SVC_IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
+      - name: Build Transaction Service
+        run: docker build ./$TRANSACTION_SVC_IMAGE_NAME --tag $TRANSACTION_SVC_IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
+      - name: Build Notification Service
+        run: docker build ./$NOTIFICATION_SVC_IMAGE_NAME --tag $NOTIFICATION_SVC_IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
+      - name: Build Transaction Processor
+        run: docker build ./$TRANSACTION_PROCESSOR_IMAGE_NAME --tag $TRANSACTION_PROCESSOR_IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
+      - name: Build Admin Service
+        run: docker build ./$ADMIN_SVC_IMAGE_NAME --tag $ADMIN_SVC_IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
 
       - name: Log into registry
         # This is where you will update the PAT to GITHUB_TOKEN
@@ -72,4 +84,64 @@ jobs:
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
           docker tag $ACCOUNT_SVC_IMAGE_NAME $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:$VERSION
+
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$TRANSACTION_SVC_IMAGE_NAME
+
+          # Change all uppercase to lowercase
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          # Strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          # Use Docker `latest` tag convention
+          [ "$VERSION" == "master" ] && VERSION=latest
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+          docker tag $TRANSACTION_SVC_IMAGE_NAME $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:$VERSION
+
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$NOTIFICATION_SVC_IMAGE_NAME
+
+          # Change all uppercase to lowercase
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          # Strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          # Use Docker `latest` tag convention
+          [ "$VERSION" == "master" ] && VERSION=latest
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+          docker tag $NOTIFICATION_SVC_IMAGE_NAME $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:$VERSION
+
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$TRANSACTION_PROCESSOR_IMAGE_NAME
+
+          # Change all uppercase to lowercase
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          # Strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          # Use Docker `latest` tag convention
+          [ "$VERSION" == "master" ] && VERSION=latest
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+          docker tag $TRANSACTION_PROCESSOR_IMAGE_NAME $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:$VERSION
+
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$ADMIN_SVC_IMAGE_NAME
+
+          # Change all uppercase to lowercase
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          # Strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          # Use Docker `latest` tag convention
+          [ "$VERSION" == "master" ] && VERSION=latest
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+          docker tag $ADMIN_SVC_IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
