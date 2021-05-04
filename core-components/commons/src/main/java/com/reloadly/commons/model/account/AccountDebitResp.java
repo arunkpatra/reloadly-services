@@ -1,13 +1,14 @@
 package com.reloadly.commons.model.account;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AccountDebitResp {
     private Boolean successful;
     private String message;
 
     @JsonCreator
-    public AccountDebitResp(Boolean successful, String message) {
+    public AccountDebitResp(@JsonProperty("successful") Boolean successful, @JsonProperty("message") String message) {
         this.successful = successful;
         this.message = message;
     }

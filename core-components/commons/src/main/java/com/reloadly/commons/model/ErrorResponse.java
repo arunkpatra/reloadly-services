@@ -10,17 +10,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class ErrorResponse {
 
-    @JsonProperty("error")
     private final String error;
 
-    @JsonProperty("error_description")
     private final String errorDescription;
 
-    @JsonProperty("error_detail")
     private final String errorDetail;
 
     @JsonCreator
-    public ErrorResponse(String error, String errorDescription, String errorDetail) {
+    public ErrorResponse(@JsonProperty("error") String error, @JsonProperty("error_description") String errorDescription,
+                         @JsonProperty("error_detail") String errorDetail) {
         this.error = error;
         this.errorDescription = errorDescription;
         this.errorDetail = errorDetail;

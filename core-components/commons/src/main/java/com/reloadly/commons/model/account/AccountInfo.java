@@ -1,6 +1,7 @@
 package com.reloadly.commons.model.account;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AccountInfo {
     private String name;
@@ -8,7 +9,7 @@ public class AccountInfo {
     private String phoneNumber;
 
     @JsonCreator
-    public AccountInfo(String name, String email, String phoneNumber) {
+    public AccountInfo(@JsonProperty("name") String name, @JsonProperty("email") String email, @JsonProperty("phoneNumber") String phoneNumber) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;

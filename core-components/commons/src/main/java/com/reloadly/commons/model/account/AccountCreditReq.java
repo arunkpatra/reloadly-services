@@ -1,12 +1,13 @@
 package com.reloadly.commons.model.account;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AccountCreditReq {
     private Float amount;
 
     @JsonCreator
-    public AccountCreditReq(Float amount) {
+    public AccountCreditReq(@JsonProperty("amount") Float amount) {
         this.amount = amount;
     }
 

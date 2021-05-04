@@ -1,6 +1,7 @@
 package com.reloadly.account.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -26,7 +27,12 @@ public class Address {
     private final String postalCode;
 
     @JsonCreator
-    public Address(String addressLine1, String addressLine2, String city, String state, String country, String postalCode) {
+    public Address(@JsonProperty("addressLine1") String addressLine1,
+                   @JsonProperty("addressLine2") String addressLine2,
+                   @JsonProperty("city") String city,
+                   @JsonProperty("state") String state,
+                   @JsonProperty("country") String country,
+                   @JsonProperty("postalCode") String postalCode) {
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
         this.city = city;

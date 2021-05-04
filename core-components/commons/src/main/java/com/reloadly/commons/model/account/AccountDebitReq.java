@@ -1,12 +1,13 @@
 package com.reloadly.commons.model.account;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AccountDebitReq {
     private Float amount;
 
     @JsonCreator
-    public AccountDebitReq(Float amount) {
+    public AccountDebitReq(@JsonProperty("amount") Float amount) {
         this.amount = amount;
     }
 

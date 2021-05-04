@@ -1,6 +1,7 @@
 package com.reloadly.account.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -19,7 +20,7 @@ public class AccountBalance {
     private final String currencyCode;
 
     @JsonCreator
-    public AccountBalance(Float accountBalance, String currencyCode) {
+    public AccountBalance(@JsonProperty("accountBalance") Float accountBalance, @JsonProperty("currencyCode") String currencyCode) {
         this.accountBalance = accountBalance;
         this.currencyCode = currencyCode;
     }

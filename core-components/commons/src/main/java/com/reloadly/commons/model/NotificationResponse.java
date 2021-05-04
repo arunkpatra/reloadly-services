@@ -1,6 +1,7 @@
 package com.reloadly.commons.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Notification response.
@@ -12,7 +13,7 @@ public class NotificationResponse {
     private String message;
 
     @JsonCreator
-    public NotificationResponse(String message) {
+    public NotificationResponse(@JsonProperty("message") String message) {
         this.message = message;
     }
 

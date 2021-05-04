@@ -1,6 +1,7 @@
 package com.reloadly.account.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.reloadly.commons.model.account.AccountInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -20,7 +21,8 @@ public class AccountUpdateRequest {
     private final Address billingAddress;
 
     @JsonCreator
-    public AccountUpdateRequest(AccountInfo accountInfo, Address billingAddress) {
+    public AccountUpdateRequest(@JsonProperty("accountInfo") AccountInfo accountInfo,
+                                @JsonProperty("billingAddress") Address billingAddress) {
         this.accountInfo = accountInfo;
         this.billingAddress = billingAddress;
     }

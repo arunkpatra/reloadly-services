@@ -1,6 +1,7 @@
 package com.reloadly.auth.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -25,7 +26,9 @@ public class AuthenticationResponse implements Serializable {
     private final Date tokenExpiresOn;
 
     @JsonCreator
-    public AuthenticationResponse(String token, Date tokenIssuedAt, Date tokenExpiresOn) {
+    public AuthenticationResponse(@JsonProperty("token") String token,
+                                  @JsonProperty("tokenIssuedAt") Date tokenIssuedAt,
+                                  @JsonProperty("tokenExpiresOn") Date tokenExpiresOn) {
         this.token = token;
         this.tokenIssuedAt = tokenIssuedAt;
         this.tokenExpiresOn = tokenExpiresOn;

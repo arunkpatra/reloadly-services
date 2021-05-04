@@ -1,6 +1,7 @@
 package com.reloadly.account.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -19,7 +20,9 @@ public class AccountUpdateResponse {
     private final String message;
 
     @JsonCreator
-    public AccountUpdateResponse(Boolean successful, String accountId, String message) {
+    public AccountUpdateResponse(@JsonProperty("successful") Boolean successful,
+                                 @JsonProperty("accountId") String accountId,
+                                 @JsonProperty("message") String message) {
         this.successful = successful;
         this.accountId = accountId;
         this.message = message;

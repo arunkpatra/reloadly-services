@@ -1,6 +1,7 @@
 package com.reloadly.transaction.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * The Send Airtime request.
@@ -12,7 +13,7 @@ public class SendAirtimeRequest {
     private final String phoneNumber;
 
     @JsonCreator
-    public SendAirtimeRequest(Float amount, String phoneNumber) {
+    public SendAirtimeRequest(@JsonProperty("amount") Float amount, @JsonProperty("phoneNumber") String phoneNumber) {
         this.amount = amount;
         this.phoneNumber = phoneNumber;
     }

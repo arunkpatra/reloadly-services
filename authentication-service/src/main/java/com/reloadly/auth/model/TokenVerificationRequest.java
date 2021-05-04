@@ -1,6 +1,7 @@
 package com.reloadly.auth.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -18,7 +19,7 @@ public class TokenVerificationRequest {
     private final String token;
 
     @JsonCreator
-    public TokenVerificationRequest(String token) {
+    public TokenVerificationRequest(@JsonProperty("token") String token) {
         this.token = token;
     }
 

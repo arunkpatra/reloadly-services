@@ -1,6 +1,7 @@
 package com.reloadly.auth.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -26,7 +27,7 @@ public class UsernamePasswordSignupRequest implements Serializable {
     private final String password;
 
     @JsonCreator
-    public UsernamePasswordSignupRequest(String username, String password) {
+    public UsernamePasswordSignupRequest(@JsonProperty("username") String username, @JsonProperty("password") String password) {
         this.username = username;
         this.password = password;
     }

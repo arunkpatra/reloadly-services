@@ -1,6 +1,7 @@
 package com.reloadly.transaction.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * The user transaction request.
@@ -14,7 +15,9 @@ public class TransactionRequest {
     private final SendAirtimeRequest sendAirtimeRequest;
 
     @JsonCreator
-    public TransactionRequest(TransactionType transactionType, AddMoneyRequest addMoneyRequest, SendAirtimeRequest sendAirtimeRequest) {
+    public TransactionRequest(@JsonProperty("transactionType") TransactionType transactionType,
+                              @JsonProperty("addMoneyRequest") AddMoneyRequest addMoneyRequest,
+                              @JsonProperty("sendAirtimeRequest") SendAirtimeRequest sendAirtimeRequest) {
         this.transactionType = transactionType;
         this.addMoneyRequest = addMoneyRequest;
         this.sendAirtimeRequest = sendAirtimeRequest;

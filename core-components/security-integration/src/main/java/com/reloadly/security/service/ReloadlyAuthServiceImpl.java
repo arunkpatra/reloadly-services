@@ -1,6 +1,7 @@
 package com.reloadly.security.service;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.reloadly.commons.model.ReloadlyApiKeyIdentity;
 import com.reloadly.commons.model.ReloadlyAuthToken;
 import com.reloadly.security.config.ReloadlyAuthProperties;
@@ -83,7 +84,7 @@ public class ReloadlyAuthServiceImpl implements ReloadlyAuth {
         final String apiKey;
 
         @JsonCreator
-        public ApiKeyRequest(String apiKey) {
+        public ApiKeyRequest(@JsonProperty("apiKey") String apiKey) {
             this.apiKey = apiKey;
         }
 
@@ -96,7 +97,7 @@ public class ReloadlyAuthServiceImpl implements ReloadlyAuth {
         final String token;
 
         @JsonCreator
-        public AuthRequest(String token) {
+        public AuthRequest(@JsonProperty("token") String token) {
             this.token = token;
         }
 
