@@ -21,7 +21,24 @@ Store images in an organizational Docker Registry or a hosted one.
 
 ==== Docker Images
 
-* Docker images can be easily created by the Spring Boot maven plugin which currently supports creation of Docker images natively.
+To create Docker images, follow these steps. First install Docker Desktop for macOS.
+
+----
+cd account-service
+docker build --tag reloadly/account-service .
+----
+
+To spin up a container, issue the following command. First start your MySQL instance on your local machine and ensure that the tables are created.
+
+----
+docker run -it -p 8080:8080 --rm --env DB_USER=root --env DB_PASSWORD=mysqlpass123 --env DB_URL=jdbc:mysql://host.docker.internal:3306/rlacctdb reloadly/account-service:latest env
+----
+
+To launch in the background:
+
+----
+docker run -d -p 8080:8080 --rm --env DB_USER=root --env DB_PASSWORD=mysqlpass123 --env DB_URL=jdbc:mysql://host.docker.internal:3306/rlacctdb reloadly/account-service:latest env
+----
 
 ==== Helm Charts
 
