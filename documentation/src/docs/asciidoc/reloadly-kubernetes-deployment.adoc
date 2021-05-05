@@ -124,3 +124,23 @@ From root of project root, issue the following commands.
 
     NAME                            READY   STATUS    RESTARTS   AGE
     admin-service-6d897557d-v6b27   2/2     Running   0          2m29s
+
+=== Jaeger
+
+==== Install
+
+Reference: https://linkerd.io/2.10/tasks/distributed-tracing/
+
+----
+linkerd jaeger install | kubectl apply -f -
+linkerd jaeger check
+linkerd jaeger dashboard
+----
+
+=== Kafka
+
+https://github.com/bitnami/charts/tree/master/bitnami/kafka
+
+=== MySQL
+
+https://bitnami.com/stack/mysql/helm
