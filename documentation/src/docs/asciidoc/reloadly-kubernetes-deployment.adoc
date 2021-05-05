@@ -1,0 +1,126 @@
+ifndef::imagesdir[:imagesdir: images]
+[[kubernetes-deployment]]
+== Kubernetes Deployment
+
+This chapter is dedicated to containerized deployments. We will need a number of components. We will start with simpler aspects and will finally achieve full automation.
+
+This chapter is targeted to developers. Some familiarity with Containerization technology, Docker and Kubernetes is helpful, but not mandatory.
+
+=== Docker Desktop
+
+You can always run the microservices developed in this project as standalone Spring Boot applications. Alternatively, you can create Docker images for each microservice, like the Account microservice, Transaction Processor etc. Once you create a docker image, you can launch a container that will run your docker image. First, you need to install Docker Desktop on your local machine.
+
+==== Install
+
+On macOS systems, install Docker Desktop by following the instructions https://docs.docker.com/docker-for-mac/install/[here].
+
+==== Building Docker Images and Running
+
+After you install Docker Desktop, start it. The following example shows how to build a Docker image for a microservice and run the service.
+
+----
+cd account-service
+docker build --tag reloadly/account-service .
+----
+
+To spin up a container, issue the following command. First start your MySQL instance on your local machine and ensure that the tables are created.
+
+----
+docker run -it -p 8080:8080 --rm --env DB_USER=root --env DB_PASSWORD=mysqlpass123 --env DB_URL=jdbc:mysql://host.docker.internal:3306/rlacctdb reloadly/account-service:latest env
+----
+
+To launch in the background:
+
+----
+docker run -d -p 8080:8080 --rm --env DB_USER=root --env DB_PASSWORD=mysqlpass123 --env DB_URL=jdbc:mysql://host.docker.internal:3306/rlacctdb reloadly/account-service:latest env
+----
+
+=== Kubernetes
+
+==== Install
+
+When you install Docker Desktop, it also brings in Kubernetes, but is not enabled yet. Enable Kubernetes from the Docker Desktop Settings.
+
+//[.thumb]
+image::docker-desktop-k8s-settings.png[scaledwidth=100%]
+
+=== Kubernetes Dashboard
+
+The first thing you might want to do is to install https://github.com/kubernetes/dashboard[Kubernetes Dashboard].
+
+==== Install
+
+To deploy Dashboard, execute following command:
+
+----
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.2.0/aio/deploy/recommended.yaml
+----
+
+==== Access
+
+To access Dashboard from your local workstation you must create a secure channel to your Kubernetes cluster. Run the following command:
+
+----
+kubectl proxy
+----
+
+Now access Dashboard at:
+
+http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
+
+==== Login
+
+To login to the dashboard, you would need a token. See instructions https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md[here]
+
+Start Proxy
+
+----
+kubectl proxy
+----
+
+Get Token
+
+----
+kubectl -n kubernetes-dashboard get secret $(kubectl -n kubernetes-dashboard get sa/admin-user -o jsonpath="{.secrets[0].name}") -o go-template="{{.data.token | base64decode}}"
+----
+
+//[.thumb]
+image::k8s-dashboard.png[scaledwidth=100%]
+
+Here's a helpful https://andrewlock.net/running-kubernetes-and-the-dashboard-with-docker-desktop/[tutorial].
+
+=== Linkerd
+
+==== Install
+
+Install Linkerd using the instruction https://linkerd.io/2.10/getting-started/[here].
+
+==== Run
+
+Start Linkerd Dashboard.
+
+----
+linkerd viz dashboard &
+----
+
+Access Linkerd dashboard at http://localhost:50750/
+
+=== Helm Charts 3
+
+=== Running Reloadly Platform Services on Kubernetes
+
+From root of project root, issue the following commands.
+
+1. This will install the reloadly microservices in your locally running K8s cluster.
+
+    cd deployment
+    kubectl apply -f ./kubernetes/reloadly-platform.yaml
+
+2. Check Pod initialization status.
+
+    kubectl get pods -n reloadly
+
+3. You should see output like:
+
+    NAME                            READY   STATUS    RESTARTS   AGE
+    admin-service-6d897557d-v6b27   2/2     Running   0          2m29s
