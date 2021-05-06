@@ -25,6 +25,7 @@
         <module>transaction-common</module>
         <module>documentation</module>
         <module>coverage</module>
+        <module>deployment</module>
     </modules>
     <packaging>pom</packaging>
     <name>Reloadly Microservices Parent</name>

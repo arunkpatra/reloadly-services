@@ -54,4 +54,6 @@ include::reloadly-production-deployment.adoc[]
 
 include::reloadly-production-monitoring.adoc[]
 
+include::reloadly-kubernetes-deployment.adoc[]
+
 include::reloadly-product-dev-best-practices.adoc[]

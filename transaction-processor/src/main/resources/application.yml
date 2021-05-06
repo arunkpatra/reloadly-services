@@ -64,3 +64,4 @@ reloadly:
         svc-account-api-key: ${RELOADLY_SVC_ACCT_API_KEY}
         kafka:
           inbound-transactions-topic: com.reloadly.inbound.txn.topic
+        reloadly-account-service-endpoint: http://localhost:8080

@@ -1,0 +1,409 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: reloadly
+---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: reloadly
+  name: reloadly-svc-account
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-service
+  namespace: reloadly
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: admin-service
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      labels:
+        app: admin-service
+    spec:
+      serviceAccountName: reloadly-svc-account
+      containers:
+        - name: admin-service
+          imagePullPolicy: Always
+          image: ghcr.io/arunkpatra/admin-service:kubernetes-deployment
+          ports:
+            - name: http
+              containerPort: 9595
+          livenessProbe:
+            initialDelaySeconds: 60
+            periodSeconds: 15
+            timeoutSeconds: 10
+            failureThreshold: 3
+            httpGet:
+              port: 9595
+              scheme: HTTP
+              path: /actuator/info
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin-service
+  namespace: reloadly
+spec:
+  type: NodePort
+  selector:
+    app: admin-service
+  ports:
+    - port: 9595
+      targetPort: 9595
+      nodePort: 30095
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authentication-service
+  namespace: reloadly
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authentication-service
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      labels:
+        app: authentication-service
+    spec:
+      serviceAccountName: reloadly-svc-account
+      containers:
+        - name: authentication-service
+          imagePullPolicy: Always
+          image: ghcr.io/arunkpatra/authentication-service:kubernetes-deployment
+          env:
+            - name: DB_USER
+              value: root
+            - name: DB_PASSWORD
+              value: "mysqlpass123"
+            - name: DB_URL
+              value: "jdbc:mysql://mysql.mysql.svc.cluster.local:3306/rlauthdb"
+            - name: SBA_SERVER_URL
+              value: "http://admin-service.reloadly.svc.cluster.local:9595"
+            - name: SBA_CLIENT_URL
+              value: "http://authentication-service.reloadly.svc.cluster.local:9090"
+            - name: SWAGGER_HOST
+              value: "localhost:30090"
+          ports:
+            - name: http
+              containerPort: 9090
+          livenessProbe:
+            initialDelaySeconds: 60
+            periodSeconds: 15
+            timeoutSeconds: 10
+            failureThreshold: 3
+            httpGet:
+              port: 9090
+              scheme: HTTP
+              path: /actuator/info
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: authentication-service
+  namespace: reloadly
+spec:
+  type: NodePort
+  selector:
+    app: authentication-service
+  ports:
+    - port: 9090
+      targetPort: 9090
+      nodePort: 30090
+---
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: account-service
+  namespace: reloadly
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: account-service
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      labels:
+        app: account-service
+    spec:
+      serviceAccountName: reloadly-svc-account
+      containers:
+        - name: account-service
+          imagePullPolicy: Always
+          image: ghcr.io/arunkpatra/account-service:kubernetes-deployment
+          env:
+            - name: DB_USER
+              value: root
+            - name: DB_PASSWORD
+              value: "mysqlpass123"
+            - name: DB_URL
+              value: "jdbc:mysql://mysql.mysql.svc.cluster.local:3306/rlacctdb"
+            - name: SBA_SERVER_URL
+              value: "http://admin-service.reloadly.svc.cluster.local:9595"
+            - name: SBA_CLIENT_URL
+              value: "http://account-service.reloadly.svc.cluster.local:8080"
+            - name: SWAGGER_HOST
+              value: "localhost:30080"
+            - name: AUTH_SVC_ENDPOINT
+              value: "http://authentication-service.reloadly.svc.cluster.local:9090"
+            - name: NOTIFICATION_SVC_ENDPOINT
+              value: "http://notification-service.reloadly.svc.cluster.local:8082"
+          ports:
+            - name: http
+              containerPort: 8080
+          livenessProbe:
+            initialDelaySeconds: 60
+            periodSeconds: 15
+            timeoutSeconds: 10
+            failureThreshold: 3
+            httpGet:
+              port: 8080
+              scheme: HTTP
+              path: /actuator/info
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: account-service
+  namespace: reloadly
+spec:
+  type: NodePort
+  selector:
+    app: account-service
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30080
+---
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transaction-service
+  namespace: reloadly
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transaction-service
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      labels:
+        app: transaction-service
+    spec:
+      serviceAccountName: reloadly-svc-account
+      containers:
+        - name: transaction-service
+          imagePullPolicy: Always
+          image: ghcr.io/arunkpatra/transaction-service:kubernetes-deployment
+          env:
+            - name: DB_USER
+              value: root
+            - name: DB_PASSWORD
+              value: "mysqlpass123"
+            - name: DB_URL
+              value: "jdbc:mysql://mysql.mysql.svc.cluster.local:3306/rltxndb"
+            - name: SBA_SERVER_URL
+              value: "http://admin-service.reloadly.svc.cluster.local:9595"
+            - name: SBA_CLIENT_URL
+              value: "http://transaction-service.reloadly.svc.cluster.local:8081"
+            - name: SWAGGER_HOST
+              value: "localhost:30081"
+            - name: AUTH_SVC_ENDPOINT
+              value: "http://authentication-service.reloadly.svc.cluster.local:9090"
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka.kafka.svc.cluster.local:9092"
+          ports:
+            - name: http
+              containerPort: 8081
+          livenessProbe:
+            initialDelaySeconds: 60
+            periodSeconds: 15
+            timeoutSeconds: 10
+            failureThreshold: 3
+            httpGet:
+              port: 8081
+              scheme: HTTP
+              path: /actuator/info
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: transaction-service
+  namespace: reloadly
+spec:
+  type: NodePort
+  selector:
+    app: transaction-service
+  ports:
+    - port: 8081
+      targetPort: 8081
+      nodePort: 30081
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service
+  namespace: reloadly
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notification-service
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      labels:
+        app: notification-service
+    spec:
+      serviceAccountName: reloadly-svc-account
+      containers:
+        - name: notification-service
+          imagePullPolicy: Always
+          image: ghcr.io/arunkpatra/notification-service:kubernetes-deployment
+          env:
+            - name: SBA_SERVER_URL
+              value: "http://admin-service.reloadly.svc.cluster.local:9595"
+            - name: SBA_CLIENT_URL
+              value: "http://notification-service.reloadly.svc.cluster.local:8082"
+            - name: SWAGGER_HOST
+              value: "localhost:30082"
+            - name: TWILIO_DRY_RUN
+              value: "true"
+            - name: TWILIO_MSG_SVC_ID
+              value: "XXX"
+            - name: TWILIO_ACCOUNT_SID
+              value: "YYY"
+            - name: TWILIO_AUTH_TOKEN
+              value: "ZZZ"
+            - name: EMAIL_DRY_RUN
+              value: "true"
+            - name: SENDER_EMAIL_ID
+              value: "email@email.com"
+            - name: AWS_ACCESS_KEY_ID
+              value: "******"
+            - name: AWS_SECRET_ACCESS_KEY
+              value: "******"
+          ports:
+            - name: http
+              containerPort: 8082
+          livenessProbe:
+            initialDelaySeconds: 60
+            periodSeconds: 15
+            timeoutSeconds: 10
+            failureThreshold: 3
+            httpGet:
+              port: 8082
+              scheme: HTTP
+              path: /actuator/info
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-service
+  namespace: reloadly
+spec:
+  type: NodePort
+  selector:
+    app: notification-service
+  ports:
+    - port: 8082
+      targetPort: 8082
+      nodePort: 30082
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transaction-processor
+  namespace: reloadly
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transaction-processor
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      labels:
+        app: transaction-processor
+    spec:
+      serviceAccountName: reloadly-svc-account
+      containers:
+        - name: transaction-processor
+          imagePullPolicy: Always
+          image: ghcr.io/arunkpatra/transaction-processor:kubernetes-deployment
+          env:
+            - name: DB_USER
+              value: root
+            - name: DB_PASSWORD
+              value: "mysqlpass123"
+            - name: DB_URL
+              value: "jdbc:mysql://mysql.mysql.svc.cluster.local:3306/rltxndb"
+            - name: SBA_SERVER_URL
+              value: "http://admin-service.reloadly.svc.cluster.local:9595"
+            - name: SBA_CLIENT_URL
+              value: "http://transaction-processor.reloadly.svc.cluster.local:8083"
+            - name: NOTIFICATION_SVC_ENDPOINT
+              value: "http://notification-service.reloadly.svc.cluster.local:8082"
+            - name: ACCOUNT_SVC_ENDPOINT
+              value: "http://account-service.reloadly.svc.cluster.local:8080"
+            - name: SVC_ACCT_API_KEY
+              value: "d3fe6f0d-120e-4161-a134-8c2342e36ca6"
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka.kafka.svc.cluster.local:9092"
+          ports:
+            - name: http
+              containerPort: 8083
+          livenessProbe:
+            initialDelaySeconds: 60
+            periodSeconds: 15
+            timeoutSeconds: 10
+            failureThreshold: 3
+            httpGet:
+              port: 8083
+              scheme: HTTP
+              path: /actuator/info
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: transaction-processor
+  namespace: reloadly
+spec:
+  type: NodePort
+  selector:
+    app: transaction-processor
+  ports:
+    - port: 8083
+      targetPort: 8083
+      nodePort: 30083
+---
