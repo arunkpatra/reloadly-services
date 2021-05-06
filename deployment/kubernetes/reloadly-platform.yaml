@@ -233,6 +233,8 @@ spec:
               value: "transaction-service.reloadly.svc.cluster.local:8081"
             - name: AUTH_SVC_ENDPOINT
               value: "http://authentication-service.reloadly.svc.cluster.local:9090"
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka.kafka.svc.cluster.local:9092"
           ports:
             - name: http
               containerPort: 8081
@@ -373,6 +375,8 @@ spec:
               value: "http://notification-service.reloadly.svc.cluster.local:8082"
             - name: AUTH_SVC_ENDPOINT
               value: "d3fe6f0d-120e-4161-a134-8c2342e36ca6"
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka.kafka.svc.cluster.local:9092"
           ports:
             - name: http
               containerPort: 8083

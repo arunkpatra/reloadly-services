@@ -32,5 +32,9 @@ if [ -n "${AUTH_SVC_ENDPOINT}" ]; then
   RELOADLY_OPTS="$RELOADLY_OPTS -Dreloadly.auth.reloadly-auth-service-endpoint=${AUTH_SVC_ENDPOINT}"
 fi
 
+if [ -n "${KAFKA_BOOTSTRAP_SERVERS}" ]; then
+  RELOADLY_OPTS="$RELOADLY_OPTS -Dspring.kafka.bootstrap-servers=${KAFKA_BOOTSTRAP_SERVERS}"
+fi
+
 echo RELOADLY_OPTS : "$RELOADLY_OPTS"
 java $RELOADLY_OPTS -jar /app.jar

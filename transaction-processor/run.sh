@@ -32,5 +32,9 @@ if [ -n "${SVC_ACCT_API_KEY}" ]; then
   RELOADLY_OPTS="$RELOADLY_OPTS -Dreloadly.api.transaction.processor.svc-account-api-key=${SVC_ACCT_API_KEY}"
 fi
 
+if [ -n "${KAFKA_BOOTSTRAP_SERVERS}" ]; then
+  RELOADLY_OPTS="$RELOADLY_OPTS -Dspring.kafka.bootstrap-servers=${KAFKA_BOOTSTRAP_SERVERS}"
+fi
+
 echo RELOADLY_OPTS : "$RELOADLY_OPTS"
 java $RELOADLY_OPTS -jar /app.jar
