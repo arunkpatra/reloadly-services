@@ -28,6 +28,10 @@ if [ -n "${NOTIFICATION_SVC_ENDPOINT}" ]; then
   RELOADLY_OPTS="$RELOADLY_OPTS -Dreloadly.notification.reloadly-notification-service-endpoint=${NOTIFICATION_SVC_ENDPOINT}"
 fi
 
+if [ -n "${ACCOUNT_SVC_ENDPOINT}" ]; then
+  RELOADLY_OPTS="$RELOADLY_OPTS -Dreloadly.api.transaction.processor.reloadly-account-service-endpoint=${ACCOUNT_SVC_ENDPOINT}"
+fi
+
 if [ -n "${SVC_ACCT_API_KEY}" ]; then
   RELOADLY_OPTS="$RELOADLY_OPTS -Dreloadly.api.transaction.processor.svc-account-api-key=${SVC_ACCT_API_KEY}"
 fi
