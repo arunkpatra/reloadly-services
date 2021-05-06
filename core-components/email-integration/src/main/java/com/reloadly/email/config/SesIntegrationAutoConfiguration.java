@@ -29,7 +29,7 @@ public class SesIntegrationAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingClass("javax.mail.Session")
     public MailSender simpleMailSender(SesClient sesClient, SesProperties properties) {
         return new SimpleEmailServiceMailSender(sesClient, properties);
     }

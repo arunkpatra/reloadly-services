@@ -4,5 +4,5 @@ reloadly:
       ses:
         enabled: true
         region: ap-south-1
-        dry-run: false
+        dry-run: true
 
