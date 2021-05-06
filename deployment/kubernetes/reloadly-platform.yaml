@@ -375,7 +375,7 @@ spec:
               value: "http://notification-service.reloadly.svc.cluster.local:8082"
             - name: ACCOUNT_SVC_ENDPOINT
               value: "http://account-service.reloadly.svc.cluster.local:8080"
-            - name: AUTH_SVC_ENDPOINT
+            - name: SVC_ACCT_API_KEY
               value: "d3fe6f0d-120e-4161-a134-8c2342e36ca6"
             - name: KAFKA_BOOTSTRAP_SERVERS
               value: "kafka.kafka.svc.cluster.local:9092"
