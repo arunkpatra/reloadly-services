@@ -107,6 +107,131 @@ Access Linkerd dashboard at http://localhost:50750/
 
 === Helm Charts 3
 
+You can use Helm Charts to install software on your K8s cluster.
+
+==== MySQL Install
+* Install MySQL in your K8s Cluster, by issuing the following command:
+
+    helm repo add bitnami https://charts.bitnami.com/bitnami
+    helm install mysql --set auth.rootPassword=mysqlpass123,primary.service.type=NodePort,primary.service.nodePort=30306 bitnami/mysql --namespace mysql --create-namespace --dry-run
+
+[NOTE]
+====
+The usage of the `--dry-run` parameter, just lets you know what actions will be performed by the Chart. You need to execute the chart again without the `--dry-run` parameter to perform the actual installation.
+====
+
+* Now go ahead and execute for real.
+
+    helm install mysql --set auth.rootPassword=mysqlpass123 bitnami/mysql --namespace mysql --create-namespace --dry-run
+
+* To know the status of the deployment, issue the following command:
+
+    helm status mysql --namespace mysql
+
+* To see the pods created by the chart deployment:
+
+    kubectl get pods  --namespace mysql
+
+* Startup a container for your mySQL client that will be used to connect to the MySQL server that you just provisioned on yuur K8s cluster. It will be deleted when you log out.
+
+    kubectl run mysql-client --rm --tty -i --restart='Never' --image  docker.io/bitnami/mysql:8.0.24-debian-10-r0 --namespace mysql --command -- bash
+
+* Now login into your instance. You will be prompted for the root password. Use the one that you selected while deploying the chart.
+
+    mysql -h mysql.mysql.svc.cluster.local -uroot -p my_database
+
+* Now execute all the database scripts mentioned in the Getting Started section.
+
+* Issue the `SHOW DATABASES` command to list the databases that got created.
+
+    mysql> show databases;
+    +--------------------+
+    | Database           |
+    +--------------------+
+    | information_schema |
+    | my_database        |
+    | mysql              |
+    | performance_schema |
+    | rlacctdb           |
+    | rlauthdb           |
+    | rltxndb            |
+    | sys                |
+    +--------------------+
+    8 rows in set (0.00 sec)
+
+* Quit out of the client by issuing a `quit;` and the `exit` out of your mySQL client container.
+
+At this point you have a fully functional MySQL Server containing all the application databases(or Schemas) that you need. Your seed data is up there as well. Here are some salient points about the MySQL Server that got provisioned.
+
+    1. Your mySQL server will be accessible in your K8s cluster with the `mysql.mysql.svc.cluster.local`. Port os `3306`.
+    2. Root user is `root`. Root password is `mysqlpass123`.
+    3. You could access this database from your local machine at `localhost:30306` using any MySQL client of your choice. This is possible since you chose `NodePort` to be the K8s `ServiceType` while deploying your Helm chart.
+
+==== MySQL Cleanup
+
+When you no longer need this MySQL server, you can delete the resources just created:
+
+    helm uninstall mysql -n mysql
+
+The above deletes all resources except the persistent volumes.
+
+
+
+==== Kafka Install
+
+* Install kafka in your K8s Cluster, by issuing the following command:
+
+    helm repo add bitnami https://charts.bitnami.com/bitnami
+    helm install kafka bitnami/kafka --namespace kafka --create-namespace --dry-run
+
+[NOTE]
+====
+The usage of the `--dry-run` parameter, just lets you know what actions will be performed by the Chart. You need to execute the chart again without the `--dry-run` parameter to perform the actual installation.
+====
+
+* Now go ahead and execute for real.
+
+    helm install kafka --set bitnami/kafka --namespace kafka --create-namespace
+
+* To know the status of the deployment, issue the following command:
+
+    helm status kafka --namespace kafka
+
+* To see the pods created by the chart deployment:
+
+    kubectl get pods  --namespace kafka
+
+* Now start a client container
+
+    1. To create a pod that you can use as a Kafka client run the following commands:
+
+    # Create client container
+    $ kubectl run kafka-client --restart='Never' --image docker.io/bitnami/kafka:2.8.0-debian-10-r0 --namespace kafka --command -- sleep infinity
+    # Connect to client container
+    kubectl exec --tty -i kafka-client --namespace kafka -- bash
+
+    2. Now put a message. Type some text when you see the `>` prompt and then hit the `ENTER` key. After that hit `CTRL + C` button.
+
+    kafka-console-producer.sh --broker-list kafka.kafka.svc.cluster.local:9092 --topic test
+
+    3. No read messages.
+
+    kafka-console-consumer.sh --bootstrap-server kafka.kafka.svc.cluster.local:9092 --topic test --from-beginning
+
+At this point you have a fully functional Kafka installation. Here are some salient points about the Kafka installation that got provisioned.
+
+1. Kafka can be accessed by consumers via port 9092 on the following DNS name from within your cluster: `kafka.kafka.svc.cluster.local`. Port is `9092`.
+2. `PLAINTEXT` protocol is enabled, so that messages can be sent without security. This is strongly discouraged in any environment other than local testing.
+
+==== Kafka Cleanup
+
+When you no longer need this Kafka installation, you can delete the resources just created:
+
+    helm uninstall kafka -n kafka
+
+The above deletes all resources except the persistent volumes.
+
+
 === Running Reloadly Platform Services on Kubernetes
 
 From root of project root, issue the following commands.
