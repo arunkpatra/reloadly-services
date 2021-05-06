@@ -110,6 +110,9 @@ Access Linkerd dashboard at http://localhost:50750/
 You can use Helm Charts to install software on your K8s cluster.
 
 ==== MySQL Install
+
+See the chart documentation https://bitnami.com/stack/mysql/helm[here].
+
 * Install MySQL in your K8s Cluster, by issuing the following command:
 
     helm repo add bitnami https://charts.bitnami.com/bitnami
@@ -122,7 +125,7 @@ The usage of the `--dry-run` parameter, just lets you know what actions will be 
 
 * Now go ahead and execute for real.
 
-    helm install mysql --set auth.rootPassword=mysqlpass123 bitnami/mysql --namespace mysql --create-namespace --dry-run
+    helm install mysql --set auth.rootPassword=mysqlpass123 bitnami/mysql --namespace mysql --create-namespace
 
 * To know the status of the deployment, issue the following command:
 
@@ -176,8 +179,9 @@ When you no longer need this MySQL server, you can delete the resources just cre
 The above deletes all resources except the persistent volumes.
 
 
-
 ==== Kafka Install
+
+See the chart documentation https://github.com/bitnami/charts/tree/master/bitnami/kafka[here].
 
 * Install kafka in your K8s Cluster, by issuing the following command:
 
@@ -262,10 +266,3 @@ linkerd jaeger check
 linkerd jaeger dashboard
 ----
 
-=== Kafka
-
-https://github.com/bitnami/charts/tree/master/bitnami/kafka
-
-=== MySQL
-
-https://bitnami.com/stack/mysql/helm

@@ -9,6 +9,8 @@ We discuss some aspects and approaches below.
 
 See this GitHub https://github.com/arunkpatra/reloadly-services/issues/17[issue].
 
+See the  <<kubernetes-deployment, Kubernetes Deployment>> chapter for more details.
+
 Kubernetes would be the ideal way to run and scale the microservices of this platform.
 Of special interest is the transaction processor which necessarily needs to scale based on transaction volumes.
 Some aspects to note are:
