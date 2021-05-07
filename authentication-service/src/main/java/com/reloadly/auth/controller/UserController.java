@@ -5,14 +5,14 @@ import com.reloadly.auth.model.UsernamePasswordSignupRequest;
 import com.reloadly.auth.service.UserService;
 import com.reloadly.commons.exceptions.ReloadlyException;
 import com.reloadly.commons.model.ErrorResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import com.reloadly.commons.model.user.UserInfo;
+import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * User specific REST APIs.
@@ -46,5 +46,22 @@ public class UserController extends AbstractRestController {
     public ResponseEntity<SignupResponse> signupUsingUsernamePassword(@RequestBody UsernamePasswordSignupRequest request) throws ReloadlyException {
             String uid = userService.createUserForUsernamePassword(request.getUsername(), request.getPassword());
             return new ResponseEntity<>(new SignupResponse("Signup successful", uid), HttpStatus.CREATED);
+    }
+
+    @ApiOperation(value = "Get User Info",
+            notes = "Get User Info", response = UserInfo.class,
+            produces = "application/json", authorizations = {@Authorization(value = "Access Token")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK",
+                    response = UserInfo.class),
+            @ApiResponse(code = 404, message = "User not found",
+                    response = UserInfo.class),
+            @ApiResponse(code = 500, message = "An internal error occurred.",
+                    response = ErrorResponse.class)
+    })
+    @ResponseBody
+    @GetMapping(value = "/me", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<UserInfo> getUserInfo(@ApiParam(hidden = true) @RequestHeader Map<String, String> headers) throws ReloadlyException {
+        return new ResponseEntity<>(userService.getUserInfo(headers), HttpStatus.OK);
     }
 }

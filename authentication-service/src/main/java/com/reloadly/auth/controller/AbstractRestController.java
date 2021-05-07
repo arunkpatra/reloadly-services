@@ -21,8 +21,15 @@ public abstract class AbstractRestController extends BaseAbstractRestController 
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({UsernameAlreadyTakenException.class , InvalidPasswordFormatException.class})
+    @ExceptionHandler({UsernameAlreadyTakenException.class , InvalidPasswordFormatException.class, UserInfoBadRequestException.class})
     public ErrorResponse handleUserException(Exception e) {
         return new ErrorResponse(e.getMessage(), "", "");
     }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler({UserNotFoundException.class})
+    public ErrorResponse handleUserNotFoundException(UserNotFoundException e) {
+        return new ErrorResponse(e.getMessage(), "", "");
+    }
+
 }

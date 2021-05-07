@@ -55,6 +55,7 @@ reloadly:
   integration:
     swagger:
       enabled: true
+      secured: true
       api-title: Reloadly Authentication Services API
       api-description: Reloadly Authentication Services API
       api-version: 1.1.0
