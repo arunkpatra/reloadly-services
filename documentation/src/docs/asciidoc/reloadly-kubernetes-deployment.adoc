@@ -195,7 +195,7 @@ The usage of the `--dry-run` parameter, just lets you know what actions will be 
 
 * Now go ahead and execute for real.
 
-    helm install kafka --set bitnami/kafka --namespace kafka --create-namespace
+    helm install kafka bitnami/kafka --namespace kafka --create-namespace
 
 * To know the status of the deployment, issue the following command:
 
