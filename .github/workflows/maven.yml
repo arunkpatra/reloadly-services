@@ -25,7 +25,7 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Maven
-      run: mvn -B package jacoco:report --file pom.xml --no-transfer-progress
+      run: mvn -B package -DskipTests=true --no-transfer-progress
 
   coverage:
     needs: build
