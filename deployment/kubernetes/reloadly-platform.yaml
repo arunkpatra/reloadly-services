@@ -32,7 +32,7 @@ spec:
       containers:
         - name: admin-service
           imagePullPolicy: Always
-          image: ghcr.io/arunkpatra/admin-service:kubernetes-deployment
+          image: ghcr.io/arunkpatra/admin-service:latest
           ports:
             - name: http
               containerPort: 9595
@@ -83,7 +83,7 @@ spec:
       containers:
         - name: authentication-service
           imagePullPolicy: Always
-          image: ghcr.io/arunkpatra/authentication-service:kubernetes-deployment
+          image: ghcr.io/arunkpatra/authentication-service:latest
           env:
             - name: DB_USER
               value: root
@@ -148,7 +148,7 @@ spec:
       containers:
         - name: account-service
           imagePullPolicy: Always
-          image: ghcr.io/arunkpatra/account-service:kubernetes-deployment
+          image: ghcr.io/arunkpatra/account-service:latest
           env:
             - name: DB_USER
               value: root
@@ -217,7 +217,7 @@ spec:
       containers:
         - name: transaction-service
           imagePullPolicy: Always
-          image: ghcr.io/arunkpatra/transaction-service:kubernetes-deployment
+          image: ghcr.io/arunkpatra/transaction-service:latest
           env:
             - name: DB_USER
               value: root
@@ -285,7 +285,7 @@ spec:
       containers:
         - name: notification-service
           imagePullPolicy: Always
-          image: ghcr.io/arunkpatra/notification-service:kubernetes-deployment
+          image: ghcr.io/arunkpatra/notification-service:latest
           env:
             - name: SBA_SERVER_URL
               value: "http://admin-service.reloadly.svc.cluster.local:9595"
@@ -359,7 +359,7 @@ spec:
       containers:
         - name: transaction-processor
           imagePullPolicy: Always
-          image: ghcr.io/arunkpatra/transaction-processor:kubernetes-deployment
+          image: ghcr.io/arunkpatra/transaction-processor:latest
           env:
             - name: DB_USER
               value: root
