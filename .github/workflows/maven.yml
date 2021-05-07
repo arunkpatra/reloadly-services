@@ -42,7 +42,7 @@ jobs:
           file: ./**/target/site/jacoco-aggregate/jacoco.xml
           name: codecov
 
-  push:
+  push-images:
     if: ${{ github.event_name != 'pull_request' }}
     runs-on: ubuntu-latest
     permissions:
