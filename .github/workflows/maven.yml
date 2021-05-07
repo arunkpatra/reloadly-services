@@ -39,11 +39,11 @@ jobs:
       - run: mvn -B test jacoco:report-aggregate --no-transfer-progress
       - uses: codecov/codecov-action@v1
         with:
-#          token: ${{ secrets.CODECOV_TOKEN_2 }}
           file: ./**/target/site/jacoco-aggregate/jacoco.xml
           name: codecov
 
   push:
+    if: ${{ github.event_name != 'pull_request' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -55,24 +55,24 @@ jobs:
 
       - name: Build
         run: mvn -B package -DskipTests=true --no-transfer-progress
-      - name: Build Account Service
+      - name: Build Account Service Image
         run: docker build ./$ACCOUNT_SVC_IMAGE_NAME --tag $ACCOUNT_SVC_IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
-      - name: Build Transaction Service
+      - name: Build Transaction Service Image
         run: docker build ./$TRANSACTION_SVC_IMAGE_NAME --tag $TRANSACTION_SVC_IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
-      - name: Build Notification Service
+      - name: Build Notification Service Image
         run: docker build ./$NOTIFICATION_SVC_IMAGE_NAME --tag $NOTIFICATION_SVC_IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
-      - name: Build Transaction Processor
+      - name: Build Transaction Processor Image
         run: docker build ./$TRANSACTION_PROCESSOR_IMAGE_NAME --tag $TRANSACTION_PROCESSOR_IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
-      - name: Build Admin Service
+      - name: Build Admin Service Image
         run: docker build ./$ADMIN_SVC_IMAGE_NAME --tag $ADMIN_SVC_IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
-      - name: Build Authentication Service
+      - name: Build Authentication Service Image
         run: docker build ./$AUTHENTICATION_SVC_IMAGE_NAME --tag $AUTHENTICATION_SVC_IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
 
       - name: Log into registry
         # This is where you will update the PAT to GITHUB_TOKEN
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Push image
+      - name: Push Images
         run: |
           IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$ACCOUNT_SVC_IMAGE_NAME
 
@@ -83,7 +83,7 @@ jobs:
           # Strip "v" prefix from tag name
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
           # Use Docker `latest` tag convention
-          [ "$VERSION" == "master" ] && VERSION=latest
+          [ "$VERSION" == "main" ] && VERSION=latest
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
           docker tag $ACCOUNT_SVC_IMAGE_NAME $IMAGE_ID:$VERSION
@@ -98,7 +98,7 @@ jobs:
           # Strip "v" prefix from tag name
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
           # Use Docker `latest` tag convention
-          [ "$VERSION" == "master" ] && VERSION=latest
+          [ "$VERSION" == "main" ] && VERSION=latest
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
           docker tag $TRANSACTION_SVC_IMAGE_NAME $IMAGE_ID:$VERSION
@@ -113,7 +113,7 @@ jobs:
           # Strip "v" prefix from tag name
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
           # Use Docker `latest` tag convention
-          [ "$VERSION" == "master" ] && VERSION=latest
+          [ "$VERSION" == "main" ] && VERSION=latest
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
           docker tag $NOTIFICATION_SVC_IMAGE_NAME $IMAGE_ID:$VERSION
@@ -128,7 +128,7 @@ jobs:
           # Strip "v" prefix from tag name
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
           # Use Docker `latest` tag convention
-          [ "$VERSION" == "master" ] && VERSION=latest
+          [ "$VERSION" == "main" ] && VERSION=latest
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
           docker tag $TRANSACTION_PROCESSOR_IMAGE_NAME $IMAGE_ID:$VERSION
@@ -143,7 +143,7 @@ jobs:
           # Strip "v" prefix from tag name
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
           # Use Docker `latest` tag convention
-          [ "$VERSION" == "master" ] && VERSION=latest
+          [ "$VERSION" == "main" ] && VERSION=latest
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
           docker tag $ADMIN_SVC_IMAGE_NAME $IMAGE_ID:$VERSION
@@ -158,7 +158,7 @@ jobs:
           # Strip "v" prefix from tag name
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
           # Use Docker `latest` tag convention
-          [ "$VERSION" == "master" ] && VERSION=latest
+          [ "$VERSION" == "main" ] && VERSION=latest
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
           docker tag $AUTHENTICATION_SVC_IMAGE_NAME $IMAGE_ID:$VERSION
