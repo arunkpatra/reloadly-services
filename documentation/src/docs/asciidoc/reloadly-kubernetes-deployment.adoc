@@ -244,6 +244,8 @@ From root of project root, issue the following commands.
 
     cd deployment
     kubectl apply -f ./kubernetes/reloadly-platform.yaml
+    # OR source the manifest directly from GitHub
+    kubectl apply -f https://raw.githubusercontent.com/arunkpatra/reloadly-services/main/deployment/kubernetes/reloadly-platform.yaml
 
 2. Check Pod initialization status.
 
@@ -258,6 +260,8 @@ From root of project root, issue the following commands.
 
     cd deployment
     kubectl delete -f ./kubernetes/reloadly-platform.yaml
+    # source the manifest directly from GitHub
+    kubectl delete - f https://raw.githubusercontent.com/arunkpatra/reloadly-services/main/deployment/kubernetes/reloadly-platform.yaml
 
 === Jaeger
 
