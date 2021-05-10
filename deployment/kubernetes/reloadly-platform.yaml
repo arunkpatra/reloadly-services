@@ -332,6 +332,8 @@ spec:
               value: "http://notification-service.reloadly.svc.cluster.local:8082"
             - name: SWAGGER_HOST
               value: "localhost:30082"
+            - name: AUTH_SVC_ENDPOINT
+              value: "http://authentication-service.reloadly.svc.cluster.local:9090"
             - name: TWILIO_DRY_RUN
               value: "true"
             - name: TWILIO_MSG_SVC_ID
