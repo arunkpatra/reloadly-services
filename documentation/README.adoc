@@ -6,6 +6,7 @@ This module builds the documentation for this project. Please keep documentation
 
 Create HTML and PDF format documentation for the project by invoking the `process-resources` goal (configured as the default goal):
 
+ $ cd documentation
  $ mvn clean process-resources -Pdocs
 
 - Open the _target/generated-docs/index.html_ file in your browser to see HTML Documentation.
