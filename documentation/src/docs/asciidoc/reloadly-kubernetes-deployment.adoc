@@ -125,7 +125,7 @@ The usage of the `--dry-run` parameter, just lets you know what actions will be 
 
 * Now go ahead and execute for real.
 
-    helm install mysql --set auth.rootPassword=mysqlpass123 bitnami/mysql --namespace mysql --create-namespace
+    helm install mysql --set auth.rootPassword=mysqlpass123,primary.service.type=NodePort,primary.service.nodePort=30306 bitnami/mysql --namespace mysql --create-namespace
 
 * To know the status of the deployment, issue the following command:
 
@@ -253,6 +253,11 @@ From root of project root, issue the following commands.
 
     NAME                            READY   STATUS    RESTARTS   AGE
     admin-service-6d897557d-v6b27   2/2     Running   0          2m29s
+
+4. To uninstall all the services, issue the following commands from root of project directory:
+
+    cd deployment
+    kubectl delete -f ./kubernetes/reloadly-platform.yaml
 
 === Jaeger
 

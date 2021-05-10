@@ -3,7 +3,15 @@
 
 name: build
 
-on: [ push, pull_request ]
+on:
+  push:
+    paths-ignore:
+      - 'documentation/**'
+      - 'deployment/**'
+  pull_request:
+    paths-ignore:
+      - 'documentation/**'
+      - 'deployment/**'
 
 env:
   ACCOUNT_SVC_IMAGE_NAME: account-service
