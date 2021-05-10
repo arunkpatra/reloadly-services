@@ -20,6 +20,11 @@
 
         <dependency>
             <groupId>com.reloadly</groupId>
+            <artifactId>logging</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.reloadly</groupId>
             <artifactId>security-integration</artifactId>
         </dependency>
 

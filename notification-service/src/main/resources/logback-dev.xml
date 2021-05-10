@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <contextName>notification-service</contextName>
+    <jmxConfigurator/>
+
+    <include resource="com/reloadly/logging/reloadly-production-logging-defaults.xml"/>
+
+    <logger name="org.springframework" level="INFO" additivity="false">
+        <appender-ref ref="ASYNC"/>
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <logger name="com.reloadly" level="INFO" additivity="false">
+        <appender-ref ref="ASYNC"/>
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+</configuration>

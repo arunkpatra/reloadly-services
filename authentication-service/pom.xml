@@ -21,6 +21,11 @@
 
         <dependency>
             <groupId>com.reloadly</groupId>
+            <artifactId>logging</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.reloadly</groupId>
             <artifactId>swagger-ui-integration</artifactId>
         </dependency>
 
