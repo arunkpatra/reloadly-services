@@ -4,6 +4,27 @@ set -e
 
 RELOADLY_OPTS=
 
+if [ -n "${RELOADLY_ENV}" ]; then
+  RELOADLY_OPTS="$RELOADLY_OPTS -Dreloadly-env=${RELOADLY_ENV}"
+else
+  RELOADLY_ENV="dev"
+  RELOADLY_OPTS="$RELOADLY_OPTS -Dreloadly-env=${RELOADLY_ENV}"
+fi
+
+if [ -n "${RELOADLY_SPRING_PROFILES}" ]; then
+  RELOADLY_OPTS="$RELOADLY_OPTS -Dspring.profiles.active=${RELOADLY_SPRING_PROFILES},${RELOADLY_ENV}"
+else
+  RELOADLY_OPTS="$RELOADLY_OPTS -Dspring.profiles.active=${RELOADLY_ENV}"
+fi
+
+if [ -n "${RELOADLY_LOG_FILE}" ]; then
+  RELOADLY_OPTS="$RELOADLY_OPTS -Dlogging.file.name=${RELOADLY_LOG_FILE}"
+fi
+
+if [ -n "${RELOADLY_LOG_TO_CONTAINER_CONSOLE}" ]; then
+  RELOADLY_OPTS="$RELOADLY_OPTS -Dreloadly.log.to.container.console=${RELOADLY_LOG_TO_CONTAINER_CONSOLE}"
+fi
+
 if [ -n "${SBA_SERVER_URL}" ]; then
   RELOADLY_OPTS="$RELOADLY_OPTS -Dspring.boot.admin.client.url=${SBA_SERVER_URL}"
 fi

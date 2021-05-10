@@ -85,6 +85,16 @@ spec:
           imagePullPolicy: Always
           image: ghcr.io/arunkpatra/authentication-service:latest
           env:
+            - name: RELOADLY_ENV
+              value: dev
+            - name: RELOADLY_ROOT_LOGGER_LEVEL
+              value: "INFO"
+            - name: RELOADLY_LOG_TO_CONTAINER_CONSOLE
+              value: "true"
+            - name: RELOADLY_LOG_PATH
+              value: "/var/log/reloadly"
+            - name: RELOADLY_LOG_FILE
+              value: "/var/log/reloadly/authentication-service.log"
             - name: DB_USER
               value: root
             - name: DB_PASSWORD
@@ -126,7 +136,6 @@ spec:
       nodePort: 30090
 ---
 
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -150,6 +159,16 @@ spec:
           imagePullPolicy: Always
           image: ghcr.io/arunkpatra/account-service:latest
           env:
+            - name: RELOADLY_ENV
+              value: dev
+            - name: RELOADLY_ROOT_LOGGER_LEVEL
+              value: "INFO"
+            - name: RELOADLY_LOG_TO_CONTAINER_CONSOLE
+              value: "true"
+            - name: RELOADLY_LOG_PATH
+              value: "/var/log/reloadly"
+            - name: RELOADLY_LOG_FILE
+              value: "/var/log/reloadly/account-service.log"
             - name: DB_USER
               value: root
             - name: DB_PASSWORD
@@ -219,6 +238,16 @@ spec:
           imagePullPolicy: Always
           image: ghcr.io/arunkpatra/transaction-service:latest
           env:
+            - name: RELOADLY_ENV
+              value: dev
+            - name: RELOADLY_ROOT_LOGGER_LEVEL
+              value: "INFO"
+            - name: RELOADLY_LOG_TO_CONTAINER_CONSOLE
+              value: "true"
+            - name: RELOADLY_LOG_PATH
+              value: "/var/log/reloadly"
+            - name: RELOADLY_LOG_FILE
+              value: "/var/log/reloadly/transaction-service.log"
             - name: DB_USER
               value: root
             - name: DB_PASSWORD
@@ -287,6 +316,16 @@ spec:
           imagePullPolicy: Always
           image: ghcr.io/arunkpatra/notification-service:latest
           env:
+            - name: RELOADLY_ENV
+              value: dev
+            - name: RELOADLY_ROOT_LOGGER_LEVEL
+              value: "INFO"
+            - name: RELOADLY_LOG_TO_CONTAINER_CONSOLE
+              value: "true"
+            - name: RELOADLY_LOG_PATH
+              value: "/var/log/reloadly"
+            - name: RELOADLY_LOG_FILE
+              value: "/var/log/reloadly/notification-service.log"
             - name: SBA_SERVER_URL
               value: "http://admin-service.reloadly.svc.cluster.local:9595"
             - name: SBA_CLIENT_URL
@@ -361,6 +400,16 @@ spec:
           imagePullPolicy: Always
           image: ghcr.io/arunkpatra/transaction-processor:latest
           env:
+            - name: RELOADLY_ENV
+              value: dev
+            - name: RELOADLY_ROOT_LOGGER_LEVEL
+              value: "INFO"
+            - name: RELOADLY_LOG_TO_CONTAINER_CONSOLE
+              value: "true"
+            - name: RELOADLY_LOG_PATH
+              value: "/var/log/reloadly"
+            - name: RELOADLY_LOG_FILE
+              value: "/var/log/reloadly/transaction-processor.log"
             - name: DB_USER
               value: root
             - name: DB_PASSWORD
