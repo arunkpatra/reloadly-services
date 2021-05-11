@@ -1,0 +1,47 @@
+{{- if .Values.reloadly.adminApp.needed -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-service
+spec:
+  replicas: {{ .Values.reloadly.adminApp.replicaCount }}
+  selector:
+    matchLabels:
+      app: admin-service
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+        rollme: {{ randAlphaNum 5 | quote }}
+      labels:
+        app: admin-service
+    spec:
+      serviceAccountName: {{ include "reloadly.serviceAccountName" . }}
+      containers:
+        - name: admin-service
+          imagePullPolicy: "{{ .Values.image.pullPolicy }}"
+          image: "{{ .Values.reloadly.adminApp.image.repository }}:{{ .Values.reloadly.adminApp.image.tag | default .Chart.AppVersion }}"
+          ports:
+            - name: http
+              containerPort: 9595
+          resources:
+{{ toYaml .Values.reloadly.adminApp.resources | indent 12 }}
+          livenessProbe:
+            initialDelaySeconds: 120
+            periodSeconds: 15
+            timeoutSeconds: 10
+            failureThreshold: 3
+            httpGet:
+              port: 9595
+              scheme: HTTP
+              path: /actuator/info
+{{/*          readinessProbe:*/}}
+{{/*            initialDelaySeconds: 120*/}}
+{{/*            periodSeconds: 15*/}}
+{{/*            timeoutSeconds: 10*/}}
+{{/*            failureThreshold: 3*/}}
+{{/*            httpGet:*/}}
+{{/*              port: 9595*/}}
+{{/*              scheme: HTTP*/}}
+{{/*              path: /actuator/health*/}}
+{{- end }}

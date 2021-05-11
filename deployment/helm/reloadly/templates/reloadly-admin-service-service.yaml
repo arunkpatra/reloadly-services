@@ -1,0 +1,18 @@
+{{- if .Values.reloadly.adminApp.needed -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin-service
+spec:
+  {{- if not .Values.reloadly.ingress.enabled }}
+  type: {{ .Values.reloadly.adminApp.service.type }}
+  {{- end }}
+  selector:
+    app: admin-service
+  ports:
+    - port: 9595
+      targetPort: 9595
+      {{- if not .Values.reloadly.ingress.enabled }}
+      nodePort: 30095
+      {{- end }}
+{{- end }}

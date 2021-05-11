@@ -42,6 +42,24 @@ To launch in the background:
 docker run -d -p 8080:8080 --rm --env DB_USER=root --env DB_PASSWORD=mysqlpass123 --env DB_URL=jdbc:mysql://host.docker.internal:3306/rlacctdb reloadly/account-service:latest env
 ----
 
+You can also run the following from the project root. It will create Docker images for all the microservices contained in this project.
+
+----
+mvn clean install -Pdocker
+----
+
+[NOTE]
+====
+For the above to work, you must have Docker running locally on your machine, and the Docker Registry running locally at port 5000. See https://docs.docker.com/registry/deploying/[this] to run a local Docker Registry.
+====
+
+Upon successful of the above command, you would have the required Docker Images installed into your locally running Docker Registry, with the images tagged as `localhost:5000/com.reloadly/<artifactId>:<versionId>`, where:
+
+* <artifactId> is the maven artifact ID of the microservice.
+* <versionId> is the maven version of the microservice.
+
+As an example, the Account microservice image would be named as `localhost:5000/com.reloadly/account-service:1.1.0`. You could thus do a `docker pull localhost:5000/com.reloadly/account-service:1.1.0`. You could use these images to run Kubernetes containers or in your Helm Charts.
+
 ==== Helm Charts
 
 As a best practice, consider using Helm Charts to easily manage deployments and deployment environments.

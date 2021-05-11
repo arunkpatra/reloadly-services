@@ -1,0 +1,39 @@
+---------------------------------------------
+Thank you for installing {{ .Chart.Name }}. Your release is named {{ .Release.Name }}.
+
+    To learn more about the release, try:
+    -------------------------------------
+    $ helm status {{ .Release.Name }} --namespace {{ .Release.Namespace }}
+    $ helm get all {{ .Release.Name }} --namespace {{ .Release.Namespace }}
+
+    To check if the release was successful, try:
+    --------------------------------------------
+    $ helm test {{ .Release.Name }} --namespace {{ .Release.Namespace }}
+
+    To rollback to a prior version of this release, try:
+    -------------------------------------------------------
+    $ helm history {{ .Release.Name }} --namespace {{ .Release.Namespace }}
+    $ helm rollback {{ .Release.Name }} <release_version> --namespace {{ .Release.Namespace }}
+
+    To upgrade to a new version of this release, make code changes and try:
+    -------------------------------------------------------
+    $ cd reloadly-services                    // CWD to project root
+    $ mvn clean install                       // Build binary deployables
+    $ git push                                // Build, tag and push images to specified repository.
+    $
+    $ helm upgrade -f <override.yaml> --install {{ .Release.Name }} ./reloadly --namespace reloadly --force  // Upgrade to new version
+    $ helm history {{ .Release.Name }} --namespace {{ .Release.Namespace }}  // verify upgrade history
+
+    To uninstall this release altogether, try:
+    ------------------------------------------
+    $ helm uninstall {{ .Release.Name }} --namespace {{ .Release.Namespace }}
+
+    To install a fresh release again after deleting it, try:
+    --------------------------------------
+    helm install -f <override.yaml> {{ .Release.Name }} ./reloadly --namespace {{ .Release.Namespace }} --create-namespace
+
+    To list the resources created by this release, try:
+    -------------------------------------
+    $ helm get manifest {{ .Release.Name }} --namespace {{ .Release.Namespace }} | kubectl get --namespace {{ .Release.Namespace }} -f -
+
+To access the SBA UI, point your browser to http://localhost:30095/
