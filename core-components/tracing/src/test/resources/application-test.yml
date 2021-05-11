@@ -1,0 +1,3 @@
+reloadly.tracing.enabled: true
+reloadly.tracing.transmit-span: false
+reloadly.tracing.jaeger-propagation-formats: b3,jaeger
