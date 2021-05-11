@@ -40,6 +40,7 @@
         <twilio.sdk.version>8.10.0</twilio.sdk.version>
         <janino.version>3.1.4</janino.version>
         <spring.boot.admin.version>2.4.1</spring.boot.admin.version>
+        <local.docker.registry>localhost:5000</local.docker.registry>
     </properties>
 
     <dependencyManagement>
