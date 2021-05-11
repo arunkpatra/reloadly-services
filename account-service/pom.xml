@@ -20,6 +20,11 @@
 
         <dependency>
             <groupId>com.reloadly</groupId>
+            <artifactId>tracing</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.reloadly</groupId>
             <artifactId>logging</artifactId>
         </dependency>
 

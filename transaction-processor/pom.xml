@@ -30,6 +30,11 @@
 
         <dependency>
             <groupId>com.reloadly</groupId>
+            <artifactId>tracing</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.reloadly</groupId>
             <artifactId>notification-integration</artifactId>
         </dependency>
 
