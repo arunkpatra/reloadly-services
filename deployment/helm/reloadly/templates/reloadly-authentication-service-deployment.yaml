@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authentication-service
+spec:
+  replicas: {{ .Values.reloadly.authApp.replicaCount }}
+  selector:
+    matchLabels:
+      app: authentication-service
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+{{/*        config.linkerd.io/trace-collector: "jaeger.tracing:14268"*/}}
+        config.linkerd.io/proxy-log-level: INFO
+        rollme: {{ randAlphaNum 5 | quote }}
+      labels:
+        app: authentication-service
+    spec:
+      serviceAccountName: {{ include "reloadly.serviceAccountName" . }}
+      containers:
+        - name: authentication-service
+          imagePullPolicy: "{{ .Values.image.pullPolicy }}"
+          image: "{{ .Values.reloadly.authApp.image.repository }}:{{ .Values.reloadly.authApp.image.tag | default .Chart.AppVersion }}"
+          ports:
+            - containerPort: 9090
+              name: http
+          env:
+            - name: RELOADLY_ENV
+              value: {{ .Values.reloadly.env }}
+            - name: RELOADLY_ROOT_LOGGER_LEVEL
+              value: "{{ .Values.reloadly.logging.rootLoggerLevel }}"
+            - name: RELOADLY_LOG_TO_CONTAINER_CONSOLE
+              value: "{{ .Values.reloadly.logging.logToContainerConsole }}"
+            - name: RELOADLY_LOG_PATH
+              value: "{{ .Values.reloadly.logging.logPath }}"
+            - name: RELOADLY_LOG_FILE
+              value: "{{ .Values.reloadly.logging.logPath }}/authentication-service-{{ .Values.reloadly.env }}.log"
+            - name: DB_USER
+              value: {{ .Values.reloadly.authApp.dbUser }}
+            - name: DB_PASSWORD
+              value: {{ .Values.reloadly.authApp.dbPassword }}
+            - name: DB_URL
+              value: {{ .Values.reloadly.authApp.dbUrl }}
+            - name: SBA_SERVER_URL
+              value: "http://admin-service.reloadly.svc.cluster.local:9595"
+            - name: SBA_CLIENT_URL
+              value: "http://authentication-service.reloadly.svc.cluster.local:9090"
+            - name: SWAGGER_HOST
+              value: "localhost:30090"
+          resources:
+{{ toYaml .Values.reloadly.authApp.resources | indent 12 }}
+          livenessProbe:
+            initialDelaySeconds: 300
+            periodSeconds: 20
+            timeoutSeconds: 15
+            failureThreshold: 3
+            httpGet:
+              port: 9090
+              scheme: HTTP
+              path: /actuator/info
+{{/*          readinessProbe:*/}}
+{{/*            initialDelaySeconds: 300*/}}
+{{/*            periodSeconds: 20*/}}
+{{/*            timeoutSeconds: 15*/}}
+{{/*            failureThreshold: 3*/}}
+{{/*            httpGet:*/}}
+{{/*              port: 9191*/}}
+{{/*              scheme: HTTP*/}}
+{{/*              path: /actuator/health*/}}
