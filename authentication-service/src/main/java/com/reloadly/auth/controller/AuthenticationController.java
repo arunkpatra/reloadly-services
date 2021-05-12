@@ -9,6 +9,7 @@ import com.reloadly.commons.exceptions.ReloadlyException;
 import com.reloadly.commons.model.ErrorResponse;
 import com.reloadly.commons.model.ReloadlyApiKeyIdentity;
 import com.reloadly.commons.model.ReloadlyAuthToken;
+import com.reloadly.tracing.annotation.Traced;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -50,6 +51,7 @@ public class AuthenticationController extends AbstractRestController {
     })
     @ResponseBody
     @PostMapping(value = "/login", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @Traced(operationName = "/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody UsernamePasswordAuthRequest request,
                                                         HttpServletRequest servletRequest,
                                                         @RequestHeader HttpHeaders headers) throws ReloadlyException {
@@ -73,6 +75,7 @@ public class AuthenticationController extends AbstractRestController {
     @ResponseBody
     @PostMapping(value = "/verify/token", produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @Traced(operationName = "/verify/token")
     public ResponseEntity<ReloadlyAuthToken> verifyToken(@RequestBody TokenVerificationRequest request,
                                                          HttpServletRequest servletRequest,
                                                          @RequestHeader HttpHeaders headers) throws ReloadlyException {
@@ -95,6 +98,7 @@ public class AuthenticationController extends AbstractRestController {
     @ResponseBody
     @PostMapping(value = "/verify/apikey", produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @Traced(operationName = "/verify/apikey")
     public ResponseEntity<ReloadlyApiKeyIdentity> verifyApiKey(@RequestBody ApiKeyVerificationRequest request,
                                                                HttpServletRequest servletRequest,
                                                                @RequestHeader HttpHeaders headers)

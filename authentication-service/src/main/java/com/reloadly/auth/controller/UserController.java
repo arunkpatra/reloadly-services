@@ -6,6 +6,7 @@ import com.reloadly.auth.service.UserService;
 import com.reloadly.commons.exceptions.ReloadlyException;
 import com.reloadly.commons.model.ErrorResponse;
 import com.reloadly.commons.model.user.UserInfo;
+import com.reloadly.tracing.annotation.Traced;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -46,6 +47,7 @@ public class UserController extends AbstractRestController {
     @ResponseBody
     @PostMapping(value = "/signup/username", produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @Traced(operationName = "/signup/username")
     public ResponseEntity<SignupResponse> signupUsingUsernamePassword(@RequestBody UsernamePasswordSignupRequest request,
                                                                       HttpServletRequest servletRequest,
                                                                       @RequestHeader HttpHeaders headers)
@@ -67,7 +69,10 @@ public class UserController extends AbstractRestController {
     })
     @ResponseBody
     @GetMapping(value = "/me", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<UserInfo> getUserInfo(@ApiParam(hidden = true) @RequestHeader Map<String, String> headers) throws ReloadlyException {
+    @Traced(operationName = "/me")
+    public ResponseEntity<UserInfo> getUserInfo(HttpServletRequest servletRequest,
+                                                @ApiParam(hidden = true) @RequestHeader HttpHeaders headers)
+            throws ReloadlyException {
         return new ResponseEntity<>(userService.getUserInfo(headers), HttpStatus.OK);
     }
 }

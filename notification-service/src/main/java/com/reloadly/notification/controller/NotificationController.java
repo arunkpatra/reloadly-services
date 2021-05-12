@@ -6,6 +6,7 @@ import com.reloadly.commons.model.ErrorResponse;
 import com.reloadly.commons.model.NotificationResponse;
 import com.reloadly.commons.model.SmsRequest;
 import com.reloadly.notification.service.NotificationService;
+import com.reloadly.tracing.annotation.Traced;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -41,6 +42,7 @@ public class NotificationController extends AbstractRestController {
     })
     @ResponseBody
     @PostMapping(value = "/notification/email", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @Traced(operationName = "/notification/email")
     public ResponseEntity<NotificationResponse> sendEMail(
             @ApiParam(name = "Account Creation Request", required = true) @RequestBody EmailRequest request,
             HttpServletRequest servletRequest,
@@ -59,6 +61,7 @@ public class NotificationController extends AbstractRestController {
     })
     @ResponseBody
     @PostMapping(value = "/notification/sms", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @Traced(operationName = "/notification/sms")
     public ResponseEntity<NotificationResponse> sendSMS(
             @ApiParam(name = "Account Creation Request", required = true) @RequestBody SmsRequest request,
             HttpServletRequest servletRequest,

@@ -10,15 +10,13 @@ import com.reloadly.auth.repository.AuthorityRepository;
 import com.reloadly.auth.repository.UserRepository;
 import com.reloadly.auth.repository.UsernamePasswordCredentialsRepository;
 import com.reloadly.commons.model.user.UserInfo;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -111,19 +109,20 @@ public class UserServiceImpl implements UserService {
      * @throws UserInfoBadRequestException If required headers were not found.
      */
     @Override
-    public UserInfo getUserInfo(Map<String, String> headers) throws UserNotFoundException, UserInfoBadRequestException,
+    public UserInfo getUserInfo(HttpHeaders headers) throws UserNotFoundException, UserInfoBadRequestException,
             ApiKeyNotFoundException {
 
         if (headers.containsKey("authorization")) {
-            return getUserInfoFromAuthHeader(headers.get("authorization"));
+            return getUserInfoFromAuthHeader(Objects.requireNonNull(headers.get("authorization")).get(0));
         }
 
         if (headers.containsKey("RELOADLY-API-KEY")) {
-            return getUserInfoFromApiKey(headers.get("RELOADLY-API-KEY"));
+            return getUserInfoFromApiKey(Objects.requireNonNull(headers.get("RELOADLY-API-KEY")).get(0));
         }
 
         if (headers.containsKey("X-Mock-UID")) {
-            return new UserInfo(headers.get("X-Mock-UID"), Collections.singletonList("ROLE_USER"));
+            return new UserInfo(Objects.requireNonNull(headers.get("X-Mock-UID")).get(0),
+                    Collections.singletonList("ROLE_USER"));
         }
 
         throw new UserInfoBadRequestException();

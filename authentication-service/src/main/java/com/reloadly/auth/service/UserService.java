@@ -2,6 +2,7 @@ package com.reloadly.auth.service;
 
 import com.reloadly.auth.exception.*;
 import com.reloadly.commons.model.user.UserInfo;
+import org.springframework.http.HttpHeaders;
 
 import java.util.Map;
 
@@ -32,5 +33,5 @@ public interface UserService {
      * @throws UserNotFoundException If the user could not be located.
      * @throws UserInfoBadRequestException If required headers were not found.
      */
-    UserInfo getUserInfo(Map<String, String> headers) throws UserNotFoundException, UserInfoBadRequestException, ApiKeyNotFoundException;
+    UserInfo getUserInfo(HttpHeaders headers) throws UserNotFoundException, UserInfoBadRequestException, ApiKeyNotFoundException;
 }

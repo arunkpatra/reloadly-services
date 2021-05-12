@@ -1,11 +1,6 @@
-thingverse:
+reloadly:
   env: "dev"
-  apiApp:
+  authApp:
     image:
-      repository: "localhost:5000/thingverse-api"
-  backendApp:
-    image:
-      repository: "localhost:5000/thingverse-backend"
-  adminApp:
-    image:
-      repository: "localhost:5000/thingverse-admin"
+      repository: "localhost:5000/com.reloadly/authentication-service"
+      tag: "1.1.0"

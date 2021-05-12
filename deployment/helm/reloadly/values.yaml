@@ -30,6 +30,12 @@ reloadly:
       repository: "ghcr.io/arunkpatra/admin-service"
       tag: "latest"
   authApp:
+    tracing:
+      enabled: true
+      transmitSpan: true
+      reporterLogSpans: true
+      maxQueueSize: 100
+      flushInterval: 2000
     dbUser: "root"
     dbPassword: "mysqlpass123"
     dbUrl: "jdbc:mysql://mysql.mysql.svc.cluster.local:3306/rlauthdb"

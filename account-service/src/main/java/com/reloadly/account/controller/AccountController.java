@@ -8,6 +8,7 @@ import com.reloadly.account.service.AccountService;
 import com.reloadly.commons.exceptions.ReloadlyException;
 import com.reloadly.commons.model.ErrorResponse;
 import com.reloadly.commons.model.account.*;
+import com.reloadly.tracing.annotation.Traced;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -47,6 +48,7 @@ public class AccountController extends AbstractRestController {
     @ResponseBody
     @PostMapping(value = "/account/{uid}", produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @Traced(operationName = "/account/{uid}")
     public ResponseEntity<AccountUpdateResponse> createAccount(
             @RequestBody AccountUpdateRequest request,
             @PathVariable(name = "uid") String uid, HttpServletRequest servletRequest,
@@ -69,6 +71,7 @@ public class AccountController extends AbstractRestController {
     @ResponseBody
     @PutMapping(value = "/account/{uid}", produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @Traced(operationName = "/account/{uid}")
     public ResponseEntity<AccountUpdateResponse> updateAccount(
             @RequestBody AccountUpdateRequest request,
             @PathVariable(name = "uid") String uid, HttpServletRequest servletRequest,
@@ -89,6 +92,7 @@ public class AccountController extends AbstractRestController {
     })
     @ResponseBody
     @GetMapping(value = "/account/{uid}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @Traced(operationName = "/account/{uid}")
     public ResponseEntity<AccountDetails> getAccountDetails(
             @PathVariable(name = "uid") String uid, HttpServletRequest servletRequest,
             @RequestHeader HttpHeaders headers) throws ReloadlyException {
@@ -108,6 +112,7 @@ public class AccountController extends AbstractRestController {
     })
     @ResponseBody
     @GetMapping(value = "/account/balance/{uid}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @Traced(operationName = "/account/balance/{uid}")
     public ResponseEntity<AccountBalance> getAccountBalance(@PathVariable(name = "uid") String uid,
                                                             HttpServletRequest servletRequest,
                                                             @RequestHeader HttpHeaders headers)
@@ -130,6 +135,7 @@ public class AccountController extends AbstractRestController {
     @ResponseBody
     @PostMapping(value = "/account/credit/{uid}", consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
+    @Traced(operationName = "/account/credit/{uid}")
     public ResponseEntity<AccountCreditResp> creditAccountBalance(@PathVariable(name = "uid") String uid,
                                                                   @RequestBody AccountCreditReq request,
                                                                   HttpServletRequest servletRequest,
@@ -153,6 +159,7 @@ public class AccountController extends AbstractRestController {
     @ResponseBody
     @PostMapping(value = "/account/debit/{uid}", consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
+    @Traced(operationName = "/account/debit/{uid}")
     public ResponseEntity<AccountDebitResp> debitAccountBalance(@PathVariable(name = "uid") String uid,
                                                                 @RequestBody AccountDebitReq request,
                                                                 HttpServletRequest servletRequest,
@@ -174,6 +181,7 @@ public class AccountController extends AbstractRestController {
     })
     @ResponseBody
     @GetMapping(value = "/account/info/{uid}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @Traced(operationName = "/account/info/{uid}")
     public ResponseEntity<AccountInfo> getAccountInfo(
             @PathVariable(name = "uid") String uid, HttpServletRequest servletRequest,
             @RequestHeader HttpHeaders headers) throws ReloadlyException {

@@ -48,6 +48,26 @@ spec:
               value: "http://authentication-service.reloadly.svc.cluster.local:9090"
             - name: SWAGGER_HOST
               value: "localhost:30090"
+            - name: RELOADLY_TRACING_ENDPOINT
+              value: "http://jaeger.linkerd-jaeger:14268/api/traces"
+            - name: RELOADLY_TRACING_PROPAGATION
+              value: "jaeger,b3"
+            - name: RELOADLY_TRACING_SAMPLER_TYPE
+              value: "const"
+            - name: RELOADLY_TRACING_SAMPLER_PARAM
+              value: "1"
+            - name: RELOADLY_TRACING_SERVICE_NAME
+              value: "authentication-service"
+            - name: RELOADLY_TRACING_TRANSMIT_SPAN
+              value: "{{ .Values.reloadly.authApp.tracing.transmitSpan}}"
+            - name: RELOADLY_TRACING_REPORTER_LOG_SPANS
+              value: "{{ .Values.reloadly.authApp.tracing.reporterLogSpans}}"
+            - name: RELOADLY_TRACING_REPORTER_MAX_QUEUE_SIZE
+              value: "{{ .Values.reloadly.authApp.tracing.maxQueueSize}}"
+            - name: RELOADLY_TRACING_REPORTER_FLUSH_INTERVAL
+              value: "{{ .Values.reloadly.authApp.tracing.flushInterval}}"
+            - name: RELOADLY_TRACING_ENABLED
+              value: "{{ .Values.reloadly.authApp.tracing.enabled}}"
           resources:
 {{ toYaml .Values.reloadly.authApp.resources | indent 12 }}
           livenessProbe:
