@@ -50,7 +50,7 @@ public class TracingAutoConfiguration {
                         .withAgentHost(properties.getJaegerAgentHost())
                         .withAgentPort(properties.getJaegerAgentPort());
 
-        if (!StringUtils.hasLength(properties.getJaegerEndpoint())) {
+        if (StringUtils.hasLength(properties.getJaegerEndpoint())) {
             senderConfiguration = senderConfiguration.withEndpoint(properties.getJaegerEndpoint());
         }
 
