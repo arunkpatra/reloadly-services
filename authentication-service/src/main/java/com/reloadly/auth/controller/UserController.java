@@ -7,11 +7,13 @@ import com.reloadly.commons.exceptions.ReloadlyException;
 import com.reloadly.commons.model.ErrorResponse;
 import com.reloadly.commons.model.user.UserInfo;
 import io.swagger.annotations.*;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -42,8 +44,12 @@ public class UserController extends AbstractRestController {
                     response = ErrorResponse.class)
     })
     @ResponseBody
-    @PostMapping(value = "/signup/username", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<SignupResponse> signupUsingUsernamePassword(@RequestBody UsernamePasswordSignupRequest request) throws ReloadlyException {
+    @PostMapping(value = "/signup/username", produces = {MediaType.APPLICATION_JSON_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<SignupResponse> signupUsingUsernamePassword(@RequestBody UsernamePasswordSignupRequest request,
+                                                                      HttpServletRequest servletRequest,
+                                                                      @RequestHeader HttpHeaders headers)
+            throws ReloadlyException {
             String uid = userService.createUserForUsernamePassword(request.getUsername(), request.getPassword());
             return new ResponseEntity<>(new SignupResponse("Signup successful", uid), HttpStatus.CREATED);
     }

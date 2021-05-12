@@ -29,7 +29,7 @@ public class ReloadlyTracingAppTests extends AbstractIntegrationTest {
     }
 
     @Test
-    public void testLocalNestedSpansTest() {
+    public void test_local_nested_spans_test() {
 
         LOGGER.info("Starting testLocalNestedSpansTest.");
         String tracedResult = parentService.someParentMethod();
