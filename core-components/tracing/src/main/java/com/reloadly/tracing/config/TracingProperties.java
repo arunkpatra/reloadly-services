@@ -44,7 +44,7 @@ public class TracingProperties {
     /**
      * Whether to transmit spans to the remote agent. Disabling this will cause the spans to just logged.
      */
-    private boolean transmitSpan = true;
+    private boolean transmitSpan = false;
     /**
      * The service name
      */
