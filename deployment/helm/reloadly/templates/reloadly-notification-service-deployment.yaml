@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service
+spec:
+  replicas: {{ .Values.reloadly.notificationApp.replicaCount }}
+  selector:
+    matchLabels:
+      app: notification-service
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+        config.linkerd.io/proxy-log-level: INFO
+        rollme: {{ randAlphaNum 5 | quote }}
+      labels:
+        app: notification-service
+    spec:
+      serviceAccountName: {{ include "reloadly.serviceAccountName" . }}
+      containers:
+        - name: notification-service
+          imagePullPolicy: "{{ .Values.image.pullPolicy }}"
+          image: "{{ .Values.reloadly.notificationApp.image.repository }}:{{ .Values.reloadly.notificationApp.image.tag | default .Chart.AppVersion }}"
+          ports:
+            - containerPort: 8082
+              name: http
+          env:
+            - name: RELOADLY_ENV
+              value: {{ .Values.reloadly.env }}
+            - name: RELOADLY_ROOT_LOGGER_LEVEL
+              value: "{{ .Values.reloadly.logging.rootLoggerLevel }}"
+            - name: RELOADLY_LOG_TO_CONTAINER_CONSOLE
+              value: "{{ .Values.reloadly.logging.logToContainerConsole }}"
+            - name: RELOADLY_LOG_PATH
+              value: "{{ .Values.reloadly.logging.logPath }}"
+            - name: RELOADLY_LOG_FILE
+              value: "{{ .Values.reloadly.logging.logPath }}/notification-service-{{ .Values.reloadly.env }}.log"
+            - name: AUTH_SVC_ENDPOINT
+              value: "http://authentication-service.reloadly.svc.cluster.local:9090"
+            - name: SBA_SERVER_URL
+              value: "http://admin-service.reloadly.svc.cluster.local:9595"
+            - name: SBA_CLIENT_URL
+              value: "http://notification-service.reloadly.svc.cluster.local:8082"
+            - name: SWAGGER_HOST
+              value: "localhost:30082"
+            - name: TWILIO_DRY_RUN
+              value: "{{ .Values.reloadly.notificationApp.sms.dryRun }}"
+            - name: TWILIO_MSG_SVC_ID
+              value: "{{ .Values.reloadly.notificationApp.sms.twilioMsgSvcId }}"
+            - name: TWILIO_ACCOUNT_SID
+              value: "{{ .Values.reloadly.notificationApp.sms.twilioAccountSID }}"
+            - name: TWILIO_AUTH_TOKEN
+              value: "{{ .Values.reloadly.notificationApp.sms.twilioAuthToken }}"
+            - name: EMAIL_DRY_RUN
+              value: "{{ .Values.reloadly.notificationApp.email.dryRun }}"
+            - name: SENDER_EMAIL_ID
+              value: "{{ .Values.reloadly.notificationApp.email.senderEmailId }}"
+            - name: AWS_ACCESS_KEY_ID
+              value: "{{ .Values.reloadly.aws.awsAccessKeyId }}"
+            - name: AWS_SECRET_ACCESS_KEY
+              value: "{{ .Values.reloadly.aws.awsSecretAccessKey }}"
+            - name: RELOADLY_TRACING_ENDPOINT
+              value: "http://jaeger.linkerd-jaeger:14268/api/traces"
+            - name: RELOADLY_TRACING_PROPAGATION
+              value: "jaeger,b3"
+            - name: RELOADLY_TRACING_SAMPLER_TYPE
+              value: "const"
+            - name: RELOADLY_TRACING_SAMPLER_PARAM
+              value: "1"
+            - name: RELOADLY_TRACING_SERVICE_NAME
+              value: "notification-service"
+            - name: RELOADLY_TRACING_TRANSMIT_SPAN
+              value: "{{ .Values.reloadly.notificationApp.tracing.transmitSpan}}"
+            - name: RELOADLY_TRACING_REPORTER_LOG_SPANS
+              value: "{{ .Values.reloadly.notificationApp.tracing.reporterLogSpans}}"
+            - name: RELOADLY_TRACING_REPORTER_MAX_QUEUE_SIZE
+              value: "{{ .Values.reloadly.notificationApp.tracing.maxQueueSize}}"
+            - name: RELOADLY_TRACING_REPORTER_FLUSH_INTERVAL
+              value: "{{ .Values.reloadly.notificationApp.tracing.flushInterval}}"
+            - name: RELOADLY_TRACING_ENABLED
+              value: "{{ .Values.reloadly.notificationApp.tracing.enabled}}"
+          resources:
+{{ toYaml .Values.reloadly.notificationApp.resources | indent 12 }}
+          livenessProbe:
+            initialDelaySeconds: 300
+            periodSeconds: 20
+            timeoutSeconds: 15
+            failureThreshold: 3
+            httpGet:
+              port: 8082
+              scheme: HTTP
+              path: /actuator/info

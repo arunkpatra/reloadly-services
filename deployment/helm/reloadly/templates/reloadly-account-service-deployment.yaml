@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: authentication-service
+  name: account-service
 spec:
-  replicas: {{ .Values.reloadly.authApp.replicaCount }}
+  replicas: {{ .Values.reloadly.accountApp.replicaCount }}
   selector:
     matchLabels:
-      app: authentication-service
+      app: account-service
   template:
     metadata:
       annotations:
@@ -14,15 +14,15 @@ spec:
         config.linkerd.io/proxy-log-level: INFO
         rollme: {{ randAlphaNum 5 | quote }}
       labels:
-        app: authentication-service
+        app: account-service
     spec:
       serviceAccountName: {{ include "reloadly.serviceAccountName" . }}
       containers:
-        - name: authentication-service
+        - name: account-service
           imagePullPolicy: "{{ .Values.image.pullPolicy }}"
-          image: "{{ .Values.reloadly.authApp.image.repository }}:{{ .Values.reloadly.authApp.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.reloadly.accountApp.image.repository }}:{{ .Values.reloadly.accountApp.image.tag | default .Chart.AppVersion }}"
           ports:
-            - containerPort: 9090
+            - containerPort: 8080
               name: http
           env:
             - name: RELOADLY_ENV
@@ -34,19 +34,23 @@ spec:
             - name: RELOADLY_LOG_PATH
               value: "{{ .Values.reloadly.logging.logPath }}"
             - name: RELOADLY_LOG_FILE
-              value: "{{ .Values.reloadly.logging.logPath }}/authentication-service-{{ .Values.reloadly.env }}.log"
+              value: "{{ .Values.reloadly.logging.logPath }}/account-service-{{ .Values.reloadly.env }}.log"
             - name: DB_USER
-              value: {{ .Values.reloadly.authApp.dbUser }}
+              value: {{ .Values.reloadly.accountApp.dbUser }}
             - name: DB_PASSWORD
-              value: {{ .Values.reloadly.authApp.dbPassword }}
+              value: {{ .Values.reloadly.accountApp.dbPassword }}
             - name: DB_URL
-              value: {{ .Values.reloadly.authApp.dbUrl }}
+              value: {{ .Values.reloadly.accountApp.dbUrl }}
+            - name: AUTH_SVC_ENDPOINT
+              value: "http://authentication-service.reloadly.svc.cluster.local:9090"
+            - name: NOTIFICATION_SVC_ENDPOINT
+              value: "http://notification-service.reloadly.svc.cluster.local:8082"
             - name: SBA_SERVER_URL
               value: "http://admin-service.reloadly.svc.cluster.local:9595"
             - name: SBA_CLIENT_URL
-              value: "http://authentication-service.reloadly.svc.cluster.local:9090"
+              value: "http://account-service.reloadly.svc.cluster.local:8080"
             - name: SWAGGER_HOST
-              value: "localhost:30090"
+              value: "localhost:30080"
             - name: RELOADLY_TRACING_ENDPOINT
               value: "http://jaeger.linkerd-jaeger:14268/api/traces"
             - name: RELOADLY_TRACING_PROPAGATION
@@ -56,25 +60,25 @@ spec:
             - name: RELOADLY_TRACING_SAMPLER_PARAM
               value: "1"
             - name: RELOADLY_TRACING_SERVICE_NAME
-              value: "authentication-service"
+              value: "account-service"
             - name: RELOADLY_TRACING_TRANSMIT_SPAN
-              value: "{{ .Values.reloadly.authApp.tracing.transmitSpan}}"
+              value: "{{ .Values.reloadly.accountApp.tracing.transmitSpan}}"
             - name: RELOADLY_TRACING_REPORTER_LOG_SPANS
-              value: "{{ .Values.reloadly.authApp.tracing.reporterLogSpans}}"
+              value: "{{ .Values.reloadly.accountApp.tracing.reporterLogSpans}}"
             - name: RELOADLY_TRACING_REPORTER_MAX_QUEUE_SIZE
-              value: "{{ .Values.reloadly.authApp.tracing.maxQueueSize}}"
+              value: "{{ .Values.reloadly.accountApp.tracing.maxQueueSize}}"
             - name: RELOADLY_TRACING_REPORTER_FLUSH_INTERVAL
-              value: "{{ .Values.reloadly.authApp.tracing.flushInterval}}"
+              value: "{{ .Values.reloadly.accountApp.tracing.flushInterval}}"
             - name: RELOADLY_TRACING_ENABLED
-              value: "{{ .Values.reloadly.authApp.tracing.enabled}}"
+              value: "{{ .Values.reloadly.accountApp.tracing.enabled}}"
           resources:
-{{ toYaml .Values.reloadly.authApp.resources | indent 12 }}
+{{ toYaml .Values.reloadly.accountApp.resources | indent 12 }}
           livenessProbe:
             initialDelaySeconds: 300
             periodSeconds: 20
             timeoutSeconds: 15
             failureThreshold: 3
             httpGet:
-              port: 9090
+              port: 8080
               scheme: HTTP
               path: /actuator/info

@@ -10,6 +10,9 @@ persistence:
   storageClass: hostpath
 
 reloadly:
+  aws:
+    awsAccessKeyId: "XXX"
+    awsSecretAccessKey: "YYY"
   env: "dev"
   ingress:
     enabled: false
@@ -45,6 +48,88 @@ reloadly:
       port: 9090
     image:
       repository: "ghcr.io/arunkpatra/authentication-service"
+      tag: "latest"
+    replicaCount: 1
+    resources: {}
+  accountApp:
+    tracing:
+      enabled: true
+      transmitSpan: true
+      reporterLogSpans: true
+      maxQueueSize: 100
+      flushInterval: 2000
+    dbUser: "root"
+    dbPassword: "mysqlpass123"
+    dbUrl: "jdbc:mysql://mysql.mysql.svc.cluster.local:3306/rlacctdb"
+    service:
+      type: "NodePort"
+    http:
+      port: 8080
+    image:
+      repository: "ghcr.io/arunkpatra/account-service"
+      tag: "latest"
+    replicaCount: 1
+    resources: {}
+  transactionApp:
+    tracing:
+      enabled: true
+      transmitSpan: true
+      reporterLogSpans: true
+      maxQueueSize: 100
+      flushInterval: 2000
+    dbUser: "root"
+    dbPassword: "mysqlpass123"
+    dbUrl: "jdbc:mysql://mysql.mysql.svc.cluster.local:3306/rltxndb"
+    service:
+      type: "NodePort"
+    http:
+      port: 8081
+    image:
+      repository: "ghcr.io/arunkpatra/transaction-service"
+      tag: "latest"
+    replicaCount: 1
+    resources: {}
+  notificationApp:
+    email:
+      dryRun: true
+      senderEmailId: "email@email.com"
+    sms:
+      dryRun: true
+      twilioMsgSvcId: "XXX"
+      twilioAccountSID: "YYY"
+      twilioAuthToken: "ZZZ"
+    tracing:
+      enabled: true
+      transmitSpan: true
+      reporterLogSpans: true
+      maxQueueSize: 100
+      flushInterval: 2000
+    service:
+      type: "NodePort"
+    http:
+      port: 8082
+    image:
+      repository: "ghcr.io/arunkpatra/notification-service"
+      tag: "latest"
+    replicaCount: 1
+    resources: {}
+  transactionProcApp:
+    svcActApiKey: "d3fe6f0d-120e-4161-a134-8c2342e36ca6"
+    tracing:
+      enabled: true
+      transmitSpan: true
+      reporterLogSpans: true
+      maxQueueSize: 100
+      flushInterval: 2000
+    dbUser: "root"
+    dbPassword: "mysqlpass123"
+    dbUrl: "jdbc:mysql://mysql.mysql.svc.cluster.local:3306/rltxndb"
+    service:
+      type: "NodePort"
+    http:
+      port: 8083
+    image:
+      repository: "ghcr.io/arunkpatra/transaction-processor"
       tag: "latest"
     replicaCount: 1
     resources: {}

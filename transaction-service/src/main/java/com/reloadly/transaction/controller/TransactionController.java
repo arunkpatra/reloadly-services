@@ -2,6 +2,7 @@ package com.reloadly.transaction.controller;
 
 import com.reloadly.commons.exceptions.ReloadlyException;
 import com.reloadly.commons.model.ErrorResponse;
+import com.reloadly.tracing.annotation.Traced;
 import com.reloadly.transaction.model.TransactionRequest;
 import com.reloadly.transaction.model.TransactionResponse;
 import com.reloadly.transaction.model.TransactionStatus;
@@ -46,6 +47,7 @@ public class TransactionController extends AbstractRestController {
     @ResponseBody
     @PostMapping(value = "/transaction", produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @Traced(operationName = "/transaction")
     public ResponseEntity<TransactionResponse> postTransaction(
             @ApiParam(name = "Transaction Request", required = true) @RequestBody TransactionRequest request,
             HttpServletRequest servletRequest,
@@ -68,6 +70,7 @@ public class TransactionController extends AbstractRestController {
     @ResponseBody
     @PutMapping(value = "/transaction/{txnId}", produces = {MediaType.APPLICATION_JSON_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @Traced(operationName = "/transaction/{txnId}")
     public ResponseEntity<TransactionResponse> updateTransactionStatus(
             @ApiParam(name = "Transaction ID", required = true) @PathVariable(name = "txnId") String txnId,
             @ApiParam(name = "Transaction Status Update Request", required = true)
@@ -90,6 +93,7 @@ public class TransactionController extends AbstractRestController {
     })
     @ResponseBody
     @GetMapping(value = "/transaction/{txnId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @Traced(operationName = "/transaction/{txnId}")
     public ResponseEntity<TransactionResponse> getTransactionStatus(
             @ApiParam(name = "Transaction ID", required = true) @PathVariable(name = "txnId") String txnId,
             HttpServletRequest servletRequest,
