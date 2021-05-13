@@ -24,6 +24,7 @@
 
 package com.reloadly.transaction.service;
 
+import com.reloadly.transaction.exception.KafkaProcessingException;
 import com.reloadly.transaction.exception.ReloadlyTxnSvcException;
 import com.reloadly.transaction.model.TransactionRequest;
 import com.reloadly.transaction.model.TransactionResponse;
@@ -49,4 +50,12 @@ public interface TransactionService {
      * @author Arun Patra
      */
     TransactionResponse acceptTransaction(TransactionRequest request) throws ReloadlyTxnSvcException;
+
+    /**
+     * Post a transaction to Kafka.
+     *
+     * @param txnId The transaction ID.
+     * @throws KafkaProcessingException If an error occurs.
+     */
+    void postTransactionToKafkaTopic(String txnId) throws KafkaProcessingException;
 }

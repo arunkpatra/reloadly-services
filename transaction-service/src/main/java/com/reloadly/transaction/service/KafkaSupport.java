@@ -52,13 +52,13 @@ public abstract class KafkaSupport {
         this.context = context;
     }
 
-    protected void postTransactionToKafka(TransactionEntity te, TransactionRequest request) throws KafkaProcessingException {
+    protected void postTransactionToKafka(String txnId) throws KafkaProcessingException {
         String topic = properties.getKafka().getInboundTransactionsTopic();
         try {
             Message<String> message = new Message<String>() {
                 @Override
                 public String getPayload() {
-                    return te.getTxnId();
+                    return txnId;
                 }
 
                 @Override

@@ -27,6 +27,8 @@ package com.reloadly.transaction.controller;
 import com.reloadly.commons.exceptions.ReloadlyException;
 import com.reloadly.commons.model.ErrorResponse;
 import com.reloadly.tracing.annotation.Traced;
+import com.reloadly.transaction.exception.KafkaProcessingException;
+import com.reloadly.transaction.exception.ReloadlyTxnSvcException;
 import com.reloadly.transaction.model.TransactionRequest;
 import com.reloadly.transaction.model.TransactionResponse;
 import com.reloadly.transaction.model.TransactionStatus;
@@ -77,7 +79,13 @@ public class TransactionController extends AbstractRestController {
             HttpServletRequest servletRequest,
             @RequestHeader HttpHeaders headers) throws ReloadlyException {
 
-        return new ResponseEntity<>(transactionService.acceptTransaction(request), HttpStatus.ACCEPTED);
+        try {
+            TransactionResponse response = transactionService.acceptTransaction(request);
+            transactionService.postTransactionToKafkaTopic(response.getTransactionId());
+            return new ResponseEntity<>(transactionService.acceptTransaction(request), HttpStatus.ACCEPTED);
+        } catch (ReloadlyTxnSvcException | KafkaProcessingException e) {
+            throw new ReloadlyException("Failed to post transaction. Root cause: " + e.getMessage());
+        }
     }
 
     @ApiOperation(value = "Update transaction status",

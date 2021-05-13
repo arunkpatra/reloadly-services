@@ -90,12 +90,17 @@ public class TransactionServiceImpl extends TransactionProcessingSupport impleme
                 throw new ReloadlyTxnSvcException("Unknown transaction type");
         }
 
-        try {
-            postTransactionToKafka(te, request);
-        } catch (KafkaProcessingException e) {
-            throw new ReloadlyTxnSvcException("Failed to post transaction to Kafka. Root Cause: ".concat(e.getMessage()), e);
-        }
-
         return new TransactionResponse(te.getTxnId(), te.getTransactionStatus());
+    }
+
+    /**
+     * Post a transaction to Kafka.
+     *
+     * @param txnId The transaction ID.
+     * @throws KafkaProcessingException If an error occurs.
+     */
+    @Override
+    public void postTransactionToKafkaTopic(String txnId) throws KafkaProcessingException {
+        postTransactionToKafka(txnId);
     }
 }
