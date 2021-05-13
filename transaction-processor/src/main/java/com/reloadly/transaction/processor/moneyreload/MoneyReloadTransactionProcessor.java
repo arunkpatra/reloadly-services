@@ -4,6 +4,7 @@ import com.reloadly.autoconfig.notification.service.ReloadlyNotification;
 import com.reloadly.commons.model.account.AccountCreditReq;
 import com.reloadly.commons.model.account.AccountCreditResp;
 import com.reloadly.commons.model.account.AccountInfo;
+import com.reloadly.tracing.utils.TracingUtils;
 import com.reloadly.transaction.annotation.TransactionHandler;
 import com.reloadly.transaction.config.TransactionProcessorProperties;
 import com.reloadly.transaction.entity.MoneyReloadTxnEntity;
@@ -14,13 +15,12 @@ import com.reloadly.transaction.repository.MoneyReloadTxnRepository;
 import com.reloadly.transaction.repository.TransactionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Optional;
 
 /**
  * An illustrative implementation of a Money Reload transaction processor.
@@ -36,8 +36,10 @@ public class MoneyReloadTransactionProcessor extends AbstractTransactionProcesso
     public MoneyReloadTransactionProcessor(TransactionProcessorProperties transactionProcessorProperties,
                                            TransactionRepository transactionRepository,
                                            MoneyReloadTxnRepository moneyReloadTxnRepository,
-                                           RestTemplate restTemplate, ReloadlyNotification notification) {
-        super(transactionProcessorProperties, restTemplate, transactionRepository, notification);
+                                           RestTemplate restTemplate,
+                                           ReloadlyNotification notification,
+                                           ApplicationContext context) {
+        super(transactionProcessorProperties, restTemplate, transactionRepository, notification, context);
         this.moneyReloadTxnRepository = moneyReloadTxnRepository;
     }
 
@@ -57,17 +59,14 @@ public class MoneyReloadTransactionProcessor extends AbstractTransactionProcesso
         // Now credit account. Account can only be credited by the Account Microservice.
         try {
             creditAccount(txnEntity);
+            markTransactionAsSuccessful(txnEntity);
+            LOGGER.info("Money reload successful.");
+            sendNotifications(txnEntity.getUid(), true);
         } catch (ReloadlyTxnProcessingException e) {
             markTransactionAsFailed(txnEntity);
             LOGGER.error("Money reload transaction with txnId: {} has failed with reason {}", txnEntity.getTxnId(), e.getMessage());
             sendNotifications(txnEntity.getUid(), false);
-        } catch (Exception e) {
-            throw new ReloadlyTxnProcessingException("Unhandled exception occurred. Rolling back transaction. Root cause: " + e.getMessage(), e);
         }
-
-        markTransactionAsSuccessful(txnEntity);
-        LOGGER.info("Money reload successful.");
-        sendNotifications(txnEntity.getUid(), true);
     }
 
     /**
@@ -92,11 +91,11 @@ public class MoneyReloadTransactionProcessor extends AbstractTransactionProcesso
 
     private void creditAccount(TransactionEntity txnEntity) throws ReloadlyTxnProcessingException {
         String uid = txnEntity.getUid();
-        Optional<MoneyReloadTxnEntity> mrTxnOpt = moneyReloadTxnRepository.getByTxnId(txnEntity.getTxnId());
-        if (!mrTxnOpt.isPresent()) {
-            throw new ReloadlyTxnProcessingException(String.format("Money reload transaction with ID: %s was not found", txnEntity.getTxnId()));
-        }
-        Float amount = mrTxnOpt.get().getAmount();
+        MoneyReloadTxnEntity mrte = moneyReloadTxnRepository.getByTxnId(txnEntity.getTxnId())
+                .orElseThrow(() -> new ReloadlyTxnProcessingException(
+                        String.format("Money reload transaction with ID: %s was not found", txnEntity.getTxnId())));
+
+        Float amount = mrte.getAmount();
         // Now make call
 
         Assert.hasLength(uid, "UID can not be empty");
@@ -105,8 +104,10 @@ public class MoneyReloadTransactionProcessor extends AbstractTransactionProcesso
         // Exchange
         try {
             ResponseEntity<AccountCreditResp> response =
-                    restTemplate.postForEntity(properties.getReloadlyAccountServiceEndpoint().concat("/account/credit/".concat(uid)),
-                            new HttpEntity<>(new AccountCreditReq(amount), getHeaders()),
+                    restTemplate.postForEntity(properties.getReloadlyAccountServiceEndpoint()
+                                    .concat("/account/credit/".concat(uid)),
+                            new HttpEntity<>(new AccountCreditReq(amount),
+                                    TracingUtils.getPropagatedHttpHeaders(getHeaders(), context)),
                             AccountCreditResp.class);
             if (response.getStatusCode().is2xxSuccessful()) {
                 LOGGER.info("Credit transaction successful");

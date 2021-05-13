@@ -30,6 +30,11 @@
 
         <dependency>
             <groupId>com.reloadly</groupId>
+            <artifactId>tracing</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.reloadly</groupId>
             <artifactId>notification-integration</artifactId>
         </dependency>
 
@@ -113,7 +118,9 @@
                                     <workingDirectory>${project.basedir}</workingDirectory>
                                     <arguments>
                                         <argument>rmi</argument>
-                                        <argument>${local.docker.registry}/${project.groupId}/${project.artifactId}:${project.version}</argument>
+                                        <argument>
+                                            ${local.docker.registry}/${project.groupId}/${project.artifactId}:${project.version}
+                                        </argument>
                                     </arguments>
                                     <successCodes>
                                         <successCode>0</successCode>
@@ -137,7 +144,9 @@
                                     <arguments>
                                         <argument>build</argument>
                                         <argument>-t</argument>
-                                        <argument>${local.docker.registry}/${project.groupId}/${project.artifactId}:${project.version}</argument>
+                                        <argument>
+                                            ${local.docker.registry}/${project.groupId}/${project.artifactId}:${project.version}
+                                        </argument>
                                         <argument>.</argument>
                                     </arguments>
                                 </configuration>
@@ -153,7 +162,9 @@
                                     <workingDirectory>${project.basedir}</workingDirectory>
                                     <arguments>
                                         <argument>push</argument>
-                                        <argument>${local.docker.registry}/${project.groupId}/${project.artifactId}:${project.version}</argument>
+                                        <argument>
+                                            ${local.docker.registry}/${project.groupId}/${project.artifactId}:${project.version}
+                                        </argument>
                                     </arguments>
                                 </configuration>
                             </execution>

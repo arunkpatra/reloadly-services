@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-service
+spec:
+  {{- if not .Values.reloadly.ingress.enabled }}
+  type: {{ .Values.reloadly.notificationApp.service.type }}
+  {{- end }}
+  selector:
+    app: notification-service
+  ports:
+    - port: 8082
+      targetPort: 8082
+      {{- if not .Values.reloadly.ingress.enabled }}
+      nodePort: 30082
+      {{- end }}

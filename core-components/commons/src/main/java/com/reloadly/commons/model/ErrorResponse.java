@@ -35,13 +35,4 @@ public class ErrorResponse {
     public String getErrorDetail() {
         return errorDetail;
     }
-
-    @Override
-    public String toString() {
-        return "ErrorResponse{" +
-                "error='" + error + '\'' +
-                ", errorDescription='" + errorDescription + '\'' +
-                ", errorDetail='" + errorDetail + '\'' +
-                '}';
-    }
 }

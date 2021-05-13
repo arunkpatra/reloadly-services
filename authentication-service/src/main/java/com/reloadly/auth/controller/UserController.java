@@ -6,13 +6,15 @@ import com.reloadly.auth.service.UserService;
 import com.reloadly.commons.exceptions.ReloadlyException;
 import com.reloadly.commons.model.ErrorResponse;
 import com.reloadly.commons.model.user.UserInfo;
+import com.reloadly.tracing.annotation.Traced;
 import io.swagger.annotations.*;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * User specific REST APIs.
@@ -42,10 +44,15 @@ public class UserController extends AbstractRestController {
                     response = ErrorResponse.class)
     })
     @ResponseBody
-    @PostMapping(value = "/signup/username", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<SignupResponse> signupUsingUsernamePassword(@RequestBody UsernamePasswordSignupRequest request) throws ReloadlyException {
-            String uid = userService.createUserForUsernamePassword(request.getUsername(), request.getPassword());
-            return new ResponseEntity<>(new SignupResponse("Signup successful", uid), HttpStatus.CREATED);
+    @PostMapping(value = "/signup/username", produces = {MediaType.APPLICATION_JSON_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @Traced(operationName = "/signup/username")
+    public ResponseEntity<SignupResponse> signupUsingUsernamePassword(@RequestBody UsernamePasswordSignupRequest request,
+                                                                      HttpServletRequest servletRequest,
+                                                                      @RequestHeader HttpHeaders headers)
+            throws ReloadlyException {
+        String uid = userService.createUserForUsernamePassword(request.getUsername(), request.getPassword());
+        return new ResponseEntity<>(new SignupResponse("Signup successful", uid), HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "Get User Info",
@@ -61,7 +68,10 @@ public class UserController extends AbstractRestController {
     })
     @ResponseBody
     @GetMapping(value = "/me", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<UserInfo> getUserInfo(@ApiParam(hidden = true) @RequestHeader Map<String, String> headers) throws ReloadlyException {
+    @Traced(operationName = "/me")
+    public ResponseEntity<UserInfo> getUserInfo(HttpServletRequest servletRequest,
+                                                @ApiParam(hidden = true) @RequestHeader HttpHeaders headers)
+            throws ReloadlyException {
         return new ResponseEntity<>(userService.getUserInfo(headers), HttpStatus.OK);
     }
 }

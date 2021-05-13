@@ -33,7 +33,8 @@ public class NotificationServiceTests {
 
     @Test
     public void should_not_sendEmail() {
-        doThrow(new MailException("") {}).when(mailSender).send(any(SimpleMailMessage.class));
+        doThrow(new MailException("") {
+        }).when(mailSender).send(any(SimpleMailMessage.class));
         assertThrows(NotificationException.class, () ->
                 notificationService.sendEmail(new EmailRequest("a@b.com", "test", "test")));
         Mockito.clearInvocations(mailSender);

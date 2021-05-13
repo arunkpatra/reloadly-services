@@ -6,11 +6,15 @@ import com.reloadly.commons.model.ErrorResponse;
 import com.reloadly.commons.model.NotificationResponse;
 import com.reloadly.commons.model.SmsRequest;
 import com.reloadly.notification.service.NotificationService;
+import com.reloadly.tracing.annotation.Traced;
 import io.swagger.annotations.*;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Notification controller.
@@ -38,10 +42,13 @@ public class NotificationController extends AbstractRestController {
     })
     @ResponseBody
     @PostMapping(value = "/notification/email", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @Traced(operationName = "/notification/email")
     public ResponseEntity<NotificationResponse> sendEMail(
-            @ApiParam(name = "Account Creation Request", required = true) @RequestBody EmailRequest request) throws ReloadlyException {
-            notificationService.sendEmail(request);
-            return new ResponseEntity<>(new NotificationResponse("Accepted"), HttpStatus.ACCEPTED);
+            @ApiParam(name = "Account Creation Request", required = true) @RequestBody EmailRequest request,
+            HttpServletRequest servletRequest,
+            @RequestHeader HttpHeaders headers) throws ReloadlyException {
+        notificationService.sendEmail(request);
+        return new ResponseEntity<>(new NotificationResponse("Accepted"), HttpStatus.ACCEPTED);
     }
 
     @ApiOperation(value = "Send a SMS",
@@ -54,9 +61,12 @@ public class NotificationController extends AbstractRestController {
     })
     @ResponseBody
     @PostMapping(value = "/notification/sms", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @Traced(operationName = "/notification/sms")
     public ResponseEntity<NotificationResponse> sendSMS(
-            @ApiParam(name = "Account Creation Request", required = true) @RequestBody SmsRequest request) throws ReloadlyException {
-            notificationService.sendSms(request);
-            return new ResponseEntity<>(new NotificationResponse("Accepted"), HttpStatus.ACCEPTED);
+            @ApiParam(name = "Account Creation Request", required = true) @RequestBody SmsRequest request,
+            HttpServletRequest servletRequest,
+            @RequestHeader HttpHeaders headers) throws ReloadlyException {
+        notificationService.sendSms(request);
+        return new ResponseEntity<>(new NotificationResponse("Accepted"), HttpStatus.ACCEPTED);
     }
 }

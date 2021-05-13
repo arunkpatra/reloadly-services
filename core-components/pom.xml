@@ -17,6 +17,7 @@
         <module>swagger-ui-integration</module>
         <module>notification-integration</module>
         <module>logging</module>
+        <module>tracing</module>
     </modules>
     <artifactId>core-components</artifactId>
     <name>Core Components Parent</name>

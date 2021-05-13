@@ -5,6 +5,7 @@ import com.reloadly.autoconfig.notification.service.ReloadlyNotificationImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
@@ -32,7 +33,8 @@ public class NotificationClientAutoConfiguration {
     }
 
     @Bean
-    public ReloadlyNotification reloadlyNotification(NotificationClientProperties properties, RestTemplate restTemplate) {
-        return new ReloadlyNotificationImpl(properties, restTemplate);
+    public ReloadlyNotification reloadlyNotification(NotificationClientProperties properties,
+                                                     RestTemplate restTemplate, ApplicationContext context) {
+        return new ReloadlyNotificationImpl(properties, restTemplate, context);
     }
 }

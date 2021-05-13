@@ -89,7 +89,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             return new AuthenticationResponse(token, new Date(),
                     new Date(System.currentTimeMillis() + properties.getJwtTokenValiditySeconds() * 1000));
         } catch (Exception e) {
-            throw new AuthenticationFailedException(e.getMessage(), e);
+            throw new AuthenticationFailedException(e.getMessage());
         }
     }
 

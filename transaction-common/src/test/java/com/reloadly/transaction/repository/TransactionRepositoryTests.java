@@ -41,7 +41,7 @@ public class TransactionRepositoryTests extends AbstractJpaIntegrationTest {
     public void should_find_all_txn_by_uid() {
         String uid = "c1fe6f0d-420e-4161-a134-9c2342e36c95";
         List<TransactionEntity> txnList = transactionRepository.findByUid(uid);
-        assertThat(txnList.size()).isEqualTo(2);
+        assertThat(txnList.size()).isGreaterThan(0);
     }
 
     @Test

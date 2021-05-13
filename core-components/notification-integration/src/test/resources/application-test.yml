@@ -1,4 +1,6 @@
 reloadly:
+  tracing:
+    enabled: false
   notification:
     enabled: true
     suppress: false

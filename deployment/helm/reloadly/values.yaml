@@ -10,6 +10,9 @@ persistence:
   storageClass: hostpath
 
 reloadly:
+  aws:
+    awsAccessKeyId: "XXX"
+    awsSecretAccessKey: "YYY"
   env: "dev"
   ingress:
     enabled: false
@@ -18,7 +21,7 @@ reloadly:
     logToContainerConsole: "true"
     logPath: "/var/log/reloadly"
   adminApp:
-    resources: {}
+    resources: { }
     service:
       type: "NodePort"
     http:
@@ -30,6 +33,12 @@ reloadly:
       repository: "ghcr.io/arunkpatra/admin-service"
       tag: "latest"
   authApp:
+    tracing:
+      enabled: true
+      transmitSpan: true
+      reporterLogSpans: true
+      maxQueueSize: 100
+      flushInterval: 2000
     dbUser: "root"
     dbPassword: "mysqlpass123"
     dbUrl: "jdbc:mysql://mysql.mysql.svc.cluster.local:3306/rlauthdb"
@@ -41,9 +50,91 @@ reloadly:
       repository: "ghcr.io/arunkpatra/authentication-service"
       tag: "latest"
     replicaCount: 1
-    resources: {}
+    resources: { }
+  accountApp:
+    tracing:
+      enabled: true
+      transmitSpan: true
+      reporterLogSpans: true
+      maxQueueSize: 100
+      flushInterval: 2000
+    dbUser: "root"
+    dbPassword: "mysqlpass123"
+    dbUrl: "jdbc:mysql://mysql.mysql.svc.cluster.local:3306/rlacctdb"
+    service:
+      type: "NodePort"
+    http:
+      port: 8080
+    image:
+      repository: "ghcr.io/arunkpatra/account-service"
+      tag: "latest"
+    replicaCount: 1
+    resources: { }
+  transactionApp:
+    tracing:
+      enabled: true
+      transmitSpan: true
+      reporterLogSpans: true
+      maxQueueSize: 100
+      flushInterval: 2000
+    dbUser: "root"
+    dbPassword: "mysqlpass123"
+    dbUrl: "jdbc:mysql://mysql.mysql.svc.cluster.local:3306/rltxndb"
+    service:
+      type: "NodePort"
+    http:
+      port: 8081
+    image:
+      repository: "ghcr.io/arunkpatra/transaction-service"
+      tag: "latest"
+    replicaCount: 1
+    resources: { }
+  notificationApp:
+    email:
+      dryRun: true
+      senderEmailId: "email@email.com"
+    sms:
+      dryRun: true
+      twilioMsgSvcId: "XXX"
+      twilioAccountSID: "YYY"
+      twilioAuthToken: "ZZZ"
+    tracing:
+      enabled: true
+      transmitSpan: true
+      reporterLogSpans: true
+      maxQueueSize: 100
+      flushInterval: 2000
+    service:
+      type: "NodePort"
+    http:
+      port: 8082
+    image:
+      repository: "ghcr.io/arunkpatra/notification-service"
+      tag: "latest"
+    replicaCount: 1
+    resources: { }
+  transactionProcApp:
+    svcActApiKey: "d3fe6f0d-120e-4161-a134-8c2342e36ca6"
+    tracing:
+      enabled: true
+      transmitSpan: true
+      reporterLogSpans: true
+      maxQueueSize: 100
+      flushInterval: 2000
+    dbUser: "root"
+    dbPassword: "mysqlpass123"
+    dbUrl: "jdbc:mysql://mysql.mysql.svc.cluster.local:3306/rltxndb"
+    service:
+      type: "NodePort"
+    http:
+      port: 8083
+    image:
+      repository: "ghcr.io/arunkpatra/transaction-processor"
+      tag: "latest"
+    replicaCount: 1
+    resources: { }
 
-imagePullSecrets: []
+imagePullSecrets: [ ]
 nameOverride: ""
 fullnameOverride: ""
 
@@ -51,38 +142,38 @@ serviceAccount:
   # Specifies whether a service account should be created
   create: true
   # Annotations to add to the service account
-  annotations: {}
+  annotations: { }
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: "reloadly-svc-account"
 
-podAnnotations: {}
+podAnnotations: { }
 
-podSecurityContext: {}
-  # fsGroup: 2000
+podSecurityContext: { }
+# fsGroup: 2000
 
-securityContext: {}
+securityContext: { }
   # capabilities:
   #   drop:
   #   - ALL
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
-  # runAsUser: 1000
+# runAsUser: 1000
 
 ingress:
   enabled: false
-  annotations: {}
+  annotations: { }
     # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  # kubernetes.io/tls-acme: "true"
   hosts:
     - host: chart-example.local
-      paths: []
-  tls: []
+      paths: [ ]
+  tls: [ ]
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
 
-resources: {}
+resources: { }
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -92,7 +183,7 @@ resources: {}
   #   memory: 128Mi
   # requests:
   #   cpu: 100m
-  #   memory: 128Mi
+#   memory: 128Mi
 
 autoscaling:
   enabled: false
@@ -101,8 +192,8 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-nodeSelector: {}
+nodeSelector: { }
 
-tolerations: []
+tolerations: [ ]
 
-affinity: {}
+affinity: { }

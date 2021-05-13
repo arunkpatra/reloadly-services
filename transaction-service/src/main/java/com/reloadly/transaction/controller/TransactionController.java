@@ -2,16 +2,20 @@ package com.reloadly.transaction.controller;
 
 import com.reloadly.commons.exceptions.ReloadlyException;
 import com.reloadly.commons.model.ErrorResponse;
+import com.reloadly.tracing.annotation.Traced;
 import com.reloadly.transaction.model.TransactionRequest;
 import com.reloadly.transaction.model.TransactionResponse;
 import com.reloadly.transaction.model.TransactionStatus;
 import com.reloadly.transaction.model.TransactionStatusUpdateRequest;
 import com.reloadly.transaction.service.TransactionService;
 import io.swagger.annotations.*;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Transaction Microservice REST APIs.
@@ -41,12 +45,15 @@ public class TransactionController extends AbstractRestController {
                     response = ErrorResponse.class)
     })
     @ResponseBody
-    @PostMapping(value = "/transaction", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value = "/transaction", produces = {MediaType.APPLICATION_JSON_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @Traced(operationName = "/transaction")
     public ResponseEntity<TransactionResponse> postTransaction(
-            @ApiParam(name = "Transaction Request", required = true) @RequestBody TransactionRequest request) throws ReloadlyException {
+            @ApiParam(name = "Transaction Request", required = true) @RequestBody TransactionRequest request,
+            HttpServletRequest servletRequest,
+            @RequestHeader HttpHeaders headers) throws ReloadlyException {
 
-            return new ResponseEntity<>(transactionService.acceptTransaction(request), HttpStatus.ACCEPTED);
-
+        return new ResponseEntity<>(transactionService.acceptTransaction(request), HttpStatus.ACCEPTED);
     }
 
     @ApiOperation(value = "Update transaction status",
@@ -61,10 +68,14 @@ public class TransactionController extends AbstractRestController {
                     response = ErrorResponse.class)
     })
     @ResponseBody
-    @PutMapping(value = "/transaction/{txnId}", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PutMapping(value = "/transaction/{txnId}", produces = {MediaType.APPLICATION_JSON_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @Traced(operationName = "/transaction/{txnId}")
     public ResponseEntity<TransactionResponse> updateTransactionStatus(
             @ApiParam(name = "Transaction ID", required = true) @PathVariable(name = "txnId") String txnId,
-            @ApiParam(name = "Transaction Status Update Request", required = true) @RequestBody TransactionStatusUpdateRequest request) throws ReloadlyException {
+            @ApiParam(name = "Transaction Status Update Request", required = true)
+            @RequestBody TransactionStatusUpdateRequest request, HttpServletRequest servletRequest,
+            @RequestHeader HttpHeaders headers) throws ReloadlyException {
         // TODO: Implement me
         return new ResponseEntity<>(new TransactionResponse(txnId, request.getTransactionStatus()), HttpStatus.OK);
     }
@@ -82,8 +93,11 @@ public class TransactionController extends AbstractRestController {
     })
     @ResponseBody
     @GetMapping(value = "/transaction/{txnId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @Traced(operationName = "/transaction/{txnId}")
     public ResponseEntity<TransactionResponse> getTransactionStatus(
-            @ApiParam(name = "Transaction ID", required = true) @PathVariable(name = "txnId") String txnId) throws ReloadlyException {
+            @ApiParam(name = "Transaction ID", required = true) @PathVariable(name = "txnId") String txnId,
+            HttpServletRequest servletRequest,
+            @RequestHeader HttpHeaders headers) throws ReloadlyException {
         // TODO: Implement me
         return new ResponseEntity<>(new TransactionResponse(txnId, TransactionStatus.SUCCESSFUL), HttpStatus.OK);
     }

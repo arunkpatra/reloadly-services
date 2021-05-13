@@ -5,19 +5,22 @@ import com.reloadly.auth.model.AuthenticationResponse;
 import com.reloadly.auth.model.TokenVerificationRequest;
 import com.reloadly.auth.model.UsernamePasswordAuthRequest;
 import com.reloadly.auth.service.AuthenticationService;
-import com.reloadly.auth.service.UserService;
 import com.reloadly.commons.exceptions.ReloadlyException;
 import com.reloadly.commons.model.ErrorResponse;
 import com.reloadly.commons.model.ReloadlyApiKeyIdentity;
 import com.reloadly.commons.model.ReloadlyAuthToken;
+import com.reloadly.tracing.annotation.Traced;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Authentication Microservice REST APIs.
@@ -30,11 +33,9 @@ import org.springframework.web.bind.annotation.*;
 public class AuthenticationController extends AbstractRestController {
 
     private final AuthenticationService authenticationService;
-    private final UserService userService;
 
-    public AuthenticationController(AuthenticationService authenticationService, UserService userService) {
+    public AuthenticationController(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
-        this.userService = userService;
     }
 
     @ApiOperation(value = "Login using username and password",
@@ -50,11 +51,14 @@ public class AuthenticationController extends AbstractRestController {
     })
     @ResponseBody
     @PostMapping(value = "/login", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<AuthenticationResponse> login(@RequestBody UsernamePasswordAuthRequest request) throws ReloadlyException {
+    @Traced(operationName = "/login")
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody UsernamePasswordAuthRequest request,
+                                                        HttpServletRequest servletRequest,
+                                                        @RequestHeader HttpHeaders headers) throws ReloadlyException {
 
-            AuthenticationResponse authenticationResponse =
-                    authenticationService.authenticateUsingUsernamePassword(request.getUsername(), request.getPassword());
-            return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
+        AuthenticationResponse authenticationResponse =
+                authenticationService.authenticateUsingUsernamePassword(request.getUsername(), request.getPassword());
+        return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Verify a reloadly issued JWT token",
@@ -69,11 +73,15 @@ public class AuthenticationController extends AbstractRestController {
                     response = ErrorResponse.class)
     })
     @ResponseBody
-    @PostMapping(value = "/verify/token", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<ReloadlyAuthToken> verifyToken(@RequestBody TokenVerificationRequest request) throws ReloadlyException {
+    @PostMapping(value = "/verify/token", produces = {MediaType.APPLICATION_JSON_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @Traced(operationName = "/verify/token")
+    public ResponseEntity<ReloadlyAuthToken> verifyToken(@RequestBody TokenVerificationRequest request,
+                                                         HttpServletRequest servletRequest,
+                                                         @RequestHeader HttpHeaders headers) throws ReloadlyException {
 
-            ReloadlyAuthToken reloadlyAuthToken = authenticationService.verifyToken(request.getToken());
-            return new ResponseEntity<>(reloadlyAuthToken, HttpStatus.OK);
+        ReloadlyAuthToken reloadlyAuthToken = authenticationService.verifyToken(request.getToken());
+        return new ResponseEntity<>(reloadlyAuthToken, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Verify an API Key",
@@ -88,10 +96,15 @@ public class AuthenticationController extends AbstractRestController {
                     response = ErrorResponse.class)
     })
     @ResponseBody
-    @PostMapping(value = "/verify/apikey", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<ReloadlyApiKeyIdentity> verifyApiKey(@RequestBody ApiKeyVerificationRequest request) throws ReloadlyException {
+    @PostMapping(value = "/verify/apikey", produces = {MediaType.APPLICATION_JSON_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @Traced(operationName = "/verify/apikey")
+    public ResponseEntity<ReloadlyApiKeyIdentity> verifyApiKey(@RequestBody ApiKeyVerificationRequest request,
+                                                               HttpServletRequest servletRequest,
+                                                               @RequestHeader HttpHeaders headers)
+            throws ReloadlyException {
 
-            ReloadlyApiKeyIdentity reloadlyApiKeyIdentity = authenticationService.verifyApiKey(request.getApiKey());
-            return new ResponseEntity<>(reloadlyApiKeyIdentity, HttpStatus.OK);
+        ReloadlyApiKeyIdentity reloadlyApiKeyIdentity = authenticationService.verifyApiKey(request.getApiKey());
+        return new ResponseEntity<>(reloadlyApiKeyIdentity, HttpStatus.OK);
     }
 }

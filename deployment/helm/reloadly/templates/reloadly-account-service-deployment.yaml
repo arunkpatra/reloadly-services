@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: account-service
+spec:
+  replicas: {{ .Values.reloadly.accountApp.replicaCount }}
+  selector:
+    matchLabels:
+      app: account-service
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+        config.linkerd.io/proxy-log-level: INFO
+        rollme: {{ randAlphaNum 5 | quote }}
+      labels:
+        app: account-service
+    spec:
+      serviceAccountName: {{ include "reloadly.serviceAccountName" . }}
+      containers:
+        - name: account-service
+          imagePullPolicy: "{{ .Values.image.pullPolicy }}"
+          image: "{{ .Values.reloadly.accountApp.image.repository }}:{{ .Values.reloadly.accountApp.image.tag | default .Chart.AppVersion }}"
+          ports:
+            - containerPort: 8080
+              name: http
+          env:
+            - name: RELOADLY_ENV
+              value: {{ .Values.reloadly.env }}
+            - name: RELOADLY_ROOT_LOGGER_LEVEL
+              value: "{{ .Values.reloadly.logging.rootLoggerLevel }}"
+            - name: RELOADLY_LOG_TO_CONTAINER_CONSOLE
+              value: "{{ .Values.reloadly.logging.logToContainerConsole }}"
+            - name: RELOADLY_LOG_PATH
+              value: "{{ .Values.reloadly.logging.logPath }}"
+            - name: RELOADLY_LOG_FILE
+              value: "{{ .Values.reloadly.logging.logPath }}/account-service-{{ .Values.reloadly.env }}.log"
+            - name: DB_USER
+              value: {{ .Values.reloadly.accountApp.dbUser }}
+            - name: DB_PASSWORD
+              value: {{ .Values.reloadly.accountApp.dbPassword }}
+            - name: DB_URL
+              value: {{ .Values.reloadly.accountApp.dbUrl }}
+            - name: AUTH_SVC_ENDPOINT
+              value: "http://authentication-service.reloadly.svc.cluster.local:9090"
+            - name: NOTIFICATION_SVC_ENDPOINT
+              value: "http://notification-service.reloadly.svc.cluster.local:8082"
+            - name: SBA_SERVER_URL
+              value: "http://admin-service.reloadly.svc.cluster.local:9595"
+            - name: SBA_CLIENT_URL
+              value: "http://account-service.reloadly.svc.cluster.local:8080"
+            - name: SWAGGER_HOST
+              value: "localhost:30080"
+            - name: RELOADLY_TRACING_ENDPOINT
+              value: "http://jaeger.linkerd-jaeger:14268/api/traces"
+            - name: RELOADLY_TRACING_PROPAGATION
+              value: "jaeger,b3"
+            - name: RELOADLY_TRACING_SAMPLER_TYPE
+              value: "const"
+            - name: RELOADLY_TRACING_SAMPLER_PARAM
+              value: "1"
+            - name: RELOADLY_TRACING_SERVICE_NAME
+              value: "account-service"
+            - name: RELOADLY_TRACING_TRANSMIT_SPAN
+              value: "{{ .Values.reloadly.accountApp.tracing.transmitSpan}}"
+            - name: RELOADLY_TRACING_REPORTER_LOG_SPANS
+              value: "{{ .Values.reloadly.accountApp.tracing.reporterLogSpans}}"
+            - name: RELOADLY_TRACING_REPORTER_MAX_QUEUE_SIZE
+              value: "{{ .Values.reloadly.accountApp.tracing.maxQueueSize}}"
+            - name: RELOADLY_TRACING_REPORTER_FLUSH_INTERVAL
+              value: "{{ .Values.reloadly.accountApp.tracing.flushInterval}}"
+            - name: RELOADLY_TRACING_ENABLED
+              value: "{{ .Values.reloadly.accountApp.tracing.enabled}}"
+          resources:
+{{ toYaml .Values.reloadly.accountApp.resources | indent 12 }}
+          livenessProbe:
+            initialDelaySeconds: 300
+            periodSeconds: 20
+            timeoutSeconds: 15
+            failureThreshold: 3
+            httpGet:
+              port: 8080
+              scheme: HTTP
+              path: /actuator/info

@@ -14,7 +14,7 @@ public class AuthenticationFailedException extends ReloadlyException {
         super(DEFAULT_MESSAGE);
     }
 
-    public AuthenticationFailedException(String message, Exception e) {
-        super(message, e);
+    public AuthenticationFailedException(String message) {
+        super(message);
     }
 }

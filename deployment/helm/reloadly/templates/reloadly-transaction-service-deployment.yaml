@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transaction-service
+spec:
+  replicas: {{ .Values.reloadly.transactionApp.replicaCount }}
+  selector:
+    matchLabels:
+      app: transaction-service
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+        config.linkerd.io/proxy-log-level: INFO
+        config.linkerd.io/skip-outbound-ports: "9092"
+        rollme: {{ randAlphaNum 5 | quote }}
+      labels:
+        app: transaction-service
+    spec:
+      serviceAccountName: {{ include "reloadly.serviceAccountName" . }}
+      containers:
+        - name: transaction-service
+          imagePullPolicy: "{{ .Values.image.pullPolicy }}"
+          image: "{{ .Values.reloadly.transactionApp.image.repository }}:{{ .Values.reloadly.transactionApp.image.tag | default .Chart.AppVersion }}"
+          ports:
+            - containerPort: 8081
+              name: http
+          env:
+            - name: RELOADLY_ENV
+              value: {{ .Values.reloadly.env }}
+            - name: RELOADLY_ROOT_LOGGER_LEVEL
+              value: "{{ .Values.reloadly.logging.rootLoggerLevel }}"
+            - name: RELOADLY_LOG_TO_CONTAINER_CONSOLE
+              value: "{{ .Values.reloadly.logging.logToContainerConsole }}"
+            - name: RELOADLY_LOG_PATH
+              value: "{{ .Values.reloadly.logging.logPath }}"
+            - name: RELOADLY_LOG_FILE
+              value: "{{ .Values.reloadly.logging.logPath }}/transaction-service-{{ .Values.reloadly.env }}.log"
+            - name: DB_USER
+              value: {{ .Values.reloadly.transactionApp.dbUser }}
+            - name: DB_PASSWORD
+              value: {{ .Values.reloadly.transactionApp.dbPassword }}
+            - name: DB_URL
+              value: {{ .Values.reloadly.transactionApp.dbUrl }}
+            - name: AUTH_SVC_ENDPOINT
+              value: "http://authentication-service.reloadly.svc.cluster.local:9090"
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka.kafka.svc.cluster.local:9092"
+            - name: SBA_SERVER_URL
+              value: "http://admin-service.reloadly.svc.cluster.local:9595"
+            - name: SBA_CLIENT_URL
+              value: "http://transaction-service.reloadly.svc.cluster.local:8081"
+            - name: SWAGGER_HOST
+              value: "localhost:30081"
+            - name: RELOADLY_TRACING_ENDPOINT
+              value: "http://jaeger.linkerd-jaeger:14268/api/traces"
+            - name: RELOADLY_TRACING_PROPAGATION
+              value: "jaeger,b3"
+            - name: RELOADLY_TRACING_SAMPLER_TYPE
+              value: "const"
+            - name: RELOADLY_TRACING_SAMPLER_PARAM
+              value: "1"
+            - name: RELOADLY_TRACING_SERVICE_NAME
+              value: "transaction-service"
+            - name: RELOADLY_TRACING_TRANSMIT_SPAN
+              value: "{{ .Values.reloadly.transactionApp.tracing.transmitSpan}}"
+            - name: RELOADLY_TRACING_REPORTER_LOG_SPANS
+              value: "{{ .Values.reloadly.transactionApp.tracing.reporterLogSpans}}"
+            - name: RELOADLY_TRACING_REPORTER_MAX_QUEUE_SIZE
+              value: "{{ .Values.reloadly.transactionApp.tracing.maxQueueSize}}"
+            - name: RELOADLY_TRACING_REPORTER_FLUSH_INTERVAL
+              value: "{{ .Values.reloadly.transactionApp.tracing.flushInterval}}"
+            - name: RELOADLY_TRACING_ENABLED
+              value: "{{ .Values.reloadly.transactionApp.tracing.enabled}}"
+          resources:
+{{ toYaml .Values.reloadly.transactionApp.resources | indent 12 }}
+          livenessProbe:
+            initialDelaySeconds: 300
+            periodSeconds: 20
+            timeoutSeconds: 15
+            failureThreshold: 3
+            httpGet:
+              port: 8081
+              scheme: HTTP
+              path: /actuator/info

@@ -10,21 +10,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class NotificationResponse {
 
-    private String message;
+    private final String message;
 
     @JsonCreator
     public NotificationResponse(@JsonProperty("message") String message) {
         this.message = message;
     }
 
-    public NotificationResponse() {
-    }
-
     public String getMessage() {
         return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 }
