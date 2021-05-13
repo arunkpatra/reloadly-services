@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -98,8 +99,9 @@ public class ReloadlyAuthAutoConfiguration {
             }
 
             @Bean
-            public ReloadlyAuth reloadlyAuthService(ReloadlyAuthProperties properties, RestTemplate restTemplate) {
-                return new ReloadlyAuthServiceImpl(properties, restTemplate);
+            public ReloadlyAuth reloadlyAuthService(ReloadlyAuthProperties properties, RestTemplate restTemplate,
+                                                    ApplicationContext context) {
+                return new ReloadlyAuthServiceImpl(properties, restTemplate, context);
             }
 
             @Bean

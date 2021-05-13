@@ -39,7 +39,7 @@ public class TracingProperties {
     /**
      * Enable or disable tracing.
      */
-    private boolean enabled = false;
+    private boolean enabled = true;
 
     /**
      * Whether to transmit spans to the remote agent. Disabling this will cause the spans to just logged.

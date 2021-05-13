@@ -6,6 +6,9 @@ import com.reloadly.commons.model.ReloadlyApiKeyIdentity;
 import com.reloadly.commons.model.ReloadlyAuthToken;
 import com.reloadly.security.config.ReloadlyAuthProperties;
 import com.reloadly.security.exception.ReloadlyAuthException;
+import com.reloadly.tracing.utils.TracingUtils;
+import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
@@ -16,10 +19,12 @@ public class ReloadlyAuthServiceImpl implements ReloadlyAuth {
 
     private final ReloadlyAuthProperties properties;
     private final RestTemplate restTemplate;
+    private final ApplicationContext context;
 
-    public ReloadlyAuthServiceImpl(ReloadlyAuthProperties properties, RestTemplate restTemplate) {
+    public ReloadlyAuthServiceImpl(ReloadlyAuthProperties properties, RestTemplate restTemplate, ApplicationContext context) {
         this.properties = properties;
         this.restTemplate = restTemplate;
+        this.context = context;
     }
 
     /**
@@ -34,11 +39,11 @@ public class ReloadlyAuthServiceImpl implements ReloadlyAuth {
         Assert.hasLength(properties.getReloadlyAuthServiceEndpoint(), "Authentication endpoint URL can not be empty.");
 
         // Exchange
-
         try {
             ResponseEntity<ReloadlyAuthToken> response =
                     restTemplate.postForEntity(properties.getReloadlyAuthServiceEndpoint().concat("/verify/token"),
-                            new AuthRequest(token),
+                            new HttpEntity<>(new AuthRequest(token),
+                                    TracingUtils.getPropagatedHttpHeaders(new HttpHeaders(), context)),
                             ReloadlyAuthToken.class);
             if (response.getStatusCode().is2xxSuccessful()) {
                 return response.getBody();
@@ -62,13 +67,11 @@ public class ReloadlyAuthServiceImpl implements ReloadlyAuth {
         Assert.hasLength(properties.getReloadlyAuthServiceEndpoint(), "Authentication endpoint URL can not be empty.");
 
         // Exchange
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Type", "application/json");
-        headers.set("accept", "application/json");
         try {
             ResponseEntity<ReloadlyApiKeyIdentity> response =
                     restTemplate.postForEntity(properties.getReloadlyAuthServiceEndpoint().concat("/verify/apikey"),
-                            new ApiKeyRequest(key),
+                            new HttpEntity<>(new ApiKeyRequest(key),
+                                    TracingUtils.getPropagatedHttpHeaders(new HttpHeaders(), context)),
                             ReloadlyApiKeyIdentity.class);
             if (response.getStatusCode().is2xxSuccessful()) {
                 return response.getBody();

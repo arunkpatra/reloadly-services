@@ -1,5 +1,7 @@
 package com.reloadly.transaction.service;
 
+import org.springframework.messaging.MessageHeaders;
+
 public interface TransactionProcessorService {
 
     /**
@@ -7,5 +9,5 @@ public interface TransactionProcessorService {
      *
      * @param txnId The transaction ID to be processed.
      */
-    void processInboundTransaction(String txnId);
+    void processInboundTransaction(String txnId, MessageHeaders messageHeaders);
 }

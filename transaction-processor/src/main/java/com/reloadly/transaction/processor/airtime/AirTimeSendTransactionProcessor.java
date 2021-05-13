@@ -4,6 +4,7 @@ import com.reloadly.autoconfig.notification.service.ReloadlyNotification;
 import com.reloadly.commons.model.account.AccountDebitReq;
 import com.reloadly.commons.model.account.AccountDebitResp;
 import com.reloadly.commons.model.account.AccountInfo;
+import com.reloadly.tracing.utils.TracingUtils;
 import com.reloadly.transaction.annotation.TransactionHandler;
 import com.reloadly.transaction.config.TransactionProcessorProperties;
 import com.reloadly.transaction.entity.AirtimeSendTxnEntity;
@@ -14,13 +15,12 @@ import com.reloadly.transaction.repository.AirtimeSendTxnRepository;
 import com.reloadly.transaction.repository.TransactionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Optional;
 
 /**
  * An illustrative implementation of a Airtime Send transaction processor.
@@ -36,8 +36,10 @@ public class AirTimeSendTransactionProcessor extends AbstractTransactionProcesso
     public AirTimeSendTransactionProcessor(TransactionProcessorProperties transactionProcessorProperties,
                                            TransactionRepository transactionRepository,
                                            AirtimeSendTxnRepository airtimeSendTxnRepository,
-                                           RestTemplate restTemplate, ReloadlyNotification notification) {
-        super(transactionProcessorProperties, restTemplate, transactionRepository, notification);
+                                           RestTemplate restTemplate,
+                                           ReloadlyNotification notification,
+                                           ApplicationContext context) {
+        super(transactionProcessorProperties, restTemplate, transactionRepository, notification, context);
         this.airtimeSendTxnRepository = airtimeSendTxnRepository;
     }
 
@@ -54,17 +56,14 @@ public class AirTimeSendTransactionProcessor extends AbstractTransactionProcesso
         // Now debit account. Account can only be debited by the Account Microservice.
         try {
             debitAccount(txnEntity);
+            markTransactionAsSuccessful(txnEntity);
+            LOGGER.info("Airtime send successful.");
+            sendNotifications(txnEntity.getUid(), true);
         } catch (ReloadlyTxnProcessingException e) {
             markTransactionAsFailed(txnEntity);
             LOGGER.error("Airtime send transaction with txnId: {} has failed with reason {}", txnEntity.getTxnId(), e.getMessage());
             sendNotifications(txnEntity.getUid(), false);
-        } catch (Exception e) {
-            throw new ReloadlyTxnProcessingException("Unhandled exception occurred. Rolling back transaction. Root cause: " + e.getMessage(), e);
         }
-
-        markTransactionAsSuccessful(txnEntity);
-        LOGGER.info("Airtime send successful.");
-        sendNotifications(txnEntity.getUid(), true);
     }
 
     /**
@@ -89,12 +88,13 @@ public class AirTimeSendTransactionProcessor extends AbstractTransactionProcesso
 
     private void debitAccount(TransactionEntity txnEntity) throws ReloadlyTxnProcessingException {
         String uid = txnEntity.getUid();
-        Optional<AirtimeSendTxnEntity> asTxnOpt = airtimeSendTxnRepository.getByTxnId(txnEntity.getTxnId());
-        if (!asTxnOpt.isPresent()) {
-            throw new ReloadlyTxnProcessingException(String.format("Airtime send transaction with ID: %s was not found", txnEntity.getTxnId()));
-        }
-        Float amount = asTxnOpt.get().getAmount();
-        String phoneNumber = asTxnOpt.get().getPhoneNumber();
+
+        AirtimeSendTxnEntity aste = airtimeSendTxnRepository.getByTxnId(txnEntity.getTxnId())
+                .orElseThrow(() -> new ReloadlyTxnProcessingException(
+                        String.format("Airtime send transaction with ID: %s was not found", txnEntity.getTxnId())));
+
+        Float amount = aste.getAmount();
+        String phoneNumber = aste.getPhoneNumber();
 
         // Now make call
 
@@ -105,8 +105,10 @@ public class AirTimeSendTransactionProcessor extends AbstractTransactionProcesso
         // Exchange - Debit call to Account microservice
         try {
             ResponseEntity<AccountDebitResp> response =
-                    restTemplate.postForEntity(properties.getReloadlyAccountServiceEndpoint().concat("/account/debit/".concat(uid)),
-                            new HttpEntity<>(new AccountDebitReq(amount), getHeaders()),
+                    restTemplate.postForEntity(properties.getReloadlyAccountServiceEndpoint()
+                                    .concat("/account/debit/".concat(uid)),
+                            new HttpEntity<>(new AccountDebitReq(amount),
+                                    TracingUtils.getPropagatedHttpHeaders(getHeaders(), context)),
                             AccountDebitResp.class);
             if (response.getStatusCode().is2xxSuccessful()) {
                 LOGGER.info("Debit transaction successful");

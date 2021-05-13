@@ -20,7 +20,7 @@ reloadly:
     image:
       repository: "localhost:5000/com.reloadly/notification-service"
       tag: "1.1.0"
-  transactionprocApp:
+  transactionProcApp:
     image:
       repository: "localhost:5000/com.reloadly/transaction-processor"
       tag: "1.1.0"

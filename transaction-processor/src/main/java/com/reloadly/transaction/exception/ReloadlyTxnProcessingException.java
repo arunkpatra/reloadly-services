@@ -14,9 +14,4 @@ public class ReloadlyTxnProcessingException extends ReloadlyException {
     public ReloadlyTxnProcessingException(String message) {
         super(message);
     }
-
-    public ReloadlyTxnProcessingException(String message, Exception e) {
-        super(message, e);
-    }
-
 }

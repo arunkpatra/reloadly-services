@@ -25,15 +25,15 @@ public class ReloadlyTracer {
         this.tracer = tracer;
     }
 
-    public Map<String, String> extractGrpcMetadataFromExistingSpan() {
+    public Map<String, String> extractMetadataFromExistingSpan() {
         Map<String, String> metadataMap = new HashMap<>();
         if (enabled) {
             try {
                 Span ss = tracer.activeSpan();
-                TextMap grpcMetadataCarrier = new TextMapAdapter(new HashMap<>());
-                tracer.inject(ss.context(), Format.Builtin.HTTP_HEADERS, grpcMetadataCarrier);
+                TextMap metadataCarrier = new TextMapAdapter(new HashMap<>());
+                tracer.inject(ss.context(), Format.Builtin.HTTP_HEADERS, metadataCarrier);
                 LOGGER.trace("Injected carrier data successfully.");
-                for (Map.Entry<String, String> e : grpcMetadataCarrier) {
+                for (Map.Entry<String, String> e : metadataCarrier) {
                     metadataMap.put(e.getKey(), e.getValue());
                 }
             } catch (Throwable t) {

@@ -69,18 +69,11 @@ public class TransactionManagerImpl implements TransactionManager, InitializingB
     @Override
     @Transactional
     public void handleTransaction(TransactionEntity txnEntity) throws ReloadlyTxnProcessingException {
-        if (txnProcessorMap.containsKey(txnEntity.getTransactionType().name())) {
-            try {
-                txnProcessorMap.get(txnEntity.getTransactionType().name()).processTransaction(txnEntity);
-            } catch (Exception e) {
-                LOGGER.info("Transaction processor has failed. Root cause: " + e.getMessage());
-                throw e;
-            }
-        } else {
-            LOGGER.error("No Transaction processor found to handle transactions of type {}.",
-                    txnEntity.getTransactionType().name());
-            throw new ReloadlyTxnProcessingException("No Transaction processor found to handle transactions of type {}." +
-                    txnEntity.getTransactionType().name());
+        try {
+            txnProcessorMap.get(txnEntity.getTransactionType().name()).processTransaction(txnEntity);
+        } catch (Exception e) {
+            LOGGER.info("Transaction processor has failed. Root cause: " + e.getMessage());
+            throw new ReloadlyTxnProcessingException("Transaction processor has failed. Root cause: " + e.getMessage());
         }
     }
 

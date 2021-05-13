@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AccountDebitResp {
-    private Boolean successful;
-    private String message;
+    private final Boolean successful;
+    private final String message;
 
     @JsonCreator
     public AccountDebitResp(@JsonProperty("successful") Boolean successful, @JsonProperty("message") String message) {
@@ -13,22 +13,11 @@ public class AccountDebitResp {
         this.message = message;
     }
 
-    public AccountDebitResp() {
-    }
-
     public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     public Boolean getSuccessful() {
         return successful;
-    }
-
-    public void setSuccessful(Boolean successful) {
-        this.successful = successful;
     }
 }

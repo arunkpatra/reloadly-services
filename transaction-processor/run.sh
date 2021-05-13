@@ -61,7 +61,6 @@ if [ -n "${KAFKA_BOOTSTRAP_SERVERS}" ]; then
   RELOADLY_OPTS="$RELOADLY_OPTS -Dspring.kafka.bootstrap-servers=${KAFKA_BOOTSTRAP_SERVERS}"
 fi
 
-
 if [ -n "${RELOADLY_TRACING_ENABLED}" ]; then
   RELOADLY_OPTS="$RELOADLY_OPTS -Dreloadly.tracing.enabled=${RELOADLY_TRACING_ENABLED}"
 fi

@@ -6,6 +6,7 @@ import com.reloadly.commons.model.EmailRequest;
 import com.reloadly.commons.model.ReloadlyCredentials;
 import com.reloadly.commons.model.SmsRequest;
 import com.reloadly.commons.model.account.AccountInfo;
+import com.reloadly.tracing.utils.TracingUtils;
 import com.reloadly.transaction.config.TransactionProcessorProperties;
 import com.reloadly.transaction.entity.TransactionEntity;
 import com.reloadly.transaction.exception.AccountInfoRetrievalException;
@@ -13,6 +14,7 @@ import com.reloadly.transaction.model.TransactionStatus;
 import com.reloadly.transaction.repository.TransactionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -33,12 +35,17 @@ public abstract class AbstractTransactionProcessor implements TransactionProcess
     protected final RestTemplate restTemplate;
     private final TransactionRepository transactionRepository;
     private final ReloadlyNotification notification;
+    protected final ApplicationContext context;
 
-    protected AbstractTransactionProcessor(TransactionProcessorProperties properties, RestTemplate restTemplate, TransactionRepository transactionRepository, ReloadlyNotification notification) {
+    protected AbstractTransactionProcessor(TransactionProcessorProperties properties, RestTemplate restTemplate,
+                                           TransactionRepository transactionRepository,
+                                           ReloadlyNotification notification,
+                                           ApplicationContext context) {
         this.properties = properties;
         this.restTemplate = restTemplate;
         this.transactionRepository = transactionRepository;
         this.notification = notification;
+        this.context = context;
     }
 
     protected void markTransactionAsProcessing(TransactionEntity txnEntity) {
@@ -81,7 +88,7 @@ public abstract class AbstractTransactionProcessor implements TransactionProcess
         try {
             ResponseEntity<AccountInfo> response = restTemplate.exchange(
                     properties.getReloadlyAccountServiceEndpoint().concat("/account/".concat(uid)), HttpMethod.GET,
-                    new HttpEntity<>(getHeaders()), AccountInfo.class);
+                    new HttpEntity<>(TracingUtils.getPropagatedHttpHeaders(getHeaders(), context)), AccountInfo.class);
             if (response.getStatusCode().is2xxSuccessful()) {
                 LOGGER.info("Account Info obtained");
                 return response.getBody();

@@ -13,6 +13,7 @@ import com.reloadly.transaction.model.TransactionStatus;
 import com.reloadly.transaction.repository.AirtimeSendTxnRepository;
 import com.reloadly.transaction.repository.MoneyReloadTxnRepository;
 import com.reloadly.transaction.repository.TransactionRepository;
+import org.springframework.context.ApplicationContext;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.Assert;
@@ -34,8 +35,9 @@ public abstract class TransactionProcessingSupport extends KafkaSupport {
                                         MoneyReloadTxnRepository moneyReloadTxnRepository,
                                         AirtimeSendTxnRepository airtimeSendTxnRepository,
                                         TransactionServiceProperties properties,
-                                        KafkaTemplate<String, String> template) {
-        super(properties, template);
+                                        KafkaTemplate<String, String> template,
+                                        ApplicationContext context) {
+        super(properties, template, context);
         this.transactionRepository = transactionRepository;
         this.moneyReloadTxnRepository = moneyReloadTxnRepository;
         this.airtimeSendTxnRepository = airtimeSendTxnRepository;

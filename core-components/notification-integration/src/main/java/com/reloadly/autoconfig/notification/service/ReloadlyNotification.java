@@ -4,6 +4,7 @@ import com.reloadly.commons.exceptions.NotificationException;
 import com.reloadly.commons.model.EmailRequest;
 import com.reloadly.commons.model.ReloadlyCredentials;
 import com.reloadly.commons.model.SmsRequest;
+import org.springframework.http.HttpHeaders;
 
 /**
  * Java API to interact with the Notification microservice.

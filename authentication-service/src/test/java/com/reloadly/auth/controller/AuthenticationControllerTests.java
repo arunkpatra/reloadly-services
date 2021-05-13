@@ -146,4 +146,33 @@ public class AuthenticationControllerTests extends AbstractIntegrationTest {
         assertThat(response.getRoles().size()).isEqualTo(2);
     }
 
+    @Test
+    public void should_not_verify_invalid_key() throws Exception {
+
+        // Setup
+        ApiKeyVerificationRequest request =
+                new ApiKeyVerificationRequest("03fe6f0d-120e-4161-a134-8c2342e36ca6");
+
+        // Setup and Act
+        MvcResult mvcResult = mockMvc.perform(post("/verify/apikey")
+                .content(objectMapper.writeValueAsString(request))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized())
+                .andReturn();
+    }
+
+    @Test
+    public void should_not_verify_disabled_key() throws Exception {
+
+        // Setup
+        ApiKeyVerificationRequest request =
+                new ApiKeyVerificationRequest("f9fe6f0a-120e-1234-a134-8c2342e36c72");
+
+        // Setup and Act
+        MvcResult mvcResult = mockMvc.perform(post("/verify/apikey")
+                .content(objectMapper.writeValueAsString(request))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized())
+                .andReturn();
+    }
 }

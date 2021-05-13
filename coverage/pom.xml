@@ -22,6 +22,12 @@
 
         <dependency>
             <groupId>com.reloadly</groupId>
+            <artifactId>tracing</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.reloadly</groupId>
             <artifactId>email-integration</artifactId>
             <version>${project.version}</version>
         </dependency>

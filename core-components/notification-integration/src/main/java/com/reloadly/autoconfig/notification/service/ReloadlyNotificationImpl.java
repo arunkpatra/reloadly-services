@@ -6,8 +6,10 @@ import com.reloadly.commons.model.EmailRequest;
 import com.reloadly.commons.model.NotificationResponse;
 import com.reloadly.commons.model.ReloadlyCredentials;
 import com.reloadly.commons.model.SmsRequest;
+import com.reloadly.tracing.utils.TracingUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +26,12 @@ public class ReloadlyNotificationImpl implements ReloadlyNotification {
     private static final Logger LOGGER = LoggerFactory.getLogger(ReloadlyNotificationImpl.class);
     private final NotificationClientProperties properties;
     private final RestTemplate restTemplate;
+    private final ApplicationContext context;
 
-    public ReloadlyNotificationImpl(NotificationClientProperties properties, RestTemplate restTemplate) {
+    public ReloadlyNotificationImpl(NotificationClientProperties properties, RestTemplate restTemplate, ApplicationContext context) {
         this.properties = properties;
         this.restTemplate = restTemplate;
+        this.context = context;
     }
 
     /**
@@ -40,6 +44,7 @@ public class ReloadlyNotificationImpl implements ReloadlyNotification {
      */
     @Override
     public void sendEmail(ReloadlyCredentials credentials, EmailRequest request) throws NotificationException {
+
         if (properties.isSuppress()) {
             LOGGER.info("Notification delivery is currently suppressed. Enable it by turning on the reloadly.notification.enabled property.");
             return;
@@ -57,6 +62,7 @@ public class ReloadlyNotificationImpl implements ReloadlyNotification {
         } catch (RestClientException e) {
             throw new NotificationException("Call to Notification Service failed. Root Cause : " + e.getMessage(), e);
         }
+
     }
 
     /**
@@ -69,6 +75,7 @@ public class ReloadlyNotificationImpl implements ReloadlyNotification {
      */
     @Override
     public void sendSms(ReloadlyCredentials credentials, SmsRequest request) throws NotificationException {
+
         if (properties.isSuppress()) {
             LOGGER.info("Notification delivery is currently suppressed. Enable it by turning on the reloadly.notification.enabled property.");
             return;
@@ -85,6 +92,7 @@ public class ReloadlyNotificationImpl implements ReloadlyNotification {
         } catch (RestClientException e) {
             throw new NotificationException("Call to Notification Service failed. Root Cause : " + e.getMessage(), e);
         }
+
     }
 
     private HttpHeaders getHeaders(ReloadlyCredentials credentials) {
@@ -103,6 +111,6 @@ public class ReloadlyNotificationImpl implements ReloadlyNotification {
                 LOGGER.error("Invalid credential type found. {}", credentials.getType());
                 break;
         }
-        return headers;
+        return TracingUtils.getPropagatedHttpHeaders(headers, context);
     }
 }

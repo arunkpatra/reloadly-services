@@ -16,8 +16,11 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.MessageHeaders;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -29,6 +32,7 @@ import java.util.Map;
  * @author Arun Patra
  */
 @Aspect
+@Order
 public class TracedAspect {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TracedAspect.class);
@@ -233,8 +237,25 @@ public class TracedAspect {
     }
 
     private TextMap getKafkaCarrier(Traced traced, ProceedingJoinPoint joinPoint) {
-        // TODO: Implement me
-        return new TextMapAdapter(new HashMap<>());
+        TextMap kafkaMetadataCarrier = new TextMapAdapter(new HashMap<>());
+        Object[] signatureArgs = joinPoint.getArgs();
+        MessageHeaders messageHeaders = null;
+        for (Object o : signatureArgs) {
+            if (o instanceof MessageHeaders) {
+                messageHeaders = (MessageHeaders) o;
+            }
+        }
+
+        if (null != messageHeaders) {
+            LOGGER.trace("[Trace: #{}] Extracted metadata -> {}", traced.operationName(), messageHeaders);
+
+            for (Map.Entry<String, Object> e : messageHeaders.entrySet()) {
+                if (e.getValue() instanceof String) {
+                    kafkaMetadataCarrier.put(e.getKey(), (String)e.getValue());
+                }
+            }
+        }
+        return kafkaMetadataCarrier;
     }
 
     private Map<String, String> getHttpRequestInfo(Traced traced, ProceedingJoinPoint joinPoint) {

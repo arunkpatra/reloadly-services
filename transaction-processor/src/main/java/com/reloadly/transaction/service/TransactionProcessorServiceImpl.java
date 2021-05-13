@@ -1,5 +1,6 @@
 package com.reloadly.transaction.service;
 
+import com.reloadly.tracing.annotation.Traced;
 import com.reloadly.transaction.entity.TransactionEntity;
 import com.reloadly.transaction.exception.ReloadlyTxnProcessingException;
 import com.reloadly.transaction.manager.TransactionManager;
@@ -7,7 +8,7 @@ import com.reloadly.transaction.model.TransactionStatus;
 import com.reloadly.transaction.repository.TransactionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.messaging.MessageHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -26,10 +27,9 @@ public class TransactionProcessorServiceImpl implements TransactionProcessorServ
         this.transactionManager = transactionManager;
     }
 
-    @KafkaListener(topics = "com.reloadly.inbound.txn.topic", groupId = "inboundTxnProcessingConsumerGrp")
-    public void processInboundTransaction(String txnId) {
+    @Traced(operationName = "TransactionProcessor#processInboundTransaction")
+    public void processInboundTransaction(String txnId, MessageHeaders messageHeaders) {
         Assert.notNull(txnId, "Transaction ID can not be null");
-        LOGGER.info("Inbound Transaction received. Txn ID: {}", txnId);
 
         Optional<TransactionEntity> txnOpt = transactionRepository.findByTxnId(txnId);
         if (!txnOpt.isPresent()) {
