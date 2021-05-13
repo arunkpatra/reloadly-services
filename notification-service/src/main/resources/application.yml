@@ -48,7 +48,7 @@ reloadly:
       secured: true
       api-title: Reloadly Notification Services API
       api-description: Reloadly Notification Services API
-      api-version: 1.2.0
+      api-version: 1.3.0
       base-url: /
       host: localhost:8082
       base-package: com.reloadly.notification.controller

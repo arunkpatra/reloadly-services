@@ -85,7 +85,7 @@ helm upgrade --install reloadly-dev ./reloadly --namespace reloadly --force
 ``` 
 $ helm ls --namespace reloadly
 NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART           APP VERSION
-reloadly-dev    reloadly        1               2021-05-11 13:46:57.851863 +0530 IST    deployed        reloadly-1.0.0  1.2.0 
+reloadly-dev    reloadly        1               2021-05-11 13:46:57.851863 +0530 IST    deployed        reloadly-1.0.0  1.3.0 
 ```
 
 #### Show Release History
@@ -94,7 +94,7 @@ reloadly-dev    reloadly        1               2021-05-11 13:46:57.851863 +0530
 $ helm history reloadly-dev --namespace reloadly
 
 REVISION        UPDATED                         STATUS          CHART           APP VERSION     DESCRIPTION     
-1               Tue May 11 13:46:57 2021        deployed        reloadly-1.0.0  1.2.0           Install complete
+1               Tue May 11 13:46:57 2021        deployed        reloadly-1.0.0  1.3.0           Install complete
 
 ```
 
