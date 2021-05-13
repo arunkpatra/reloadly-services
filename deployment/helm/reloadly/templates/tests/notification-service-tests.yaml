@@ -8,6 +8,6 @@ spec:
   containers:
     - name: wget
       image: busybox
-      command: ['wget']
-      args: ['notification-service:{{ .Values.reloadly.notificationApp.http.port }}/actuator/health']
+      command: [ 'wget' ]
+      args: [ 'notification-service:{{ .Values.reloadly.notificationApp.http.port }}/actuator/health' ]
   restartPolicy: Never

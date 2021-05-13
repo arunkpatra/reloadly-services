@@ -21,10 +21,8 @@ details on the architecture, design, code and other asks of the code challenge, 
 
 [PDF Reference]: https://master.d219ur0ee5uhks.amplifyapp.com/pdf/reloadly-services.pdf
 
-
 ## License
 
 The code in this project is released under the [MIT License](LICENSE).
-
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Farunkpatra%2Freloadly-services.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Farunkpatra%2Freloadly-services?ref=badge_large)

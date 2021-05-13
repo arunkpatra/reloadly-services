@@ -5,6 +5,7 @@ import com.reloadly.sms.service.SMSService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ReloadlySmsAppTests extends AbstractIntegrationTest {

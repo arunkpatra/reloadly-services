@@ -8,6 +8,6 @@ spec:
   containers:
     - name: wget
       image: busybox
-      command: ['wget']
-      args: ['transaction-service:{{ .Values.reloadly.transactionApp.http.port }}/actuator/health']
+      command: [ 'wget' ]
+      args: [ 'transaction-service:{{ .Values.reloadly.transactionApp.http.port }}/actuator/health' ]
   restartPolicy: Never

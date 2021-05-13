@@ -48,7 +48,7 @@ public class ReloadlyNotificationTests extends AbstractIntegrationTest {
     public void should_not_send_email() {
         setup_mocks_for_failed_api_calls();
         assertThrows(NotificationException.class, () -> reloadlyNotification.sendEmail(testCredentials(),
-                        new EmailRequest("a@b.com", "test subject", "test body")));
+                new EmailRequest("a@b.com", "test subject", "test body")));
         Mockito.clearInvocations(restTemplate);
     }
 
@@ -76,17 +76,17 @@ public class ReloadlyNotificationTests extends AbstractIntegrationTest {
         Mockito.clearInvocations(restTemplate);
     }
 
-    private void setup_mocks_for_successful_api_calls()  {
+    private void setup_mocks_for_successful_api_calls() {
         NotificationResponse mockResponse = new NotificationResponse("Successful");
         Mockito.when(restTemplate.postForEntity(eq(properties.getReloadlyNotificationServiceEndpoint()
                 .concat("/notification/sms")), any(), eq(NotificationResponse.class)))
                 .thenReturn(new ResponseEntity<>(mockResponse, HttpStatus.OK));
         Mockito.when(restTemplate.postForEntity(eq(properties.getReloadlyNotificationServiceEndpoint()
-                        .concat("/notification/email")), any(), eq(NotificationResponse.class)))
+                .concat("/notification/email")), any(), eq(NotificationResponse.class)))
                 .thenReturn(new ResponseEntity<>(mockResponse, HttpStatus.OK));
     }
 
-    private void setup_mocks_for_failed_api_calls()  {
+    private void setup_mocks_for_failed_api_calls() {
         NotificationResponse mockResponse = new NotificationResponse("Successful");
         Mockito.when(restTemplate.postForEntity(eq(properties.getReloadlyNotificationServiceEndpoint()
                 .concat("/notification/sms")), any(), eq(NotificationResponse.class)))

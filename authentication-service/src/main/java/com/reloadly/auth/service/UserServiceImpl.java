@@ -16,7 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -128,8 +130,8 @@ public class UserServiceImpl implements UserService {
         throw new UserInfoBadRequestException();
     }
 
-    private UserInfo getUserInfoFromAuthHeader(String authHeader) throws UserNotFoundException ,
-            UserInfoBadRequestException{
+    private UserInfo getUserInfoFromAuthHeader(String authHeader) throws UserNotFoundException,
+            UserInfoBadRequestException {
         // See if Bearer token exists
         if (!authHeader.startsWith("Bearer ")) {
             throw new UserInfoBadRequestException();

@@ -3,6 +3,7 @@
 ## Notes
 
 #### Install (Perform a Release)
+
 ``` 
 $ helm install reloadly-dev ./reloadly --namespace reloadly --create-namespace --dry-run
 # Or, run with overrides
@@ -13,6 +14,7 @@ $ helm install -f override.yaml reloadly-dev ./reloadly --namespace reloadly --c
 `values.yaml`. Also, the `--create-namespace` works in HELM 3.2.0 and above. To .perform an actual release, remove the `--dry-run` parameter
 
 #### Run Tests for a Release
+
 ``` 
 $ helm test reloadly-dev --namespace reloadly --logs
 
@@ -32,7 +34,9 @@ Phase:          Succeeded
 NOTES:
 
 ```
+
 #### Get Status of a Release
+
 ``` 
 $ helm status reloadly-dev --namespace reloadly
 
@@ -52,7 +56,9 @@ Phase:          Succeeded
 NOTES:
 
 ```
+
 #### List Resources created by a Release
+
 ``` 
 $ helm get manifest reloadly-dev --namespace reloadly | kubectl get --namespace reloadly -f -
 
@@ -69,11 +75,13 @@ deployment.apps/authentication-service   1/1     1            1           10m
 ```
 
 #### Upgrade a Release
+
 ``` 
 helm upgrade --install reloadly-dev ./reloadly --namespace reloadly --force
 ```
 
 #### List all Releases
+
 ``` 
 $ helm ls --namespace reloadly
 NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART           APP VERSION
@@ -81,6 +89,7 @@ reloadly-dev    reloadly        1               2021-05-11 13:46:57.851863 +0530
 ```
 
 #### Show Release History
+
 ``` 
 $ helm history reloadly-dev --namespace reloadly
 
@@ -90,6 +99,7 @@ REVISION        UPDATED                         STATUS          CHART           
 ```
 
 #### Rollback a Release
+
 ``` 
 $ helm rollback reloadly-dev 1 --namespace reloadly 
 
@@ -99,14 +109,17 @@ $ helm history reloadly-dev --namespace reloadly
 ```
 
 #### Uninstall a Release
+
 ``` 
 helm uninstall reloadly-dev --namespace reloadly
 ```
 
 #### Storage
+
 https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/
 
 List persistent volumes
+
 ``` 
 $ kubectl get pv -n reloadly
 

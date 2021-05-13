@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
 
 /**
  * User specific REST APIs.
@@ -52,8 +51,8 @@ public class UserController extends AbstractRestController {
                                                                       HttpServletRequest servletRequest,
                                                                       @RequestHeader HttpHeaders headers)
             throws ReloadlyException {
-            String uid = userService.createUserForUsernamePassword(request.getUsername(), request.getPassword());
-            return new ResponseEntity<>(new SignupResponse("Signup successful", uid), HttpStatus.CREATED);
+        String uid = userService.createUserForUsernamePassword(request.getUsername(), request.getPassword());
+        return new ResponseEntity<>(new SignupResponse("Signup successful", uid), HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "Get User Info",

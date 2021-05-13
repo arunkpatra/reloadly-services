@@ -47,8 +47,8 @@ public class NotificationController extends AbstractRestController {
             @ApiParam(name = "Account Creation Request", required = true) @RequestBody EmailRequest request,
             HttpServletRequest servletRequest,
             @RequestHeader HttpHeaders headers) throws ReloadlyException {
-            notificationService.sendEmail(request);
-            return new ResponseEntity<>(new NotificationResponse("Accepted"), HttpStatus.ACCEPTED);
+        notificationService.sendEmail(request);
+        return new ResponseEntity<>(new NotificationResponse("Accepted"), HttpStatus.ACCEPTED);
     }
 
     @ApiOperation(value = "Send a SMS",
@@ -66,7 +66,7 @@ public class NotificationController extends AbstractRestController {
             @ApiParam(name = "Account Creation Request", required = true) @RequestBody SmsRequest request,
             HttpServletRequest servletRequest,
             @RequestHeader HttpHeaders headers) throws ReloadlyException {
-            notificationService.sendSms(request);
-            return new ResponseEntity<>(new NotificationResponse("Accepted"), HttpStatus.ACCEPTED);
+        notificationService.sendSms(request);
+        return new ResponseEntity<>(new NotificationResponse("Accepted"), HttpStatus.ACCEPTED);
     }
 }

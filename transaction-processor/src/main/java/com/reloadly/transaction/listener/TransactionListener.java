@@ -12,7 +12,7 @@ public interface TransactionListener {
     /**
      * Listens for inbound messages in a kafka topic.
      *
-     * @param txnId The transaction ID to be processed.
+     * @param txnId          The transaction ID to be processed.
      * @param messageHeaders The message headers
      */
     void listen(String txnId, MessageHeaders messageHeaders);

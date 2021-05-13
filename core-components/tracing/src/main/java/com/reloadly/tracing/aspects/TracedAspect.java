@@ -16,7 +16,6 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -220,7 +219,7 @@ public class TracedAspect {
     private TextMap getHttpCarrier(Traced traced, ProceedingJoinPoint joinPoint) {
         TextMap httpMetadataCarrier = new TextMapAdapter(new HashMap<>());
         Object[] signatureArgs = joinPoint.getArgs();
-        HttpHeaders  httpHeaders = null;
+        HttpHeaders httpHeaders = null;
         for (Object o : signatureArgs) {
             if (o instanceof HttpHeaders) {
                 httpHeaders = (HttpHeaders) o;
@@ -251,7 +250,7 @@ public class TracedAspect {
 
             for (Map.Entry<String, Object> e : messageHeaders.entrySet()) {
                 if (e.getValue() instanceof String) {
-                    kafkaMetadataCarrier.put(e.getKey(), (String)e.getValue());
+                    kafkaMetadataCarrier.put(e.getKey(), (String) e.getValue());
                 }
             }
         }

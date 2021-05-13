@@ -8,6 +8,6 @@ spec:
   containers:
     - name: wget
       image: busybox
-      command: ['wget']
-      args: ['account-service:{{ .Values.reloadly.accountApp.http.port }}/actuator/health']
+      command: [ 'wget' ]
+      args: [ 'account-service:{{ .Values.reloadly.accountApp.http.port }}/actuator/health' ]
   restartPolicy: Never

@@ -36,6 +36,7 @@ public abstract class KafkaSupport {
                 public String getPayload() {
                     return te.getTxnId();
                 }
+
                 @Override
                 public MessageHeaders getHeaders() {
                     return TracingUtils.getPropagatedMessageHeaders(context);

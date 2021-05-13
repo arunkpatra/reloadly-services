@@ -56,9 +56,9 @@ public class AuthenticationController extends AbstractRestController {
                                                         HttpServletRequest servletRequest,
                                                         @RequestHeader HttpHeaders headers) throws ReloadlyException {
 
-            AuthenticationResponse authenticationResponse =
-                    authenticationService.authenticateUsingUsernamePassword(request.getUsername(), request.getPassword());
-            return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
+        AuthenticationResponse authenticationResponse =
+                authenticationService.authenticateUsingUsernamePassword(request.getUsername(), request.getPassword());
+        return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Verify a reloadly issued JWT token",
@@ -80,8 +80,8 @@ public class AuthenticationController extends AbstractRestController {
                                                          HttpServletRequest servletRequest,
                                                          @RequestHeader HttpHeaders headers) throws ReloadlyException {
 
-            ReloadlyAuthToken reloadlyAuthToken = authenticationService.verifyToken(request.getToken());
-            return new ResponseEntity<>(reloadlyAuthToken, HttpStatus.OK);
+        ReloadlyAuthToken reloadlyAuthToken = authenticationService.verifyToken(request.getToken());
+        return new ResponseEntity<>(reloadlyAuthToken, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Verify an API Key",
@@ -104,7 +104,7 @@ public class AuthenticationController extends AbstractRestController {
                                                                @RequestHeader HttpHeaders headers)
             throws ReloadlyException {
 
-            ReloadlyApiKeyIdentity reloadlyApiKeyIdentity = authenticationService.verifyApiKey(request.getApiKey());
-            return new ResponseEntity<>(reloadlyApiKeyIdentity, HttpStatus.OK);
+        ReloadlyApiKeyIdentity reloadlyApiKeyIdentity = authenticationService.verifyApiKey(request.getApiKey());
+        return new ResponseEntity<>(reloadlyApiKeyIdentity, HttpStatus.OK);
     }
 }

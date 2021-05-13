@@ -53,7 +53,7 @@ public class TransactionController extends AbstractRestController {
             HttpServletRequest servletRequest,
             @RequestHeader HttpHeaders headers) throws ReloadlyException {
 
-            return new ResponseEntity<>(transactionService.acceptTransaction(request), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(transactionService.acceptTransaction(request), HttpStatus.ACCEPTED);
     }
 
     @ApiOperation(value = "Update transaction status",

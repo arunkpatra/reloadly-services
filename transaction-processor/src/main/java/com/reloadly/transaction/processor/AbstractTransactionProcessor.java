@@ -33,9 +33,9 @@ public abstract class AbstractTransactionProcessor implements TransactionProcess
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractTransactionProcessor.class);
     protected final TransactionProcessorProperties properties;
     protected final RestTemplate restTemplate;
+    protected final ApplicationContext context;
     private final TransactionRepository transactionRepository;
     private final ReloadlyNotification notification;
-    protected final ApplicationContext context;
 
     protected AbstractTransactionProcessor(TransactionProcessorProperties properties, RestTemplate restTemplate,
                                            TransactionRepository transactionRepository,

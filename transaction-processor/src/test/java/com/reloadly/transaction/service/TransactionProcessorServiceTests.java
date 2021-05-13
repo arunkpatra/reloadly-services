@@ -316,8 +316,8 @@ public class TransactionProcessorServiceTests extends AbstractIntegrationTest {
         Map<String, Object> headers = new HashMap<>();
         headers.put("x-b3-spanid", "c9f621954448e21e");
         headers.put("x-b3-parentspanid", "6aa95a61699d289e");
-        headers.put("x-b3-sampled",  "1");
-        headers.put("x-b3-traceid",  "6aa95a61699d289e");
+        headers.put("x-b3-sampled", "1");
+        headers.put("x-b3-traceid", "6aa95a61699d289e");
         return new MessageHeaders(headers);
     }
 }

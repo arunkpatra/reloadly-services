@@ -9,7 +9,9 @@ public class NotificationException extends RuntimeException {
 
     private static final String DEFAULT_MESSAGE = "Notification service error occurred.";
 
-    public NotificationException() {}
+    public NotificationException() {
+    }
+
     public NotificationException(String msg) {
         super(msg);
     }
