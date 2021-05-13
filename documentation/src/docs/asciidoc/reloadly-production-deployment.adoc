@@ -58,7 +58,7 @@ Upon successful of the above command, you would have the required Docker Images 
 * <artifactId> is the maven artifact ID of the microservice.
 * <versionId> is the maven version of the microservice.
 
-As an example, the Account microservice image would be named as `localhost:5000/com.reloadly/account-service:1.1.0`. You could thus do a `docker pull localhost:5000/com.reloadly/account-service:1.1.0`. You could use these images to run Kubernetes containers or in your Helm Charts.
+As an example, the Account microservice image would be named as `localhost:5000/com.reloadly/account-service:1.2.0`. You could thus do a `docker pull localhost:5000/com.reloadly/account-service:1.2.0`. You could use these images to run Kubernetes containers or in your Helm Charts.
 
 ==== Helm Charts
 

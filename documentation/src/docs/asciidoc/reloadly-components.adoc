@@ -16,7 +16,7 @@ Add the following dependency in any Spring Boot application and Spring Boot Auto
 <dependency>
     <groupId>com.reloadly</groupId>
     <artifactId>email-integration</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 </dependency>
 ----
 
@@ -32,7 +32,7 @@ Add the following dependency in any Spring Boot application and Spring Boot Auto
 <dependency>
     <groupId>com.reloadly</groupId>
     <artifactId>sms-integration</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 </dependency>
 ----
 
@@ -49,7 +49,7 @@ Add the following dependency in any Spring Boot application and Spring Boot Auto
 <dependency>
     <groupId>com.reloadly</groupId>
     <artifactId>security-integration</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 </dependency>
 ----
 
@@ -66,7 +66,7 @@ Add the following dependency in any Spring Boot application and Spring Boot Auto
 <dependency>
     <groupId>com.reloadly</groupId>
     <artifactId>notification-integration</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 </dependency>
 ----
 
@@ -83,7 +83,7 @@ Add the following dependency in any Spring Boot application and Spring Boot Auto
 <dependency>
     <groupId>com.reloadly</groupId>
     <artifactId>swagger-ui-integration</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 </dependency>
 ----
 
