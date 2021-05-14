@@ -24,6 +24,9 @@
 
 package com.reloadly.transaction.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * The transaction status update request.
  *
@@ -33,7 +36,8 @@ public class TransactionStatusUpdateRequest {
 
     private final TransactionStatus transactionStatus;
 
-    public TransactionStatusUpdateRequest(TransactionStatus transactionStatus) {
+    @JsonCreator
+    public TransactionStatusUpdateRequest(@JsonProperty("transactionStatus") TransactionStatus transactionStatus) {
         this.transactionStatus = transactionStatus;
     }
 

@@ -28,6 +28,7 @@ import com.reloadly.transaction.exception.KafkaProcessingException;
 import com.reloadly.transaction.exception.ReloadlyTxnSvcException;
 import com.reloadly.transaction.model.TransactionRequest;
 import com.reloadly.transaction.model.TransactionResponse;
+import com.reloadly.transaction.model.TransactionStatus;
 
 /**
  * This exposes capabilities related to user transaction requests.
@@ -58,4 +59,24 @@ public interface TransactionService {
      * @throws KafkaProcessingException If an error occurs.
      */
     void postTransactionToKafkaTopic(String txnId) throws KafkaProcessingException;
+
+    /**
+     * Get transaction status.
+     *
+     * @param txnId The transaction ID.
+     * @return The transaction status.
+     * @throws ReloadlyTxnSvcException If an error occurs.
+     */
+    TransactionResponse getTransactionStatus(String txnId) throws ReloadlyTxnSvcException;
+
+    /**
+     * Update a transaction status.
+     *
+     * @param txnId     The transaction ID.
+     * @param txnStatus The transaction status to be updated.
+     * @return Updated transaction status.
+     * @throws ReloadlyTxnSvcException If an error occurs.
+     */
+    TransactionResponse updateTransactionStatus(String txnId, TransactionStatus txnStatus)
+            throws ReloadlyTxnSvcException;
 }

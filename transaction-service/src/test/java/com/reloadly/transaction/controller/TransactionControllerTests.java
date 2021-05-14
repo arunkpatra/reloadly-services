@@ -33,17 +33,18 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class TransactionControllerTests extends AbstractIntegrationTest {
 
+    private final String testUid = "fefe6f0d-420e-4161-a134-9c2342e36c95";
+
     @Test
     @Transactional
     @Rollback
     public void should_post_add_money_transaction() throws Exception {
-        String testUid = "fefe6f0d-420e-4161-a134-9c2342e36c95";
 
         TransactionRequest request =
                 new TransactionRequest(TransactionType.ADD_MONEY, new AddMoneyRequest(100f), null);
@@ -74,7 +75,6 @@ public class TransactionControllerTests extends AbstractIntegrationTest {
     @Transactional
     @Rollback
     public void should_post_airtime_send_transaction() throws Exception {
-        String testUid = "fefe6f0d-420e-4161-a134-9c2342e36c95";
 
         TransactionRequest request =
                 new TransactionRequest(TransactionType.SEND_AIRTIME, null, new SendAirtimeRequest(100f, "+10000000000"));
@@ -99,5 +99,66 @@ public class TransactionControllerTests extends AbstractIntegrationTest {
         } catch (InterruptedException e) {
             System.out.println("Thread was interrupted");
         }
+    }
+
+    @Test
+    public void should_get_txn_status() throws Exception {
+        String txnId = "e7fe6f0d-420e-5161-a134-9c2342e36c32";
+
+        // Setup and Act
+        MvcResult mvcResult = mockMvc.perform(get("/transaction/".concat(txnId))
+                .header("X-Mock-UID", testUid))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+        // Assert
+        TransactionResponse response =
+                objectMapper.readValue(mvcResult.getResponse().getContentAsString(), TransactionResponse.class);
+        assertThat(response.getTransactionId()).isNotEmpty();
+        assertThat(response.getTransactionStatus()).isEqualTo(TransactionStatus.ACCEPTED);
+    }
+
+    @Test
+    public void should_not_get_txn_status() throws Exception {
+        String txnId = "f7fe6f0d-420e-6161-a134-9c2342e36c33";
+
+        // Act
+        MvcResult mvcResult = mockMvc.perform(get("/transaction/".concat(txnId))
+                .header("X-Mock-UID", testUid))
+                .andExpect(status().isInternalServerError()).andReturn();
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void should_update_txn_status() throws Exception {
+        String txnId = "e7fe6f0d-420e-5161-a134-9c2342e36c32";
+
+        TransactionStatusUpdateRequest request = new TransactionStatusUpdateRequest(TransactionStatus.SUCCESSFUL);
+        // Setup and Act
+        MvcResult mvcResult = mockMvc.perform(put("/transaction/".concat(txnId))
+                .header("X-Mock-UID", testUid).content(objectMapper.writeValueAsString(request))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+        // Assert
+        TransactionResponse response =
+                objectMapper.readValue(mvcResult.getResponse().getContentAsString(), TransactionResponse.class);
+        assertThat(response.getTransactionId()).isNotEmpty();
+        assertThat(response.getTransactionStatus()).isEqualTo(TransactionStatus.SUCCESSFUL);
+    }
+
+    @Test
+    public void should_not_update_txn_status() throws Exception {
+        String txnId = "f7fe6f0d-420e-6161-a134-9c2342e36c33";
+
+        TransactionStatusUpdateRequest request = new TransactionStatusUpdateRequest(TransactionStatus.SUCCESSFUL);
+        // Setup and Act
+        MvcResult mvcResult = mockMvc.perform(put("/transaction/".concat(txnId))
+                .header("X-Mock-UID", testUid).content(objectMapper.writeValueAsString(request))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError())
+                .andReturn();
     }
 }

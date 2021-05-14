@@ -25,6 +25,8 @@
 package com.reloadly.transaction.controller;
 
 import com.reloadly.commons.controller.BaseAbstractRestController;
+import com.reloadly.commons.exceptions.ReloadlyException;
+import com.reloadly.transaction.exception.KafkaProcessingException;
 import com.reloadly.transaction.exception.ReloadlyTxnSvcException;
 import com.reloadly.transaction.model.TransactionResponse;
 import com.reloadly.transaction.model.TransactionStatus;
@@ -44,8 +46,8 @@ public abstract class AbstractRestController extends BaseAbstractRestController 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractRestController.class);
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(ReloadlyTxnSvcException.class)
-    public TransactionResponse handleReloadlyTxnSvcException(ReloadlyTxnSvcException e) {
+    @ExceptionHandler({ReloadlyTxnSvcException.class, KafkaProcessingException.class})
+    public TransactionResponse handleReloadlyTxnSvcException(ReloadlyException e) {
         return new TransactionResponse("", TransactionStatus.REJECTED);
     }
 }

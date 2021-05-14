@@ -24,6 +24,9 @@
 
 package com.reloadly.transaction.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * The transaction response.
  *
@@ -34,7 +37,9 @@ public class TransactionResponse {
     private final String transactionId;
     private final TransactionStatus transactionStatus;
 
-    public TransactionResponse(String transactionId, TransactionStatus transactionStatus) {
+    @JsonCreator
+    public TransactionResponse(@JsonProperty("transactionId") String transactionId,
+                               @JsonProperty("transactionStatus") TransactionStatus transactionStatus) {
         this.transactionId = transactionId;
         this.transactionStatus = transactionStatus;
     }

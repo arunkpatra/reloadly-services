@@ -27,11 +27,8 @@ package com.reloadly.transaction.controller;
 import com.reloadly.commons.exceptions.ReloadlyException;
 import com.reloadly.commons.model.ErrorResponse;
 import com.reloadly.tracing.annotation.Traced;
-import com.reloadly.transaction.exception.KafkaProcessingException;
-import com.reloadly.transaction.exception.ReloadlyTxnSvcException;
 import com.reloadly.transaction.model.TransactionRequest;
 import com.reloadly.transaction.model.TransactionResponse;
-import com.reloadly.transaction.model.TransactionStatus;
 import com.reloadly.transaction.model.TransactionStatusUpdateRequest;
 import com.reloadly.transaction.service.TransactionService;
 import io.swagger.annotations.*;
@@ -79,13 +76,10 @@ public class TransactionController extends AbstractRestController {
             HttpServletRequest servletRequest,
             @RequestHeader HttpHeaders headers) throws ReloadlyException {
 
-        try {
-            TransactionResponse response = transactionService.acceptTransaction(request);
-            transactionService.postTransactionToKafkaTopic(response.getTransactionId());
-            return new ResponseEntity<>(transactionService.acceptTransaction(request), HttpStatus.ACCEPTED);
-        } catch (ReloadlyTxnSvcException | KafkaProcessingException e) {
-            throw new ReloadlyException("Failed to post transaction. Root cause: " + e.getMessage());
-        }
+        TransactionResponse response = transactionService.acceptTransaction(request);
+        transactionService.postTransactionToKafkaTopic(response.getTransactionId());
+        return new ResponseEntity<>(transactionService.acceptTransaction(request), HttpStatus.ACCEPTED);
+
     }
 
     @ApiOperation(value = "Update transaction status",
@@ -108,8 +102,8 @@ public class TransactionController extends AbstractRestController {
             @ApiParam(name = "Transaction Status Update Request", required = true)
             @RequestBody TransactionStatusUpdateRequest request, HttpServletRequest servletRequest,
             @RequestHeader HttpHeaders headers) throws ReloadlyException {
-        // TODO: Implement me
-        return new ResponseEntity<>(new TransactionResponse(txnId, request.getTransactionStatus()), HttpStatus.OK);
+        return new ResponseEntity<>(transactionService.updateTransactionStatus(txnId, request.getTransactionStatus()),
+                HttpStatus.OK);
     }
 
     @ApiOperation(value = "Get Transaction Status",
@@ -130,7 +124,6 @@ public class TransactionController extends AbstractRestController {
             @ApiParam(name = "Transaction ID", required = true) @PathVariable(name = "txnId") String txnId,
             HttpServletRequest servletRequest,
             @RequestHeader HttpHeaders headers) throws ReloadlyException {
-        // TODO: Implement me
-        return new ResponseEntity<>(new TransactionResponse(txnId, TransactionStatus.SUCCESSFUL), HttpStatus.OK);
+        return new ResponseEntity<>(transactionService.getTransactionStatus(txnId), HttpStatus.OK);
     }
 }

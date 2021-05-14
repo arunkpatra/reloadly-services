@@ -30,6 +30,7 @@ import com.reloadly.transaction.exception.KafkaProcessingException;
 import com.reloadly.transaction.exception.ReloadlyTxnSvcException;
 import com.reloadly.transaction.model.TransactionRequest;
 import com.reloadly.transaction.model.TransactionResponse;
+import com.reloadly.transaction.model.TransactionStatus;
 import com.reloadly.transaction.repository.AirtimeSendTxnRepository;
 import com.reloadly.transaction.repository.MoneyReloadTxnRepository;
 import com.reloadly.transaction.repository.TransactionRepository;
@@ -102,5 +103,42 @@ public class TransactionServiceImpl extends TransactionProcessingSupport impleme
     @Override
     public void postTransactionToKafkaTopic(String txnId) throws KafkaProcessingException {
         postTransactionToKafka(txnId);
+    }
+
+    /**
+     * Get transaction status.
+     *
+     * @param txnId The transaction ID.
+     * @return The transaction status.
+     * @throws ReloadlyTxnSvcException If an error occurs.
+     */
+    @Override
+    public TransactionResponse getTransactionStatus(String txnId) throws ReloadlyTxnSvcException {
+
+        TransactionEntity te = transactionRepository
+                .findByTxnId(txnId).orElseThrow(() -> new ReloadlyTxnSvcException("Transaction ID not found"));
+
+        return new TransactionResponse(txnId, te.getTransactionStatus());
+    }
+
+    /**
+     * Update a transaction status.
+     *
+     * @param txnId     The transaction ID.
+     * @param txnStatus The transaction status to be updated.
+     * @return Updated transaction status.
+     * @throws ReloadlyTxnSvcException If an error occurs.
+     */
+    @Override
+    @Transactional
+    public synchronized TransactionResponse updateTransactionStatus(String txnId, TransactionStatus txnStatus)
+            throws ReloadlyTxnSvcException {
+
+        TransactionEntity te = transactionRepository
+                .findByTxnId(txnId).orElseThrow(() -> new ReloadlyTxnSvcException("Transaction ID not found"));
+        te.setTransactionStatus(txnStatus);
+        te = transactionRepository.save(te);
+
+        return new TransactionResponse(txnId, te.getTransactionStatus());
     }
 }
