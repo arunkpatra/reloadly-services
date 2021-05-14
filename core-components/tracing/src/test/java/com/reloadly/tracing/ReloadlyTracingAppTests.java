@@ -32,8 +32,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.messaging.MessageHeaders;
 
 import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -55,11 +59,25 @@ public class ReloadlyTracingAppTests extends AbstractIntegrationTest {
     @Test
     public void test_local_nested_spans_test() {
 
-        LOGGER.info("Starting testLocalNestedSpansTest.");
+        LOGGER.info("Starting test_local_nested_spans_test.");
         String tracedResult = parentService.someParentMethod();
         assertThat(tracedResult).isEqualTo("Hello World from Parent -> Hello World from Child");
         LOGGER.info("Result was traced");
 
+    }
+
+    @Test
+    public void test_propagated_nested_spans_test() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("kafka_offset", 1L);
+        map.put("kafka_receivedTopic", "test.topic");
+        map.put("kafka_groupId", "test.group_id");
+        map.put("kafka_receivedTimestamp", (new Date()).getTime());
+        LOGGER.info("Starting test_propagated_nested_spans_test.");
+        String tracedResult = parentService.someParentMethodWithMessageHeaders(new MessageHeaders(map));
+        assertThat(tracedResult)
+                .isEqualTo("Hello World from Parent -> Hello World from Child", tracedResult);
+        LOGGER.info("Result was traced");
     }
 
     private void validateBeanExistence(Class<?>... types) {

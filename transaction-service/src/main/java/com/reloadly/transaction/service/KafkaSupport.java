@@ -43,7 +43,7 @@ public abstract class KafkaSupport {
 
     protected final TransactionServiceProperties properties;
     private final KafkaTemplate<String, String> template;
-    private final ApplicationContext context;
+    protected final ApplicationContext context;
 
     public KafkaSupport(TransactionServiceProperties properties, KafkaTemplate<String, String> template,
                         ApplicationContext context) {

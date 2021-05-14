@@ -46,6 +46,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessageHeaders;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,6 +62,7 @@ public class TracedAspect {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TracedAspect.class);
     private final ReloadlyTracer tracer;
+    private final SimpleDateFormat DATE_FORMAT_YYYY_MM_DD_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS z");
 
     public TracedAspect(ReloadlyTracer tracer) {
         LOGGER.trace("Creating TracedAspect aspect.");
@@ -219,6 +222,7 @@ public class TracedAspect {
         for (Map.Entry<String, String> e : tagMapHttp.entrySet()) {
             span = span.setTag(e.getKey(), e.getValue());
         }
+
         Map<String, String> tagMapGrpc = getGrpcRequestInfo(traced, joinPoint);
         for (Map.Entry<String, String> e : tagMapGrpc.entrySet()) {
             span = span.setTag(e.getKey(), e.getValue());
@@ -304,8 +308,30 @@ public class TracedAspect {
     }
 
     private Map<String, String> getKafkaRequestInfo(Traced traced, ProceedingJoinPoint joinPoint) {
-        // TODO: Implement me
-        return new HashMap<>();
+        Map<String, String> tagMap = new HashMap<>();
+        Object[] signatureArgs = joinPoint.getArgs();
+        MessageHeaders messageHeaders = null;
+        for (Object o : signatureArgs) {
+            if (o instanceof MessageHeaders) {
+                messageHeaders = (MessageHeaders) o;
+            }
+        }
+        if (null != messageHeaders) {
+            try {
+                if (messageHeaders.containsKey("kafka_receivedTimestamp")) {
+                    Long longDate = messageHeaders.get("kafka_receivedTimestamp", Long.class);
+                    String ts = DATE_FORMAT_YYYY_MM_DD_FORMAT.format(new Date(longDate));
+                    tagMap.put("kafka.received.timestamp", ts);
+                }
+                tagMap.put("kafka.received.topic", messageHeaders.get("kafka_receivedTopic", String.class));
+                tagMap.put("kafka.offset", Long.toString(messageHeaders.get("kafka_offset", Long.class)));
+                tagMap.put("kafka.group.id", messageHeaders.get("kafka_groupId", String.class));
+                tagMap.put("component", "net/kafka");
+            } catch (Exception e) {
+                LOGGER.error("Trace error: {}: {}", e.getClass().getName(), e.getMessage());
+            }
+        }
+        return tagMap;
     }
 
     private Span enhanceSpanFromResponse(Traced traced, Span currentSpan, Object proceed) {

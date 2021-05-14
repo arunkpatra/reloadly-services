@@ -57,4 +57,13 @@ public class TracingUtils {
         }
         return new MessageHeaders(Collections.emptyMap());
     }
+
+    public static void addTraceTag(String key, String value, ApplicationContext context) {
+        try {
+            ReloadlyTracer reloadlyTracer = context.getBean(ReloadlyTracer.class);
+            reloadlyTracer.tracer.activeSpan().setTag(key, value);
+        } catch (Exception e) {
+            // NOOP
+        }
+    }
 }

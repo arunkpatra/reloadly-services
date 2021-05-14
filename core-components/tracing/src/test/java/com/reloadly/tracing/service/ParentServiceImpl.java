@@ -27,6 +27,7 @@ package com.reloadly.tracing.service;
 import com.reloadly.tracing.annotation.Traced;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.messaging.MessageHeaders;
 
 public class ParentServiceImpl implements ParentService {
 
@@ -40,6 +41,15 @@ public class ParentServiceImpl implements ParentService {
     @Override
     @Traced(operationName = "some-parent-method")
     public String someParentMethod() {
+        String parentMessage = "Hello World from Parent";
+        String childMessage = childService.someChildMethod();
+        LOGGER.info("Returning: {} -> {}", parentMessage, childMessage);
+        return String.format("%s -> %s", parentMessage, childMessage);
+    }
+
+    @Override
+    @Traced(operationName = "some-parent-method-with-message-headers", spanType = Traced.SpanType.PROPAGATED)
+    public String someParentMethodWithMessageHeaders(MessageHeaders headers) {
         String parentMessage = "Hello World from Parent";
         String childMessage = childService.someChildMethod();
         LOGGER.info("Returning: {} -> {}", parentMessage, childMessage);

@@ -24,6 +24,7 @@
 
 package com.reloadly.transaction.service;
 
+import com.reloadly.tracing.utils.TracingUtils;
 import com.reloadly.transaction.config.TransactionServiceProperties;
 import com.reloadly.transaction.entity.TransactionEntity;
 import com.reloadly.transaction.exception.KafkaProcessingException;
@@ -80,6 +81,9 @@ public class TransactionServiceImpl extends TransactionProcessingSupport impleme
         Assert.notNull(uid, "UID can not be null");
 
         TransactionEntity te = addTransactionRecord(uid, request);
+        TracingUtils.addTraceTag("txn_id", te.getTxnId(), context);
+        TracingUtils.addTraceTag("uid", uid, context);
+
         switch (request.getTransactionType()) {
             case ADD_MONEY:
                 addMoneyReloadTxnRecord(te, request);

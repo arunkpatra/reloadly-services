@@ -55,6 +55,8 @@ public class TransactionProcessorServiceImpl implements TransactionProcessorServ
     public void processInboundTransaction(String txnId, MessageHeaders messageHeaders) {
         Assert.notNull(txnId, "Transaction ID can not be null");
 
+        //messageHeaders.forEach((key, value) -> LOGGER.info("Key: {}, Value: {}", key, value));
+
         Optional<TransactionEntity> txnOpt = transactionRepository.findByTxnId(txnId);
         if (!txnOpt.isPresent()) {
             LOGGER.error("Transaction ID: {} was not found.", txnId);

@@ -56,6 +56,10 @@ public class TransactionListenerImpl implements TransactionListener {
     @KafkaListener(topics = "com.reloadly.inbound.txn.topic", groupId = "inboundTxnProcessingConsumerGrp")
     public void listen(String txnId, MessageHeaders messageHeaders) {
         LOGGER.info("Message received. Txn ID: {}", txnId);
-        transactionProcessorService.processInboundTransaction(txnId, messageHeaders);
+        try {
+            transactionProcessorService.processInboundTransaction(txnId, messageHeaders);
+        } catch (Throwable t) {
+            LOGGER.error("Failed to process message. Root cause: {}", t.getMessage());
+        }
     }
 }

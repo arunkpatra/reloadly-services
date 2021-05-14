@@ -24,8 +24,11 @@
 
 package com.reloadly.tracing.service;
 
+import org.springframework.messaging.MessageHeaders;
+
 public interface ParentService {
 
     String someParentMethod();
 
+    String someParentMethodWithMessageHeaders(MessageHeaders headers);
 }
