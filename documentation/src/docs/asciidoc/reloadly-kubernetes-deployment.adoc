@@ -1,3 +1,4 @@
+:sourcedir: ../../../..
 ifndef::imagesdir[:imagesdir: images]
 [[kubernetes-deployment]]
 == Kubernetes Deployment
@@ -104,10 +105,6 @@ linkerd viz dashboard &
 ----
 
 Access Linkerd dashboard at http://localhost:50750/
-
-=== Helm Charts 3
-
-You can use Helm Charts to install software on your K8s cluster.
 
 ==== MySQL Install
 
@@ -235,7 +232,7 @@ When you no longer need this Kafka installation, you can delete the resources ju
 
 The above deletes all resources except the persistent volumes.
 
-
+[[running-services-on-kubernetes]]
 === Running Reloadly Platform Services on Kubernetes
 
 From root of project root, issue the following commands.
@@ -262,6 +259,16 @@ From root of project root, issue the following commands.
     kubectl delete -f ./kubernetes/reloadly-platform.yaml
     # source the manifest directly from GitHub
     kubectl delete - f https://raw.githubusercontent.com/arunkpatra/reloadly-services/main/deployment/kubernetes/reloadly-platform.yaml
+
+[[running-services-on-kubernetes-using-helm]]
+=== Helm Charts 3
+
+You can use Helm Charts to install software on your K8s cluster.
+
+[source, markdown]
+----
+include::{sourcedir}/deployment/helm/reloadly/README.md[]
+----
 
 === Jaeger
 

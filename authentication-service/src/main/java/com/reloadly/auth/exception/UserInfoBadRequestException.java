@@ -32,7 +32,7 @@ import com.reloadly.commons.exceptions.ReloadlyException;
  * @author Arun Patra
  */
 public class UserInfoBadRequestException extends ReloadlyException {
-    private static final String DEFAULT_MESSAGE = "Request must contain the RELOADLY-API-KEY, Authorization headers.";
+    private static final String DEFAULT_MESSAGE = "Request must contain the RELOADLY-API-KEY and RELOADLY-CLIENT-ID, or Authorization headers.";
 
     public UserInfoBadRequestException() {
         super(DEFAULT_MESSAGE);

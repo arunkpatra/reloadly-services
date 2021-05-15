@@ -168,7 +168,7 @@ Please refer Kafka documentation for securing a Kafka installation.
 ==== Running Microservices
 
 Follow the steps listed below in order to run all components of the platform locally.
-You should folow these steps sequentially.
+You should follow these steps sequentially. The steps mentioned below run the services as spring boot apps. However, you could run all these services in a Kubernetes cluster as described in <<running-services-on-kubernetes, this section>>. A convenient Helm Chart is provided and is described in <<running-services-on-kubernetes-using-helm, this section.>>
 
 ===== Environment Variable Configuration
 
@@ -269,7 +269,7 @@ export TWILIO_DRY_RUN=true
 export TWILIO_ACCOUNT_SID=
 export TWILIO_AUTH_TOKEN=
 export TWILIO_MSG_SVC_ID=
-
+export RELOADLY_CLIENT_ID=
 export RELOADLY_SVC_ACCT_API_KEY=
 ----
 

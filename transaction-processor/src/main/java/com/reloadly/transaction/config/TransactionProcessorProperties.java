@@ -43,6 +43,11 @@ public class TransactionProcessorProperties {
     private String svcAccountApiKey = "";
 
     /**
+     * The client ID.
+     */
+    private String clientId = "";
+
+    /**
      * Account service endpoint.
      */
     private String reloadlyAccountServiceEndpoint = "http://localhost:8080";
@@ -62,6 +67,14 @@ public class TransactionProcessorProperties {
 
     public String getSvcAccountApiKey() {
         return svcAccountApiKey;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 
     public void setSvcAccountApiKey(String svcAccountApiKey) {

@@ -115,7 +115,7 @@ public class AuthenticationController extends AbstractRestController {
             @ApiResponse(code = 200, message = "API key verification successful",
                     response = ReloadlyApiKeyIdentity.class),
             @ApiResponse(code = 401, message = "API Key verification failed",
-                    response = ReloadlyAuthToken.class),
+                    response = ReloadlyApiKeyIdentity.class),
             @ApiResponse(code = 500, message = "An internal error occurred.",
                     response = ErrorResponse.class)
     })

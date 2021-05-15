@@ -48,6 +48,8 @@ spec:
               value: "http://account-service.reloadly.svc.cluster.local:8080"
             - name: SVC_ACCT_API_KEY
               value: {{ .Values.reloadly.transactionProcApp.svcActApiKey }}
+            - name: SVC_ACCT_CLIENT_ID
+              value: {{ .Values.reloadly.transactionProcApp.svcActClientId }}
             - name: KAFKA_BOOTSTRAP_SERVERS
               value: "kafka.kafka.svc.cluster.local:9092"
             - name: SBA_SERVER_URL

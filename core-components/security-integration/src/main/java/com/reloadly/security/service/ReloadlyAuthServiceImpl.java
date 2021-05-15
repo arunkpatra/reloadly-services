@@ -87,14 +87,14 @@ public class ReloadlyAuthServiceImpl implements ReloadlyAuth {
      * @throws ReloadlyAuthException If an error occurs.
      */
     @Override
-    public ReloadlyApiKeyIdentity verifyApiKey(String key) throws ReloadlyAuthException {
+    public ReloadlyApiKeyIdentity verifyApiKey(String key, String clientId) throws ReloadlyAuthException {
         Assert.hasLength(properties.getReloadlyAuthServiceEndpoint(), "Authentication endpoint URL can not be empty.");
 
         // Exchange
         try {
             ResponseEntity<ReloadlyApiKeyIdentity> response =
                     restTemplate.postForEntity(properties.getReloadlyAuthServiceEndpoint().concat("/verify/apikey"),
-                            new HttpEntity<>(new ApiKeyRequest(key),
+                            new HttpEntity<>(new ApiKeyRequest(key, clientId),
                                     TracingUtils.getPropagatedHttpHeaders(new HttpHeaders(), context)),
                             ReloadlyApiKeyIdentity.class);
             if (response.getStatusCode().is2xxSuccessful()) {
@@ -109,14 +109,20 @@ public class ReloadlyAuthServiceImpl implements ReloadlyAuth {
 
     static class ApiKeyRequest {
         final String apiKey;
+        final String clientId;
 
         @JsonCreator
-        public ApiKeyRequest(@JsonProperty("apiKey") String apiKey) {
+        public ApiKeyRequest(@JsonProperty("apiKey") String apiKey, @JsonProperty("apiKey") String clientId) {
             this.apiKey = apiKey;
+            this.clientId = clientId;
         }
 
         public String getApiKey() {
             return apiKey;
+        }
+
+        public String getClientId() {
+            return clientId;
         }
     }
 

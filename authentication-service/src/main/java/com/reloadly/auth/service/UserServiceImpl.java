@@ -143,6 +143,7 @@ public class UserServiceImpl implements UserService {
      * @throws UserInfoBadRequestException If required headers were not found.
      */
     @Override
+    @Transactional
     public UserInfo getUserInfo(HttpHeaders headers) throws UserNotFoundException, UserInfoBadRequestException,
             ApiKeyNotFoundException {
 
