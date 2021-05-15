@@ -1,6 +1,6 @@
 = Fintech Platform Reference Implementation
 Arun Patra <https://twitter.com/arunkpatra[@arunkpatra]>
-2021.04.27
+{build-timestamp}
 :example-caption!:
 :revnumber: {project-version}
 :toc: left
@@ -16,7 +16,6 @@ Arun Patra <https://twitter.com/arunkpatra[@arunkpatra]>
 :tabsize: 2
 :pdf-version: 1.7
 ifndef::imagesdir[:imagesdir: images]
-//ifndef::sourcedir[:sourcedir: ../../main/java]
 
 
 == Introduction

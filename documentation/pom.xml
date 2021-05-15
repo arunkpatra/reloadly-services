@@ -60,6 +60,7 @@
                             <attributes>
                                 <!--                        <sourcedir>${project.build.sourceDirectory}</sourcedir>-->
                                 <project-version>${project.version}</project-version>
+                                <build-timestamp>${maven.build.timestamp}</build-timestamp>
                             </attributes>
                         </configuration>
                         <executions>
