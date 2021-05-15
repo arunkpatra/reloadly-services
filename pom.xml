@@ -13,7 +13,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.reloadly</groupId>
     <artifactId>reloadly-services</artifactId>
-    <version>1.3.0-SNAPSHOT</version>
+    <version>1.3.0</version>
     <modules>
         <module>account-service</module>
         <module>transaction-service</module>

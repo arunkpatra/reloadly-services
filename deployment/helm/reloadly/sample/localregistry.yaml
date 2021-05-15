@@ -3,24 +3,24 @@ reloadly:
   adminApp:
     image:
       repository: "localhost:5000/com.reloadly/admin-service"
-      tag: "1.3.0-SNAPSHOT"
+      tag: "1.3.0"
   authApp:
     image:
       repository: "localhost:5000/com.reloadly/authentication-service"
-      tag: "1.3.0-SNAPSHOT"
+      tag: "1.3.0"
   accountApp:
     image:
       repository: "localhost:5000/com.reloadly/account-service"
-      tag: "1.3.0-SNAPSHOT"
+      tag: "1.3.0"
   transactionApp:
     image:
       repository: "localhost:5000/com.reloadly/transaction-service"
-      tag: "1.3.0-SNAPSHOT"
+      tag: "1.3.0"
   notificationApp:
     image:
       repository: "localhost:5000/com.reloadly/notification-service"
-      tag: "1.3.0-SNAPSHOT"
+      tag: "1.3.0"
   transactionProcApp:
     image:
       repository: "localhost:5000/com.reloadly/transaction-processor"
-      tag: "1.3.0-SNAPSHOT"
+      tag: "1.3.0"
