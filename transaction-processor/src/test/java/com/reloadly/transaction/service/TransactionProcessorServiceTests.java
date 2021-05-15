@@ -338,6 +338,10 @@ public class TransactionProcessorServiceTests extends AbstractIntegrationTest {
 
     private MessageHeaders getHeaders() {
         Map<String, Object> headers = new HashMap<>();
+        headers.put("kafka_receivedTimestamp", System.currentTimeMillis());
+        headers.put("kafka_receivedTopic", "test-topic");
+        headers.put("kafka_groupId", "test-group-id");
+        headers.put("kafka_offset", 1L);
         headers.put("x-b3-spanid", "c9f621954448e21e");
         headers.put("x-b3-parentspanid", "6aa95a61699d289e");
         headers.put("x-b3-sampled", "1");

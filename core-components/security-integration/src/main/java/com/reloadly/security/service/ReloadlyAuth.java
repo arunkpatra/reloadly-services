@@ -51,5 +51,5 @@ public interface ReloadlyAuth {
      * @return Identity details attached to the API key.
      * @throws ReloadlyAuthException If an error occurs.
      */
-    ReloadlyApiKeyIdentity verifyApiKey(String key) throws ReloadlyAuthException;
+    ReloadlyApiKeyIdentity verifyApiKey(String key, String clientId) throws ReloadlyAuthException;
 }

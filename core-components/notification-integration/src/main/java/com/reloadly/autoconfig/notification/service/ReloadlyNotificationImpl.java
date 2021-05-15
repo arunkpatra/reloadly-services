@@ -127,6 +127,7 @@ public class ReloadlyNotificationImpl implements ReloadlyNotification {
                 break;
             case API_KEY:
                 headers.set("RELOADLY-API-KEY", credentials.getCredentials());
+                headers.set("RELOADLY-CLIENT-ID", credentials.getClientId());
                 break;
             case MOCK_UID:
                 headers.set("X-Mock-UID", credentials.getCredentials());

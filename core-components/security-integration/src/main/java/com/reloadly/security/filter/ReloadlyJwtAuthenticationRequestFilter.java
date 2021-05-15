@@ -75,7 +75,7 @@ public class ReloadlyJwtAuthenticationRequestFilter extends OncePerRequestFilter
                 if (userDetails != null) {
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(userDetails,
-                                    getCredentials(ReloadlyCredentials.CredentialType.RELOADLY_JWT_TOKEN, token),
+                                    getCredentials(token),
                                     userDetails.getAuthorities());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -95,10 +95,10 @@ public class ReloadlyJwtAuthenticationRequestFilter extends OncePerRequestFilter
         return bearerToken;
     }
 
-    private ReloadlyCredentials getCredentials(ReloadlyCredentials.CredentialType credentialType, String credential) {
+    private ReloadlyCredentials getCredentials(String jwtToken) {
         ReloadlyCredentials credentials = new ReloadlyCredentials();
-        credentials.setType(credentialType);
-        credentials.setCredentials(credential);
+        credentials.setType(ReloadlyCredentials.CredentialType.RELOADLY_JWT_TOKEN);
+        credentials.setCredentials(jwtToken);
         return credentials;
     }
 }

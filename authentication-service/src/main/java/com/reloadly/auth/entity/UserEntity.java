@@ -52,7 +52,7 @@ public class UserEntity extends AbstractPersistable<Long> implements Serializabl
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "uid", referencedColumnName = "uid")
-    private List<ApiKeyEntity> apiKeyEntities = new ArrayList<>();
+    private List<ClientEntity> clientEntities = new ArrayList<>();
 
     public Boolean getActive() {
         return active;
@@ -78,11 +78,11 @@ public class UserEntity extends AbstractPersistable<Long> implements Serializabl
         this.authorityEntities = authorityEntities;
     }
 
-    public List<ApiKeyEntity> getApiKeyEntities() {
-        return apiKeyEntities;
+    public List<ClientEntity> getClientEntities() {
+        return clientEntities;
     }
 
-    public void setApiKeyEntities(List<ApiKeyEntity> apiKeyEntities) {
-        this.apiKeyEntities = apiKeyEntities;
+    public void setClientEntities(List<ClientEntity> clientEntities) {
+        this.clientEntities = clientEntities;
     }
 }

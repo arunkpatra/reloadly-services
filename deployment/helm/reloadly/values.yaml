@@ -114,7 +114,8 @@ reloadly:
     replicaCount: 1
     resources: { }
   transactionProcApp:
-    svcActApiKey: "d3fe6f0d-120e-4161-a134-8c2342e36ca6"
+    svcActApiKey: "test-api-key"
+    svcActClientId: "bafa4494-40dd-4b0c-b42e-623399e70533"
     tracing:
       enabled: true
       transmitSpan: true

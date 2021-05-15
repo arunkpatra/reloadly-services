@@ -48,6 +48,11 @@ public class AuthenticationServiceProperties {
     private boolean swaggerUiEnabled = true;
 
     /**
+     * Whether access via mock users is enabled. e.g. for Tests.
+     */
+    private boolean mockEnabled = false;
+
+    /**
      * JWT token validity in seconds.
      */
     private long jwtTokenValiditySeconds = DEFAULT_JWT_TOKEN_VALIDITY_DURATION_SECONDS;
@@ -98,5 +103,13 @@ public class AuthenticationServiceProperties {
 
     public void setAudience(String audience) {
         this.audience = audience;
+    }
+
+    public boolean isMockEnabled() {
+        return mockEnabled;
+    }
+
+    public void setMockEnabled(boolean mockEnabled) {
+        this.mockEnabled = mockEnabled;
     }
 }

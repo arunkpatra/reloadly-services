@@ -40,9 +40,22 @@ public class ReloadlyCredentials {
      */
     private CredentialType type;
     /**
-     * The credential, usually a JWT token.
+     * The credential, usually a JWT token or an API key.
      */
     private String credentials;
+
+    /**
+     * The client ID. This is needed when the credential type is {@link CredentialType.API_KEY}
+     */
+    private String clientId;
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
 
     public CredentialType getType() {
         return type;

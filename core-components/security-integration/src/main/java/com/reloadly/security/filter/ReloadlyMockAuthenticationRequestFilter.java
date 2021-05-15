@@ -64,16 +64,13 @@ public class ReloadlyMockAuthenticationRequestFilter extends OncePerRequestFilte
 
     private void verifyToken(HttpServletRequest request) {
         String uid = getUid(request);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Mock UserId (Run this for tests ONLY): {}", uid);
-        }
         try {
             if (uid != null) {
                 UserDetails userDetails = loadUserByUsername(uid);
                 if (userDetails != null) {
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(userDetails,
-                                    getCredentials(ReloadlyCredentials.CredentialType.MOCK_UID, uid),
+                                    getCredentials(uid),
                                     userDetails.getAuthorities());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -93,10 +90,10 @@ public class ReloadlyMockAuthenticationRequestFilter extends OncePerRequestFilte
         return mockUid;
     }
 
-    private ReloadlyCredentials getCredentials(ReloadlyCredentials.CredentialType credentialType, String credential) {
+    private ReloadlyCredentials getCredentials(String mockUid) {
         ReloadlyCredentials credentials = new ReloadlyCredentials();
-        credentials.setType(credentialType);
-        credentials.setCredentials(credential);
+        credentials.setType(ReloadlyCredentials.CredentialType.MOCK_UID);
+        credentials.setCredentials(mockUid);
         return credentials;
     }
 

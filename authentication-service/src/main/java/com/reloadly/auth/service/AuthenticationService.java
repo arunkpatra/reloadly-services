@@ -64,10 +64,11 @@ public interface AuthenticationService {
      * Verifies an API key. API keys are meant to be granted to users and applications. It may be granted to service
      * accounts as well. Service accounts are needed for threads which are not user initiated.
      *
-     * @param apiKey The API key
+     * @param clientId The Client ID
+     * @param apiKey   The API key
      * @return A translated API key. The {@link ReloadlyApiKeyIdentity} wraps a user or a service account and the roles attached
      * to it.
      * @throws ApiKeyVerificationFailedException If verification fails
      */
-    ReloadlyApiKeyIdentity verifyApiKey(String apiKey) throws ApiKeyVerificationFailedException;
+    ReloadlyApiKeyIdentity verifyApiKey(String clientId, String apiKey) throws ApiKeyVerificationFailedException;
 }

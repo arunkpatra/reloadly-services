@@ -26,31 +26,37 @@ package com.reloadly.auth.entity;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * The API Key JPA entity.
+ * The Client entity. Exposes a client ID for now.
  *
  * @author Arun Patra
  */
 @Entity
-@Table(name = "api_key_table")
-public class ApiKeyEntity extends AbstractPersistable<Long> implements Serializable {
+@Table(name = "client_id_table")
+public class ClientEntity extends AbstractPersistable<Long> implements Serializable {
+
+    @Column(name = "uid")
+    private String uid;
 
     @Column(name = "client_id")
     private String clientId;
 
-    @Column(name = "api_key")
-    private String apiKey;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id", referencedColumnName = "client_id")
+    private List<ApiKeyEntity> apiKeyEntities = new ArrayList<>();
 
-    @Column(name = "api_key_desc")
-    private String apiKeyDescription;
+    public String getUid() {
+        return uid;
+    }
 
-    @Column(name = "active")
-    private Boolean active;
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
     public String getClientId() {
         return clientId;
@@ -60,27 +66,11 @@ public class ApiKeyEntity extends AbstractPersistable<Long> implements Serializa
         this.clientId = clientId;
     }
 
-    public String getApiKey() {
-        return apiKey;
+    public List<ApiKeyEntity> getApiKeyEntities() {
+        return apiKeyEntities;
     }
 
-    public void setApiKey(String apiKey) {
-        this.apiKey = apiKey;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public String getApiKeyDescription() {
-        return apiKeyDescription;
-    }
-
-    public void setApiKeyDescription(String apiKeyDescription) {
-        this.apiKeyDescription = apiKeyDescription;
+    public void setApiKeyEntities(List<ApiKeyEntity> apiKeyEntities) {
+        this.apiKeyEntities = apiKeyEntities;
     }
 }

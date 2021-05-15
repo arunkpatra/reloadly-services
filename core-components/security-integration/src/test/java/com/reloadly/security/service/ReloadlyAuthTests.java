@@ -100,7 +100,7 @@ public class ReloadlyAuthTests {
 
         // Act and Assert
         String apiKey = "d3fe6f0d-120e-4161-a134-8c2342e36ca6";
-        assertThrows(ReloadlyAuthException.class, () -> reloadlyAuth.verifyApiKey(apiKey));
+        assertThrows(ReloadlyAuthException.class, () -> reloadlyAuth.verifyApiKey(apiKey, "test-client-id"));
 
         clear_mocks();
 
@@ -109,7 +109,7 @@ public class ReloadlyAuthTests {
                 .thenThrow(new RestClientException("Things went south"));
 
         // Act and Assert
-        assertThrows(ReloadlyAuthException.class, () -> reloadlyAuth.verifyApiKey(apiKey));
+        assertThrows(ReloadlyAuthException.class, () -> reloadlyAuth.verifyApiKey(apiKey, "test-client-id"));
 
         clear_mocks();
     }
@@ -122,7 +122,7 @@ public class ReloadlyAuthTests {
         String apiKey = "d3fe6f0d-120e-4161-a134-8c2342e36ca6";
 
         // Act
-        ReloadlyApiKeyIdentity apiKeyIdentity = reloadlyAuth.verifyApiKey(apiKey);
+        ReloadlyApiKeyIdentity apiKeyIdentity = reloadlyAuth.verifyApiKey(apiKey, "test-client-id");
 
         // Assert
         assertThat(apiKeyIdentity.getUid()).isEqualTo("test-uid");

@@ -130,7 +130,8 @@ include::{sourcedir}/transaction-common/src/main/resources/transaction-services-
 ====== Seed Data
 
 This data must be seeded into the DB for system to work correctly.
-It does nothing other than ading a service account and API key which is needed for inter-microservice communication.
+It does nothing other than adding a service account, and an API key which is needed for inter-microservice communication.
+The unencrypted value (for testing only) of the API key is _test-api-key_. Also note the `client_id`.
 
 [source,sql]
 ----
@@ -167,7 +168,7 @@ Please refer Kafka documentation for securing a Kafka installation.
 ==== Running Microservices
 
 Follow the steps listed below in order to run all components of the platform locally.
-You should folow these steps sequentially.
+You should follow these steps sequentially. The steps mentioned below run the services as spring boot apps. However, you could run all these services in a Kubernetes cluster as described in <<running-services-on-kubernetes, this section>>. A convenient Helm Chart is provided and is described in <<running-services-on-kubernetes-using-helm, this section.>>
 
 ===== Environment Variable Configuration
 
@@ -227,11 +228,17 @@ Get it from your Twilio account.
 Get it from your Twilio account.
 |Needed to send SMS via Twilio.
 
+|RELOADLY_CLIENT_ID
+|The reloadly service account client ID.
+Use the value you inserted in the <<seed-data, Seed Data>> section.
+|Needed for the platform to work correctly.
+Use the value of `client_id` from the final `INSERT` statement in that script. (This is for testing only; should not be used for production)
+
 |RELOADLY_SVC_ACCT_API_KEY
 |The reloadly service account API key.
 Use the value you inserted in the <<seed-data, Seed Data>> section.
 |Needed for the platform to work correctly.
-Use the `api-key` value from the final `INSERT` statement in that script.
+Use the unencrypted value of `api-key` from the final `INSERT` statement in that script. The pre-seeded value is _test-api-key_. (This is for testing only; should not be used for production)
 |===
 
 [TIP]
@@ -262,7 +269,7 @@ export TWILIO_DRY_RUN=true
 export TWILIO_ACCOUNT_SID=
 export TWILIO_AUTH_TOKEN=
 export TWILIO_MSG_SVC_ID=
-
+export RELOADLY_CLIENT_ID=
 export RELOADLY_SVC_ACCT_API_KEY=
 ----
 

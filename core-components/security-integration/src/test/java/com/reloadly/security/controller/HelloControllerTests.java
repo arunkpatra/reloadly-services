@@ -95,11 +95,12 @@ public class HelloControllerTests extends AbstractIntegrationTest {
         mockIdentity.setUid("test-uid");
         mockIdentity.setRoles(Collections.singletonList("ROLE_USER"));
 
-        Mockito.when(reloadlyAuth.verifyApiKey(eq(apiKey))).thenReturn(mockIdentity);
+        Mockito.when(reloadlyAuth.verifyApiKey(eq(apiKey), eq("test-client-id"))).thenReturn(mockIdentity);
 
         // Setup and Act
         MvcResult mvcResult = mockMvc.perform(get("/hello")
                 .header("RELOADLY-API-KEY", apiKey)
+                .header("RELOADLY-CLIENT-ID", "test-client-id")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))

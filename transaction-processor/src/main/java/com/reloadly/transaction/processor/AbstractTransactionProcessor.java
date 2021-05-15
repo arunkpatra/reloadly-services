@@ -93,6 +93,7 @@ public abstract class AbstractTransactionProcessor implements TransactionProcess
     protected HttpHeaders getHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.set("RELOADLY-API-KEY", properties.getSvcAccountApiKey());
+        headers.set("RELOADLY-CLIENT-ID", properties.getClientId());
         headers.set("Content-Type", "application/json");
         headers.set("Accept", "application/json");
         return headers;
@@ -101,6 +102,7 @@ public abstract class AbstractTransactionProcessor implements TransactionProcess
     protected ReloadlyCredentials getReloadlyCredentials() {
         ReloadlyCredentials credentials = new ReloadlyCredentials();
         credentials.setType(ReloadlyCredentials.CredentialType.API_KEY);
+        credentials.setClientId(properties.getClientId());
         credentials.setCredentials(properties.getSvcAccountApiKey());
         return credentials;
     }

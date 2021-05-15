@@ -42,12 +42,20 @@ public class ApiKeyVerificationRequest {
     @ApiModelProperty(value = "API Key")
     private final String apiKey;
 
+    @ApiModelProperty(value = "Client ID")
+    private final String clientId;
+
     @JsonCreator
-    public ApiKeyVerificationRequest(@JsonProperty("apiKey") String apiKey) {
+    public ApiKeyVerificationRequest(@JsonProperty("apiKey") String apiKey, @JsonProperty("clientId") String clientId) {
         this.apiKey = apiKey;
+        this.clientId = clientId;
     }
 
     public String getApiKey() {
         return apiKey;
+    }
+
+    public String getClientId() {
+        return clientId;
     }
 }

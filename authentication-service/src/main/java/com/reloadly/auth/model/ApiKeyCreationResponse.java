@@ -22,65 +22,49 @@
  * SOFTWARE.
  */
 
-package com.reloadly.auth.entity;
+package com.reloadly.auth.model;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
- * The API Key JPA entity.
+ * The API key verification request.
  *
  * @author Arun Patra
  */
-@Entity
-@Table(name = "api_key_table")
-public class ApiKeyEntity extends AbstractPersistable<Long> implements Serializable {
+@ApiModel(value = "ApiKeyCreationResponse", description = "An API Key creation response.")
+public class ApiKeyCreationResponse {
+    /**
+     * A Reloadly issued API Key. Unencrypted. This is the only time, this key is handed over un-encrypted to the user.
+     */
+    @ApiModelProperty(value = "API Key")
+    private final String apiKey;
 
-    @Column(name = "client_id")
-    private String clientId;
+    @ApiModelProperty(value = "Client ID")
+    private final String clientId;
 
-    @Column(name = "api_key")
-    private String apiKey;
+    @ApiModelProperty(value = "API Key description")
+    private final String description;
 
-    @Column(name = "api_key_desc")
-    private String apiKeyDescription;
-
-    @Column(name = "active")
-    private Boolean active;
-
-    public String getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(String clientId) {
+    @JsonCreator
+    public ApiKeyCreationResponse(@JsonProperty("apiKey") String apiKey, @JsonProperty("clientId") String clientId,
+                                  @JsonProperty("description") String description) {
+        this.apiKey = apiKey;
         this.clientId = clientId;
+        this.description = description;
     }
 
     public String getApiKey() {
         return apiKey;
     }
 
-    public void setApiKey(String apiKey) {
-        this.apiKey = apiKey;
+    public String getClientId() {
+        return clientId;
     }
 
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public String getApiKeyDescription() {
-        return apiKeyDescription;
-    }
-
-    public void setApiKeyDescription(String apiKeyDescription) {
-        this.apiKeyDescription = apiKeyDescription;
+    public String getDescription() {
+        return description;
     }
 }

@@ -32,8 +32,10 @@ VALUES ('reloadly', '$2a$10$OwuE74o7m2qCj7yTVgleGOhwuqrvbJZT2qwYCGtyUi6ITSjSqHEZ
        ('banneduser', '$2a$10$OwuE74o7m2qCj7yTVgleGOhwuqrvbJZT2qwYCGtyUi6ITSjSqHEZy',
         '2244d807-d77e-4e42-b81c-22f8b0f95632');
 
+INSERT INTO client_id_table(uid, client_id)
+VALUES ('c1fe6f0d-420e-4161-a134-9c2342e36c95', 'bafa4494-40dd-4b0c-b42e-623399e70533');
 
-INSERT INTO api_key_table(uid, api_key, active)
-VALUES ('c1fe6f0d-420e-4161-a134-9c2342e36c95', 'd3fe6f0d-120e-4161-a134-8c2342e36ca6', true),
-       ('c1fe6f0d-420e-4161-a134-9c2342e36c95', 'b2fe6f0a-120e-1234-a134-8c2342e36c72', true),
-       ('c1fe6f0d-420e-4161-a134-9c2342e36c95', 'f9fe6f0a-120e-1234-a134-8c2342e36c72', false);
+INSERT INTO api_key_table(client_id, api_key, api_key_desc, active)
+VALUES ('bafa4494-40dd-4b0c-b42e-623399e70533', '$2a$10$C3nQIBaKAixaJHQtTUj/8eoT487qd7vwq4ZRHFQYVla6Z.fQOx0YG', 'Test API key', true),
+       ('bafa4494-40dd-4b0c-b42e-623399e70533', '$2a$10$Ha8J/MTO5j91FfzfxiRh9uRNgXR3N0xwwKsWd9B6XnoY/hYQNOI.C', 'Test API key', true),
+       ('bafa4494-40dd-4b0c-b42e-623399e70533', '$2a$10$DeMMslFZX3ZH6rrOW12c0um/Z5as4mEkEgXInlt9G8y/QRy6nNd2O', 'Test API key', false);

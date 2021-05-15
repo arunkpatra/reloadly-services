@@ -22,20 +22,32 @@
  * SOFTWARE.
  */
 
-package com.reloadly.auth.exception;
+package com.reloadly.auth.model;
 
-import com.reloadly.commons.exceptions.ReloadlyException;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
- * Exception indicating that the username was not found.
+ * The API key verification request.
  *
  * @author Arun Patra
  */
-public class ApiKeyNotFoundException extends ReloadlyException {
-    private static final String DEFAULT_MESSAGE = "Api key not found.";
+@ApiModel(value = "ApiKeyCreationRequest", description = "An API Key creation request.")
+public class ApiKeyCreationRequest {
+    /**
+     * A Reloadly issued API Key. Unencrypted. This is the only time, this key is handed over un-encrypted to the user.
+     */
+    @ApiModelProperty(value = "API Key Description")
+    private final String description;
 
-    public ApiKeyNotFoundException() {
-        super(DEFAULT_MESSAGE);
+    @JsonCreator
+    public ApiKeyCreationRequest(@JsonProperty("description") String description) {
+        this.description = description;
     }
 
+    public String getDescription() {
+        return description;
+    }
 }

@@ -70,16 +70,17 @@ public class ReloadlyApiKeyAuthenticationRequestFilter extends OncePerRequestFil
 
     private void verifyApiKey(HttpServletRequest request) {
         String apiKey = getApiKey(request);
+        String clientId = getClientId(request);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Reloadly API Key: {}", apiKey);
         }
         try {
-            if (apiKey != null) {
-                UserDetails userDetails = getApiKeyUserDetails(apiKey);
+            if ((apiKey != null) && (clientId != null)) {
+                UserDetails userDetails = getApiKeyUserDetails(apiKey, clientId);
                 if (userDetails != null) {
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(userDetails,
-                                    getCredentials(ReloadlyCredentials.CredentialType.API_KEY, apiKey),
+                                    getCredentials(apiKey, clientId),
                                     userDetails.getAuthorities());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -94,18 +95,23 @@ public class ReloadlyApiKeyAuthenticationRequestFilter extends OncePerRequestFil
         return request.getHeader("RELOADLY-API-KEY");
     }
 
-    private ReloadlyCredentials getCredentials(ReloadlyCredentials.CredentialType credentialType, String credential) {
+    private String getClientId(HttpServletRequest request) {
+        return request.getHeader("RELOADLY-CLIENT-ID");
+    }
+
+    private ReloadlyCredentials getCredentials(String apiKey, String clientId) {
         ReloadlyCredentials credentials = new ReloadlyCredentials();
-        credentials.setType(credentialType);
-        credentials.setCredentials(credential);
+        credentials.setType(ReloadlyCredentials.CredentialType.API_KEY);
+        credentials.setCredentials(apiKey);
+        credentials.setClientId(clientId);
         return credentials;
     }
 
-    private UserDetails getApiKeyUserDetails(String apiKey) {
+    private UserDetails getApiKeyUserDetails(String apiKey, String clientId) {
         ReloadlyUserDetails user = null;
         try {
-            if (apiKey != null) {
-                ReloadlyApiKeyIdentity keyIdentity = reloadlyAuth.verifyApiKey(apiKey);
+            if ((apiKey != null) && (clientId != null)) {
+                ReloadlyApiKeyIdentity keyIdentity = reloadlyAuth.verifyApiKey(apiKey, clientId);
                 user = getReloadlyUserFromDecodedApiKeyDetails(keyIdentity);
             }
         } catch (ReloadlyAuthException e) {
