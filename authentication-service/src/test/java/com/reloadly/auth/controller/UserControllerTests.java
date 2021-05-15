@@ -102,6 +102,23 @@ public class UserControllerTests extends AbstractIntegrationTest {
     }
 
     @Test
+    public void should_get_user_info_via_api_key() throws Exception {
+        // Setup and Act
+        MvcResult mvcResult = mockMvc.perform(get("/me")
+                .header("RELOADLY-API-KEY", "test-api-key")
+                .header("RELOADLY-CLIENT-ID", "bafa4494-40dd-4b0c-b42e-623399e70533"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        UserInfo userInfoResponse =
+                objectMapper.readValue(mvcResult.getResponse().getContentAsString(), UserInfo.class);
+
+        assertThat(userInfoResponse).isNotNull();
+        assertThat(userInfoResponse.getUid()).isNotNull();
+        assertThat(userInfoResponse.getUid()).isEqualTo("c1fe6f0d-420e-4161-a134-9c2342e36c95");
+    }
+    @Test
     public void should_get_user_info() throws Exception {
 
         // Setup
@@ -139,20 +156,6 @@ public class UserControllerTests extends AbstractIntegrationTest {
         assertThat(userInfoResponse.getUid()).isNotNull();
         assertThat(userInfoResponse.getUid()).isEqualTo("c1fe6f0d-420e-4161-a134-9c2342e36c95");
         assertThat(userInfoResponse.getRoles().size()).isEqualTo(2);
-
-        // Setup and Act
-        mvcResult = mockMvc.perform(get("/me")
-                .header("RELOADLY-API-KEY", "d3fe6f0d-120e-4161-a134-8c2342e36ca6"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andReturn();
-
-        userInfoResponse =
-                objectMapper.readValue(mvcResult.getResponse().getContentAsString(), UserInfo.class);
-
-        assertThat(userInfoResponse).isNotNull();
-        assertThat(userInfoResponse.getUid()).isNotNull();
-        assertThat(userInfoResponse.getUid()).isEqualTo("c1fe6f0d-420e-4161-a134-9c2342e36c95");
 
         // Setup and Act
         mvcResult = mockMvc.perform(get("/me")

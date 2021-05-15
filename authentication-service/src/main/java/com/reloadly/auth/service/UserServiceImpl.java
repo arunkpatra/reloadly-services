@@ -24,15 +24,14 @@
 
 package com.reloadly.auth.service;
 
+import com.reloadly.auth.config.AuthenticationServiceProperties;
 import com.reloadly.auth.entity.AuthorityEntity;
 import com.reloadly.auth.entity.UserEntity;
 import com.reloadly.auth.entity.UsernamePasswordCredentialsEntity;
 import com.reloadly.auth.exception.*;
 import com.reloadly.auth.jwt.JwtTokenUtil;
-import com.reloadly.auth.repository.ApiKeyRepository;
-import com.reloadly.auth.repository.AuthorityRepository;
-import com.reloadly.auth.repository.UserRepository;
-import com.reloadly.auth.repository.UsernamePasswordCredentialsRepository;
+import com.reloadly.auth.repository.*;
+import com.reloadly.commons.model.ReloadlyApiKeyIdentity;
 import com.reloadly.commons.model.user.UserInfo;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -53,23 +52,32 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private final AuthenticationServiceProperties properties;
     private final UserRepository userRepository;
     private final UsernamePasswordCredentialsRepository usernamePasswordCredentialsRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthorityRepository authorityRepository;
     private final JwtTokenUtil jwtTokenUtil;
     private final ApiKeyRepository apiKeyRepository;
+    private final ClientRepository clientRepository;
+    private final AuthenticationService authenticationService;
 
-    public UserServiceImpl(UserRepository userRepository,
+    public UserServiceImpl(AuthenticationServiceProperties properties,
+                           UserRepository userRepository,
                            UsernamePasswordCredentialsRepository usernamePasswordCredentialsRepository,
                            PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository,
-                           JwtTokenUtil jwtTokenUtil, ApiKeyRepository apiKeyRepository) {
+                           JwtTokenUtil jwtTokenUtil, ApiKeyRepository apiKeyRepository,
+                           ClientRepository clientRepository,
+                           AuthenticationService authenticationService) {
+        this.properties = properties;
         this.userRepository = userRepository;
         this.usernamePasswordCredentialsRepository = usernamePasswordCredentialsRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.jwtTokenUtil = jwtTokenUtil;
         this.apiKeyRepository = apiKeyRepository;
+        this.clientRepository = clientRepository;
+        this.authenticationService = authenticationService;
     }
 
     /**
@@ -142,13 +150,15 @@ public class UserServiceImpl implements UserService {
             return getUserInfoFromAuthHeader(Objects.requireNonNull(headers.get("authorization")).get(0));
         }
 
-        if (headers.containsKey("RELOADLY-API-KEY")) {
-            return getUserInfoFromApiKey(Objects.requireNonNull(headers.get("RELOADLY-API-KEY")).get(0));
+        if (headers.containsKey("RELOADLY-API-KEY") && headers.containsKey("RELOADLY-CLIENT-ID")) {
+            return getUserInfoFromApiKey(Objects.requireNonNull(headers.get("RELOADLY-API-KEY")).get(0),
+                    Objects.requireNonNull(headers.get("RELOADLY-CLIENT-ID")).get(0));
         }
 
-        if (headers.containsKey("X-Mock-UID")) {
-            return new UserInfo(Objects.requireNonNull(headers.get("X-Mock-UID")).get(0),
-                    Collections.singletonList("ROLE_USER"));
+        if (properties.isMockEnabled() && headers.containsKey("X-Mock-UID")) {
+            UserEntity ue = userRepository.findByUid((headers.get("X-Mock-UID")).get(0)).orElseThrow(UserInfoBadRequestException::new);
+            return new UserInfo(ue.getUid(),
+                    ue.getAuthorityEntities().stream().map(AuthorityEntity::getAuthority).collect(Collectors.toList()));
         }
 
         throw new UserInfoBadRequestException();
@@ -173,10 +183,15 @@ public class UserServiceImpl implements UserService {
                         .collect(Collectors.toList()));
     }
 
-    private UserInfo getUserInfoFromApiKey(String apiKey) throws ApiKeyNotFoundException {
-        String uid = apiKeyRepository.findByApiKey(apiKey).orElseThrow(ApiKeyNotFoundException::new).getUid();
-        return new UserInfo(uid, authorityRepository.findAllByUid(uid).stream().map(AuthorityEntity::getAuthority)
-                .collect(Collectors.toList()));
+    private UserInfo getUserInfoFromApiKey(String apiKey, String clientId) throws ApiKeyNotFoundException {
+        try {
+            ReloadlyApiKeyIdentity apiKeyIdentity = authenticationService.verifyApiKey(clientId, apiKey);
+            String uid = apiKeyIdentity.getUid();
+            return new UserInfo(uid, authorityRepository.findAllByUid(uid).stream().map(AuthorityEntity::getAuthority)
+                    .collect(Collectors.toList()));
+        } catch (ApiKeyVerificationFailedException e) {
+            throw new ApiKeyNotFoundException();
+        }
     }
 
     private void addUserRole(UserEntity ue) {

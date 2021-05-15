@@ -57,13 +57,30 @@ CREATE TABLE username_password_table
             REFERENCES user_table (uid)
 );
 
-create TABLE api_key_table
+--
+-- Client ID table
+--
+create TABLE client_id_table
 (
-    id      BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    uid     VARCHAR(40) NOT NULL,
-    api_key VARCHAR(40) NOT NULL UNIQUE,
-    active  BOOLEAN DEFAULT true,
-    CONSTRAINT fk_api_key_table_uid_user_table
+    id        BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    uid       VARCHAR(40) NOT NULL UNIQUE,
+    client_id VARCHAR(40) NOT NULL UNIQUE,
+    CONSTRAINT fk_client_id_table_uid_user_table
         FOREIGN KEY (uid)
             REFERENCES user_table (uid)
+);
+
+--
+-- API Key table
+--
+create TABLE api_key_table
+(
+    id           BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    client_id    VARCHAR(40)  NOT NULL,
+    api_key      VARCHAR(128) NOT NULL UNIQUE,
+    api_key_desc VARCHAR(128) NOT NULL,
+    active       BOOLEAN DEFAULT true,
+    CONSTRAINT fk_api_key_table_client_id_client_id_table
+        FOREIGN KEY (client_id)
+            REFERENCES client_id_table (client_id)
 )

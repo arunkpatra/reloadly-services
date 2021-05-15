@@ -128,7 +128,7 @@ public class AuthenticationController extends AbstractRestController {
                                                                @RequestHeader HttpHeaders headers)
             throws ReloadlyException {
 
-        ReloadlyApiKeyIdentity reloadlyApiKeyIdentity = authenticationService.verifyApiKey(request.getApiKey());
+        ReloadlyApiKeyIdentity reloadlyApiKeyIdentity = authenticationService.verifyApiKey(request.getClientId(), request.getApiKey());
         return new ResponseEntity<>(reloadlyApiKeyIdentity, HttpStatus.OK);
     }
 }

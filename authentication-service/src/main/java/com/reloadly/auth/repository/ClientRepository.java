@@ -22,20 +22,28 @@
  * SOFTWARE.
  */
 
-package com.reloadly.auth.exception;
+package com.reloadly.auth.repository;
 
-import com.reloadly.commons.exceptions.ReloadlyException;
+import com.reloadly.auth.entity.ApiKeyEntity;
+import com.reloadly.auth.entity.ClientEntity;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 /**
- * Exception indicating that the username was not found.
+ * Client repository.
  *
  * @author Arun Patra
  */
-public class ApiKeyNotFoundException extends ReloadlyException {
-    private static final String DEFAULT_MESSAGE = "Api key not found.";
+@Repository
+public interface ClientRepository extends CrudRepository<ClientEntity, Long> {
 
-    public ApiKeyNotFoundException() {
-        super(DEFAULT_MESSAGE);
-    }
+    @Transactional(readOnly = true)
+    Optional<ClientEntity> findByClientId(String clientId);
+
+    @Transactional(readOnly = true)
+    Optional<ClientEntity> findByUid(String uid);
 
 }

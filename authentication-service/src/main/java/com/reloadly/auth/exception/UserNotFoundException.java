@@ -32,7 +32,7 @@ import com.reloadly.commons.exceptions.ReloadlyException;
  * @author Arun Patra
  */
 public class UserNotFoundException extends ReloadlyException {
-    private static final String DEFAULT_MESSAGE = "Use was not found.";
+    private static final String DEFAULT_MESSAGE = "User was not found.";
 
     public UserNotFoundException() {
         super(DEFAULT_MESSAGE);

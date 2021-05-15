@@ -27,15 +27,18 @@ package com.reloadly.auth.exception;
 import com.reloadly.commons.exceptions.ReloadlyException;
 
 /**
- * Exception indicating that the username was not found.
+ * Exception indicating that an API key management related exception has occured.
  *
  * @author Arun Patra
  */
-public class ApiKeyNotFoundException extends ReloadlyException {
-    private static final String DEFAULT_MESSAGE = "Api key not found.";
+public class ApiKeyException extends ReloadlyException {
+    private static final String DEFAULT_MESSAGE = "AP Key exception.";
 
-    public ApiKeyNotFoundException() {
+    public ApiKeyException() {
         super(DEFAULT_MESSAGE);
     }
 
+    public ApiKeyException(String message, Exception e) {
+        super(message, e);
+    }
 }

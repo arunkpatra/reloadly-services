@@ -17,6 +17,8 @@ spring:
         enabled: false
 
 reloadly:
+  auth:
+    mock-enabled: true
   integration:
     swagger:
       enabled: false

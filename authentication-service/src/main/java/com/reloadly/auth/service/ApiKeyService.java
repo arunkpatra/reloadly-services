@@ -22,20 +22,31 @@
  * SOFTWARE.
  */
 
-package com.reloadly.auth.exception;
+package com.reloadly.auth.service;
 
-import com.reloadly.commons.exceptions.ReloadlyException;
+import com.reloadly.auth.exception.*;
+import com.reloadly.auth.model.ApiKeyCreationRequest;
+import com.reloadly.auth.model.ApiKeyCreationResponse;
+import org.springframework.http.HttpHeaders;
 
 /**
- * Exception indicating that the username was not found.
+ * Provides services related to API Key management.
  *
  * @author Arun Patra
  */
-public class ApiKeyNotFoundException extends ReloadlyException {
-    private static final String DEFAULT_MESSAGE = "Api key not found.";
+public interface ApiKeyService {
 
-    public ApiKeyNotFoundException() {
-        super(DEFAULT_MESSAGE);
-    }
+    /**
+     * Create a new API Key.
+     * <p>
+     *     APi Keys can only be create by human users who have signed in using a standard process like a username
+     *     password based method. A client ID will be created if it does not exist.
+     * </p>
+     *
+     * @param headers The HTTP headers containing authentication information.
+     * @return ApiKeyCreationResponse The APi key creation response.
+     * @throws ApiKeyException If an error occurs.
+     */
+    ApiKeyCreationResponse createApiKey(HttpHeaders headers, ApiKeyCreationRequest request) throws ApiKeyException;
 
 }

@@ -31,7 +31,13 @@ VALUES ('reloadly_svc_acct', '$2a$10$OwuE74o7m2qCj7yTVgleGOhwuqrvbJZT2qwYCGtyUi6
         'c1fe6f0d-420e-4161-a134-9c2342e36c95');
 
 --
--- API Key issued to 'reloadly_svc_acct' service account.
+-- Client ID for service account
 --
-INSERT INTO api_key_table(uid, api_key, active)
-VALUES ('c1fe6f0d-420e-4161-a134-9c2342e36c95', 'd3fe6f0d-120e-4161-a134-8c2342e36ca6', true);
+INSERT INTO client_id_table(uid, client_id)
+VALUES ('c1fe6f0d-420e-4161-a134-9c2342e36c95', 'bafa4494-40dd-4b0c-b42e-623399e70533');
+
+--
+-- API Key issued to 'reloadly_svc_acct' service account. Un-encrypted API key is 'test-api-key'
+--
+INSERT INTO api_key_table(client_id, api_key, api_key_desc, active)
+VALUES ('bafa4494-40dd-4b0c-b42e-623399e70533', '$2a$10$C3nQIBaKAixaJHQtTUj/8eoT487qd7vwq4ZRHFQYVla6Z.fQOx0YG', 'Test API key', true);

@@ -153,7 +153,7 @@ public class AuthenticationControllerTests extends AbstractIntegrationTest {
 
         // Setup
         ApiKeyVerificationRequest request =
-                new ApiKeyVerificationRequest("d3fe6f0d-120e-4161-a134-8c2342e36ca6");
+                new ApiKeyVerificationRequest("test-api-key", "bafa4494-40dd-4b0c-b42e-623399e70533");
 
         // Setup and Act
         MvcResult mvcResult = mockMvc.perform(post("/verify/apikey")
@@ -175,7 +175,8 @@ public class AuthenticationControllerTests extends AbstractIntegrationTest {
 
         // Setup
         ApiKeyVerificationRequest request =
-                new ApiKeyVerificationRequest("03fe6f0d-120e-4161-a134-8c2342e36ca6");
+                new ApiKeyVerificationRequest("test-invalid-api-key",
+                        "bafa4494-40dd-4b0c-b42e-623399e70533");
 
         // Setup and Act
         MvcResult mvcResult = mockMvc.perform(post("/verify/apikey")
@@ -190,7 +191,8 @@ public class AuthenticationControllerTests extends AbstractIntegrationTest {
 
         // Setup
         ApiKeyVerificationRequest request =
-                new ApiKeyVerificationRequest("f9fe6f0a-120e-1234-a134-8c2342e36c72");
+                new ApiKeyVerificationRequest("f9fe6f0a-120e-1234-a134-8c2342e36c72",
+                        "bafa4494-40dd-4b0c-b42e-623399e70533");
 
         // Setup and Act
         MvcResult mvcResult = mockMvc.perform(post("/verify/apikey")
