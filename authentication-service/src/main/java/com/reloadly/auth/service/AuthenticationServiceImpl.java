@@ -25,7 +25,10 @@
 package com.reloadly.auth.service;
 
 import com.reloadly.auth.config.AuthenticationServiceProperties;
-import com.reloadly.auth.entity.*;
+import com.reloadly.auth.entity.AuthorityEntity;
+import com.reloadly.auth.entity.ClientEntity;
+import com.reloadly.auth.entity.UserEntity;
+import com.reloadly.auth.entity.UsernamePasswordCredentialsEntity;
 import com.reloadly.auth.exception.ApiKeyVerificationFailedException;
 import com.reloadly.auth.exception.AuthenticationFailedException;
 import com.reloadly.auth.exception.TokenVerificationFailedException;

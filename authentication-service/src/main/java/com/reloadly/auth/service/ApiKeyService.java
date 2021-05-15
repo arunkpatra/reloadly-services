@@ -24,7 +24,7 @@
 
 package com.reloadly.auth.service;
 
-import com.reloadly.auth.exception.*;
+import com.reloadly.auth.exception.ApiKeyException;
 import com.reloadly.auth.model.ApiKeyCreationRequest;
 import com.reloadly.auth.model.ApiKeyCreationResponse;
 import org.springframework.http.HttpHeaders;

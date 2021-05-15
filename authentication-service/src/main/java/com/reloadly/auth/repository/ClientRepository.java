@@ -24,7 +24,6 @@
 
 package com.reloadly.auth.repository;
 
-import com.reloadly.auth.entity.ApiKeyEntity;
 import com.reloadly.auth.entity.ClientEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

@@ -25,18 +25,13 @@
 package com.reloadly.auth.controller;
 
 import com.reloadly.auth.AbstractIntegrationTest;
-import com.reloadly.auth.entity.UserEntity;
 import com.reloadly.auth.model.ApiKeyCreationRequest;
 import com.reloadly.auth.model.ApiKeyCreationResponse;
-import com.reloadly.auth.model.SignupResponse;
-import com.reloadly.auth.model.UsernamePasswordSignupRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

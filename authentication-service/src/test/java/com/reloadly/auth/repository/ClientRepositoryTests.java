@@ -25,7 +25,6 @@
 package com.reloadly.auth.repository;
 
 import com.reloadly.auth.AbstractIntegrationTest;
-import com.reloadly.auth.entity.ApiKeyEntity;
 import com.reloadly.auth.entity.ClientEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
