@@ -133,7 +133,6 @@ public class ReloadlyNotificationImpl implements ReloadlyNotification {
                 headers.set("X-Mock-UID", credentials.getCredentials());
                 break;
             default:
-                LOGGER.error("Invalid credential type found. {}", credentials.getType());
                 break;
         }
         return TracingUtils.getPropagatedHttpHeaders(headers, context);

@@ -73,11 +73,6 @@ public @interface Traced {
         HTTP,
 
         /**
-         * gRPC headers are to be propagated.
-         */
-        GRPC,
-
-        /**
          * Kafka headers are to be propagated.
          */
         KAFKA,

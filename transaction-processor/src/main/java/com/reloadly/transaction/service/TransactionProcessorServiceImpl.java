@@ -51,7 +51,7 @@ public class TransactionProcessorServiceImpl implements TransactionProcessorServ
         this.transactionManager = transactionManager;
     }
 
-    @Traced(operationName = "TransactionProcessor#processInboundTransaction")
+    @Traced(operationName = "TransactionProcessor#processInboundTransaction", headerType = Traced.HeaderType.KAFKA)
     public void processInboundTransaction(String txnId, MessageHeaders messageHeaders) {
         Assert.notNull(txnId, "Transaction ID can not be null");
 

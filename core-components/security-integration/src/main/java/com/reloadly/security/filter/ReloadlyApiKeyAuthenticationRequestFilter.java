@@ -71,9 +71,6 @@ public class ReloadlyApiKeyAuthenticationRequestFilter extends OncePerRequestFil
     private void verifyApiKey(HttpServletRequest request) {
         String apiKey = getApiKey(request);
         String clientId = getClientId(request);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Reloadly API Key: {}", apiKey);
-        }
         try {
             if ((apiKey != null) && (clientId != null)) {
                 UserDetails userDetails = getApiKeyUserDetails(apiKey, clientId);

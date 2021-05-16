@@ -19,6 +19,11 @@ spring:
 reloadly:
   auth:
     mock-enabled: true
+    jwt-secret-key: somesecretkey234242432fdfsdfsfsfs242432424242fsfsfs
+    swagger-ui-enabled: false
+    audience: reloadly
+    issuer: reloadly-services-inc
+    jwt-token-validity-seconds: 10000
   integration:
     swagger:
       enabled: false

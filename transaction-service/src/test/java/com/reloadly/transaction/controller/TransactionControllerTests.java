@@ -25,14 +25,20 @@
 package com.reloadly.transaction.controller;
 
 import com.reloadly.transaction.AbstractIntegrationTest;
+import com.reloadly.transaction.exception.KafkaProcessingException;
 import com.reloadly.transaction.model.*;
+import com.reloadly.transaction.service.TransactionService;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -69,6 +75,16 @@ public class TransactionControllerTests extends AbstractIntegrationTest {
         } catch (InterruptedException e) {
             System.out.println("Thread was interrupted");
         }
+    }
+
+    @Test
+    public void should_throw_kafka_exception() throws Exception {
+        TransactionService mockTransactionService = Mockito.mock(TransactionService.class);
+        doThrow(new KafkaProcessingException("Kafka error", new Exception("Kafka Internal Error")))
+                .when(mockTransactionService).postTransactionToKafkaTopic(any());
+
+        assertThrows(KafkaProcessingException.class, () -> mockTransactionService.postTransactionToKafkaTopic("any-topic"));
+
     }
 
     @Test

@@ -24,6 +24,7 @@
 
 package com.reloadly.tracing.service;
 
+import com.reloadly.tracing.annotation.TraceTag;
 import com.reloadly.tracing.annotation.Traced;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +40,9 @@ public class ParentServiceImpl implements ParentService {
     }
 
     @Override
-    @Traced(operationName = "some-parent-method")
+    @Traced(operationName = "some-parent-method",
+            traceTags = @TraceTag(key = "a", value = "b"),
+            headerType = Traced.HeaderType.HTTP)
     public String someParentMethod() {
         String parentMessage = "Hello World from Parent";
         String childMessage = childService.someChildMethod();
@@ -48,7 +51,8 @@ public class ParentServiceImpl implements ParentService {
     }
 
     @Override
-    @Traced(operationName = "some-parent-method-with-message-headers", spanType = Traced.SpanType.PROPAGATED)
+    @Traced(operationName = "some-parent-method-with-message-headers", spanType = Traced.SpanType.PROPAGATED,
+            headerType = Traced.HeaderType.KAFKA)
     public String someParentMethodWithMessageHeaders(MessageHeaders headers) {
         String parentMessage = "Hello World from Parent";
         String childMessage = childService.someChildMethod();

@@ -34,10 +34,6 @@ import com.reloadly.commons.exceptions.ReloadlyException;
 public class ApiKeyException extends ReloadlyException {
     private static final String DEFAULT_MESSAGE = "AP Key exception.";
 
-    public ApiKeyException() {
-        super(DEFAULT_MESSAGE);
-    }
-
     public ApiKeyException(String message, Exception e) {
         super(message, e);
     }
