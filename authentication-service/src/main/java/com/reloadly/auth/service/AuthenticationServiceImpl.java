@@ -92,18 +92,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         Assert.notNull(username, "Username can not be null");
         Assert.notNull(username, "Password can not be null");
 
-        Optional<UsernamePasswordCredentialsEntity> upceOptional =
-                usernamePasswordCredentialsRepository.findByUsername(username);
+        UsernamePasswordCredentialsEntity upce =
+                usernamePasswordCredentialsRepository.findByUsername(username)
+                        .orElseThrow(UsernameNotFoundException::new);
 
-        if (!upceOptional.isPresent()) {
-            throw new UsernameNotFoundException();
+        if (!passwordEncoder.matches(password, upce.getPassword())) {
+            throw new AuthenticationFailedException("Password did not match");
         }
 
-        if (!passwordEncoder.matches(password, upceOptional.get().getPassword())) {
-            throw new AuthenticationFailedException();
-        }
-
-        String uid = upceOptional.get().getUid();
+        String uid = upce.getUid();
 
         // Generate token
         try {
@@ -125,7 +122,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public ReloadlyAuthToken verifyToken(String token) throws TokenVerificationFailedException {
         if (!jwtTokenUtil.validateToken(token)) {
-            throw new TokenVerificationFailedException();
+            throw new TokenVerificationFailedException("Token could not be verified");
         }
         return new ReloadlyAuthToken(jwtTokenUtil.getAllClaimsFromToken(token));
     }

@@ -109,7 +109,7 @@ public class UserServiceImpl implements UserService {
             ue.setActive(true);
             ue = userRepository.save(ue);
         } catch (Exception e) {
-            throw new UsernameAlreadyTakenException();
+            throw new UsernameAlreadyTakenException("Username already taken.", e);
         }
 
         // Add a ROLE_USER role.

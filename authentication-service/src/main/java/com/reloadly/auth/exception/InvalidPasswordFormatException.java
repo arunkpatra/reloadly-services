@@ -37,5 +37,4 @@ public class InvalidPasswordFormatException extends ReloadlyException {
     public InvalidPasswordFormatException() {
         super(DEFAULT_MESSAGE);
     }
-
 }

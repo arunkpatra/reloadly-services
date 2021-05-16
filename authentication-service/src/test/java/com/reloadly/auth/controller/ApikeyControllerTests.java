@@ -69,6 +69,32 @@ public class ApikeyControllerTests extends AbstractIntegrationTest {
     @Test
     @Transactional
     @Rollback
+    public void should_create_api_key_when_client_id_does_not_exist() throws Exception {
+
+        // Setup
+        ApiKeyCreationRequest request =
+                new ApiKeyCreationRequest("test api key description");
+
+        // Setup and Act
+        MvcResult mvcResult = mockMvc.perform(post("/apikey")
+                .content(objectMapper.writeValueAsString(request))
+                .header("X-Mock-UID", "d273e6f9-bbf5-4126-bd7b-643ffc601291")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        // Assert
+        ApiKeyCreationResponse response =
+                objectMapper.readValue(mvcResult.getResponse().getContentAsString(), ApiKeyCreationResponse.class);
+        assertThat(response.getApiKey()).isNotNull();
+        assertThat(response.getClientId()).isNotNull();
+        assertThat(response.getDescription()).isEqualTo("test api key description");
+    }
+
+    @Test
+    @Transactional
+    @Rollback
     public void should_not_create_api_key() throws Exception {
 
         // Setup

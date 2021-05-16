@@ -32,9 +32,8 @@ import com.reloadly.commons.exceptions.ReloadlyException;
  * @author Arun Patra
  */
 public class TokenVerificationFailedException extends ReloadlyException {
-    private static final String DEFAULT_MESSAGE = "Token verification failed";
 
-    public TokenVerificationFailedException() {
-        super(DEFAULT_MESSAGE);
+    public TokenVerificationFailedException(String message) {
+        super(message);
     }
 }

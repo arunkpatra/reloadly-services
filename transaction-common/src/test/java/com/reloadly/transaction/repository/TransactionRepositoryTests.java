@@ -40,6 +40,12 @@ public class TransactionRepositoryTests extends AbstractJpaIntegrationTest {
     @Autowired
     private TransactionRepository transactionRepository;
 
+    @Autowired
+    private MoneyReloadTxnRepository moneyReloadTxnRepository;
+
+    @Autowired
+    private AirtimeSendTxnRepository airtimeSendTxnRepository;
+
     @Test
     @Transactional
     public void should_find_txn_by_txn_id() {
@@ -49,7 +55,7 @@ public class TransactionRepositoryTests extends AbstractJpaIntegrationTest {
         assertThat(txnOpt.isPresent()).isTrue();
         TransactionEntity te = txnOpt.get();
         assertThat(te.getUid()).isEqualTo("c1fe6f0d-420e-4161-a134-9c2342e36c95");
-
+        assertThat(moneyReloadTxnRepository.getByTxnId(existingTxnId).get().getTxnId()).isNotNull();
 
         // This is a airtime send  txn
         String existingTxnIdAirtime = "b7fe6f0d-420e-5121-a134-9c2342e36c64";
@@ -57,6 +63,7 @@ public class TransactionRepositoryTests extends AbstractJpaIntegrationTest {
         assertThat(txnOpt.isPresent()).isTrue();
         te = txnOpt.get();
         assertThat(te.getUid()).isEqualTo("c1fe6f0d-420e-4161-a134-9c2342e36c95");
+        assertThat(airtimeSendTxnRepository.getByTxnId(existingTxnIdAirtime).get().getTxnId()).isNotNull();
 
     }
 

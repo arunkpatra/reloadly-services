@@ -189,21 +189,14 @@ public class TracedAspect {
         TextMap carrier = new TextMapAdapter(new HashMap<>());
         switch (traced.headerType()) {
             case ALL:
-                TextMap gCarrier = getGrpcCarrier(traced, joinPoint);
                 TextMap hCarrier = getHttpCarrier(traced, joinPoint);
                 TextMap kCarrier = getKafkaCarrier(traced, joinPoint);
-                for (Map.Entry<String, String> e : gCarrier) {
-                    carrier.put(e.getKey(), e.getValue());
-                }
                 for (Map.Entry<String, String> e : hCarrier) {
                     carrier.put(e.getKey(), e.getValue());
                 }
                 for (Map.Entry<String, String> e : kCarrier) {
                     carrier.put(e.getKey(), e.getValue());
                 }
-                break;
-            case GRPC:
-                carrier = getGrpcCarrier(traced, joinPoint);
                 break;
             case HTTP:
                 carrier = getHttpCarrier(traced, joinPoint);
@@ -223,11 +216,6 @@ public class TracedAspect {
             span = span.setTag(e.getKey(), e.getValue());
         }
 
-        Map<String, String> tagMapGrpc = getGrpcRequestInfo(traced, joinPoint);
-        for (Map.Entry<String, String> e : tagMapGrpc.entrySet()) {
-            span = span.setTag(e.getKey(), e.getValue());
-        }
-
         Map<String, String> tagMapKafka = getKafkaRequestInfo(traced, joinPoint);
         for (Map.Entry<String, String> e : tagMapKafka.entrySet()) {
             span = span.setTag(e.getKey(), e.getValue());
@@ -237,11 +225,6 @@ public class TracedAspect {
             span = span.setTag(tt.key(), tt.value());
         }
         return span;
-    }
-
-    private TextMap getGrpcCarrier(Traced traced, ProceedingJoinPoint joinPoint) {
-        // TODO: Implement me
-        return new TextMapAdapter(new HashMap<>());
     }
 
     private TextMap getHttpCarrier(Traced traced, ProceedingJoinPoint joinPoint) {
@@ -300,11 +283,6 @@ public class TracedAspect {
             tagMap.put("component", "net/http");
         }
         return tagMap;
-    }
-
-    private Map<String, String> getGrpcRequestInfo(Traced traced, ProceedingJoinPoint joinPoint) {
-        // TODO: Implement me
-        return new HashMap<>();
     }
 
     private Map<String, String> getKafkaRequestInfo(Traced traced, ProceedingJoinPoint joinPoint) {
