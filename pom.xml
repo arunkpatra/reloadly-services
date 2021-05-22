@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.5</version>
+        <version>2.4.6</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -41,7 +41,9 @@
         <janino.version>3.1.4</janino.version>
         <spring.boot.admin.version>2.4.1</spring.boot.admin.version>
         <jaeger.client.version>1.6.0</jaeger.client.version>
+        <jjwt.version>0.11.2</jjwt.version>
         <local.docker.registry>localhost:5000</local.docker.registry>
+        <jacoco.maven.plugin.version>0.8.6</jacoco.maven.plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -264,7 +266,7 @@
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.8.6</version>
+                    <version>${jacoco.maven.plugin.version}</version>
                     <executions>
                         <execution>
                             <id>default-prepare-agent</id>
