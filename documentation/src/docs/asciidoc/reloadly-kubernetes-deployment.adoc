@@ -59,31 +59,36 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.2.0/a
 
 ==== Access
 
-To access Dashboard from your local workstation you must create a secure channel to your Kubernetes cluster. Run the following command:
-
-----
-kubectl proxy
-----
-
-Now access Dashboard at:
-
-http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
+To access Dashboard from your local workstation you must create a secure channel to your Kubernetes cluster. We need to create an admin-user to login to the Kubernetes Dashboard.
 
 ==== Login
 
-To login to the dashboard, you would need a token. See instructions https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md[here]
+To login to the dashboard, you would need a token. Execute the following commands.
 
-Start Proxy
+----
+# This creates a user named `admin-user`
+kubectl apply - f https://raw.githubusercontent.com/arunkpatra/reloadly-services/main/deployment/kubernetes/kubernetes-dashboard-admin-user.yaml
+
+# This creates a cluster rolebinding
+kubectl apply - f https://raw.githubusercontent.com/arunkpatra/reloadly-services/main/deployment/kubernetes/kubernetes-dashboard-cluster-role-binding.yaml
+
+# Now get the token
+
+kubectl -n kubernetes-dashboard get secret $(kubectl -n kubernetes-dashboard get sa/admin-user -o jsonpath="{.secrets[0].name}") -o go-template="{{.data.token | base64decode}}"
+
+----
+
+Reference: See more information https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md[here].
+
+Start the Proxy to access the dashboard.
 
 ----
 kubectl proxy
 ----
 
-Get Token
+Now access Dashboard at(Use the token you obtained above):
 
-----
-kubectl -n kubernetes-dashboard get secret $(kubectl -n kubernetes-dashboard get sa/admin-user -o jsonpath="{.secrets[0].name}") -o go-template="{{.data.token | base64decode}}"
-----
+http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
 
 //[.thumb]
 image::k8s-dashboard.png[scaledwidth=100%]
@@ -106,7 +111,15 @@ linkerd viz dashboard &
 
 Access Linkerd dashboard at http://localhost:50750/
 
-==== MySQL Install
+=== Helm Install
+
+Install Helm. See more information https://helm.sh/docs/intro/install/[here].
+
+----
+brew install helm
+----
+
+=== MySQL Install
 
 See the chart documentation https://bitnami.com/stack/mysql/helm[here].
 
@@ -176,7 +189,7 @@ When you no longer need this MySQL server, you can delete the resources just cre
 The above deletes all resources except the persistent volumes.
 
 
-==== Kafka Install
+=== Kafka Install
 
 See the chart documentation https://github.com/bitnami/charts/tree/master/bitnami/kafka[here].
 
@@ -279,6 +292,6 @@ Reference: https://linkerd.io/2.10/tasks/distributed-tracing/
 ----
 linkerd jaeger install | kubectl apply -f -
 linkerd jaeger check
-linkerd jaeger dashboard
+linkerd jaeger dashboard &
 ----
 
