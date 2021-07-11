@@ -83,4 +83,4 @@ create TABLE api_key_table
     CONSTRAINT fk_api_key_table_client_id_client_id_table
         FOREIGN KEY (client_id)
             REFERENCES client_id_table (client_id)
-)
+);
